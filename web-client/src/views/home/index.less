@@ -3,11 +3,35 @@
     height: 100%;
     background-color: #EFF4FF;
     > .ant-layout-header{
-        background-color: white;
+        background-color: #1890FF;
+        padding: 0px 30px;
+        > .header-box{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            > .header-title{
+                color: white;
+                font-size: 20px;
+            }
+        }
     }
     > .container{
         > .ant-layout-sider,.ant-layout-content{
-            background-color: #EFF4FF;
+            background-color: white;
+        }
+        > .ant-layout-sider{
+            > .ant-layout-sider-children{
+                > .ant-menu{
+                    > .ant-menu-submenu{
+                        > .ant-menu{
+                            background-color: white;
+                        }
+                    }
+                }
+            }
+            
         }
     }
 }
