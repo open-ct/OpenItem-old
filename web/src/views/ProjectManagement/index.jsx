@@ -24,7 +24,7 @@ export default class index extends Component {
                             <Button>导出成员</Button>
                         ]}
                         footer={
-                            <Tabs defaultActiveKey="proposition-guide" type="card" onChange={(e)=>{
+                            <Tabs defaultActiveKey="6-interviews" type="card" onChange={(e)=>{
                                 this.props.history.push(`/home/project-management/${e}`)
                             }}>
                                 <TabPane tab="命题指南与测试" key="proposition-guide">

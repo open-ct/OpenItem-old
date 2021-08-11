@@ -1,0 +1,51 @@
+[data-component=completion-status-box]{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding-left: 0.47rem;
+    > .left-box{
+        > .title{
+            height: .24rem;
+            line-height: .24rem;
+            margin-bottom: .08rem;
+            > span{
+                font-size: .14rem;
+                color: #8C8C8C;
+            }
+        }
+        > .value-list{
+            .ant-statistic-title{
+                font-size: .14rem;
+                color: rgba(0, 0, 0, 0.45);
+            }
+            .ant-statistic-content-value-int,.ant-statistic-content-suffix{
+                font-size: .26rem;
+                color: rgba(0, 0, 0, 0.85);
+            }
+        }
+    }
+    > .right-box{
+        .statistic-item-title{
+            font-size: .14rem;
+            color: #000000D9;
+            line-height: .22rem;
+            box-sizing: border-box;
+            padding-left: .14rem;
+            position: relative;
+            > .circle{
+                width: .06rem;
+                height: .06rem;
+                position: absolute;
+                left: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                border-radius: 50%;
+            }
+        }
+        .ant-statistic-content-value-int,.ant-statistic-content-suffix{
+            font-size: .26rem;
+            color: rgba(0, 0, 0, 0.85);
+        }
+    }
+}

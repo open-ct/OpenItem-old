@@ -1,14 +1,14 @@
 /*
  * @Author: your name
- * @Date: 2021-07-31 17:08:03
- * @LastEditTime: 2021-07-31 17:09:20
+ * @Date: 2021-08-12 00:18:40
+ * @LastEditTime: 2021-08-12 00:20:43
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
- * @FilePath: \OpenItem\web-client\src\Conf.js
+ * @FilePath: \OpenItem\web\src\conf\index.js
  */
-export const AuthConfig = {
-    serverUrl: "http://localhost:8000",
-    clientId: "70e1935bf72eb360d0fa",
-    appName: "application_1",
-    organizationName: "built-in",
-};
+
+let baseConfig = {
+    baseURL:'http://49.232.73.36:8081',
+}
+
+export default baseConfig
