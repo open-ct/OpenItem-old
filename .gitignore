@@ -16,3 +16,10 @@
 
 # Goalng mod packs:
 vendor
+
+# ignore the log file
+*.log
+
+# compile temp file
+*.tmp
+proj-review
