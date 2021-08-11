@@ -5,6 +5,8 @@ import {Switch, Route,Redirect} from 'react-router-dom'
 import {  UserOutlined } from '@ant-design/icons';
 import PendingTasks from '../PendingTasks'
 import ProjectManagement from '../ProjectManagement'
+import NotFound from '../errors/404'
+import Forbid from '../errors/402'
 import './index.less'
 const { Header , Content } = Layout;
 
@@ -57,6 +59,8 @@ export default class index extends Component {
                             <Redirect from="/home" to="/home/pending-tasks" exact></Redirect>
                             <Route path="/home/pending-tasks" component={PendingTasks} exact></Route>
                             <Route path="/home/project-management" component={ProjectManagement}></Route>
+                            <Route path="/402" component={Forbid} exact></Route>
+                            <Route component={NotFound}></Route>
                         </Switch>
                     </Content>
                 </Layout>

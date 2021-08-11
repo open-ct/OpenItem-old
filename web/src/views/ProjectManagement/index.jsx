@@ -4,6 +4,7 @@ import DocumentTitle from 'react-document-title'
 import { PageHeader, Tabs, Button, Descriptions } from 'antd';
 import PropositionGuide from '../../components/PropositionGuide'
 import InterViews6 from '../../components/Interviews6'
+import NotFound from '../errors/404'
 import './index.less'
 
 const { TabPane } = Tabs;
@@ -50,6 +51,7 @@ export default class index extends Component {
                             <Redirect from="/home/project-management" to="/home/project-management/proposition-guide" exact></Redirect>
                             <Route path="/home/project-management/proposition-guide" component={PropositionGuide} exact></Route>
                             <Route path="/home/project-management/6-interviews" component={InterViews6} exact></Route>
+                            <Route component={NotFound}></Route>
                         </Switch>
                     </div>
                 </div>
