@@ -3,6 +3,7 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 import DocumentTitle from 'react-document-title'
 import { PageHeader, Tabs, Button, Descriptions } from 'antd';
 import PropositionGuide from '../../components/PropositionGuide'
+import InterViews6 from '../../components/Interviews6'
 import './index.less'
 
 const { TabPane } = Tabs;
@@ -24,7 +25,7 @@ export default class index extends Component {
                         ]}
                         footer={
                             <Tabs defaultActiveKey="proposition-guide" type="card" onChange={(e)=>{
-                                console.log(e)
+                                this.props.history.push(`/home/project-management/${e}`)
                             }}>
                                 <TabPane tab="命题指南与测试" key="proposition-guide">
                                 </TabPane>
@@ -48,6 +49,7 @@ export default class index extends Component {
                         <Switch>
                             <Redirect from="/home/project-management" to="/home/project-management/proposition-guide" exact></Redirect>
                             <Route path="/home/project-management/proposition-guide" component={PropositionGuide} exact></Route>
+                            <Route path="/home/project-management/6-interviews" component={InterViews6} exact></Route>
                         </Switch>
                     </div>
                 </div>
