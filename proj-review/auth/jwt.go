@@ -75,7 +75,10 @@ func ParseToken(tokenString string) (*JwtPayload, error) {
 		func(token *jwt.Token) (interface{}, error) {
 			return []byte(SecretKEY), nil
 		})
-
+	if err != nil {
+		log.Logger.Warn("Error user token: ", err.Error())
+		return nil, err
+	}
 	claims, ok := token.Claims.(*MyCustomClaims)
 	if ok && token.Valid {
 		log.Logger.Info(fmt.Sprintf("%v %v", claims.UserID, claims.StandardClaims.ExpiresAt))

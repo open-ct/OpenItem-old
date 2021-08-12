@@ -22,4 +22,8 @@ vendor
 
 # compile temp file
 *.tmp
-proj-review
+
+# temp upload file & exec file
+proj-review/static/files/*
+proj-review/proj-review
+

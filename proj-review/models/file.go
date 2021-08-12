@@ -51,7 +51,9 @@ func init() {
 		context.Background(),
 		[]options.IndexModel{
 			{Key: []string{"uuid"}, Unique: true},
-			{Key: []string{"tags", "name", "type"}, Unique: false},
+			{Key: []string{"tags"}, Unique: false},
+			{Key: []string{"name"}, Unique: false},
+			{Key: []string{"type"}, Unique: false},
 		},
 	)
 	if err != nil {
@@ -66,6 +68,7 @@ func init() {
 func DoRecordFileInfo(uploadReq *request.UploadFile) (*response.FileDefault, bool) {
 	fileUuid := utils.GenUuidV4()
 	file := FileItem{
+		Uuid:        fileUuid,
 		Name:        uploadReq.FileName,
 		Type:        uploadReq.Type,
 		Description: uploadReq.Description,
@@ -73,7 +76,7 @@ func DoRecordFileInfo(uploadReq *request.UploadFile) (*response.FileDefault, boo
 		Path:        genFilesPath(fileUuid, uploadReq.Type),
 		Owner:       uploadReq.UserId, // record the uploader's id
 	}
-	insertRes, err := database.MgoFileRecords.InsertOne(context.Background(), file)
+	insertRes, err := database.MgoFileRecords.InsertOne(context.Background(), &file)
 	if err != nil {
 		log.Logger.Warn("[File Insert] " + err.Error())
 		return &response.FileDefault{
@@ -132,6 +135,7 @@ func DoDeleteFile(fileID string) (*response.FileDefault, bool) {
 			Description: constant.FileMsg.Fail,
 		}, false
 	}
+	// todo: delete file on server disk.
 	err = database.MgoFileRecords.Remove(context.Background(), bson.M{
 		"uuid": fileID,
 	})

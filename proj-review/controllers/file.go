@@ -37,7 +37,7 @@ func (f *FileController) respondJson(httpCode int, opCode int, message string, d
 // UploadFile (need to record the user id)
 func (f *FileController) UploadFile() {
 	// 获取前端上传文件
-	file, fileHeader, err := f.GetFile("file_name")
+	file, fileHeader, err := f.GetFile("filename")
 	if err != nil || fileHeader == nil {
 		log.Logger.Warn("[File] " + err.Error())
 		f.respondJson(
@@ -48,7 +48,7 @@ func (f *FileController) UploadFile() {
 		return
 	}
 	// confirm the user id
-	userId, err := parseUserToken(f.GetString("token"))
+	userId, err := parseUserToken(f.Ctx.Request.Header["Token"][0])
 	if err != nil {
 		log.Logger.Warn("[File] " + err.Error())
 		f.respondJson(
@@ -56,6 +56,7 @@ func (f *FileController) UploadFile() {
 			constant.FAIL,
 			constant.BasicMsg.UploadFileFail, // unknown upload user ... operation denied
 		)
+		return
 	}
 	fileReq := request.UploadFile{
 		UserId:      userId,
@@ -82,7 +83,7 @@ func (f *FileController) UploadFile() {
 			uploadResp,
 		)
 	}
-	f.SaveToFile("file_name", uploadResp.FilePath)
+	f.SaveToFile("filename", uploadResp.FilePath)
 	return
 }
 
@@ -150,7 +151,7 @@ func (f *FileController) SearchFile() {
 
 }
 
-// DeleteFile
+// DeleteFile todo:
 func (f *FileController) DeleteFile() {
 	fileId := f.GetString("file_id")
 	if fileId == "" {

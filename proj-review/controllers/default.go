@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
+	"fmt"
 	beego "github.com/beego/beego/v2/server/web"
 	"proj-review/auth"
 	"proj-review/log"
@@ -36,6 +37,9 @@ func unmarshalBody(body []byte, obj interface{}) error {
 
 // parseUserToken get user id from token string
 func parseUserToken(token string) (string, error) {
+	//
+	fmt.Println("recv token: ", token)
+	//
 	tokenData, err := auth.ParseToken(token)
 	if err != nil {
 		return "", err
