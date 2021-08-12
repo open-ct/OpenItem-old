@@ -47,7 +47,7 @@ func (f *FileController) UploadFile() {
 		)
 		return
 	}
-	// confirm the user id
+	// todo: confirm the user id
 	userId, err := parseUserToken(f.Ctx.Request.Header["Token"][0])
 	if err != nil {
 		log.Logger.Warn("[File] " + err.Error())

@@ -1,0 +1,28 @@
+GET http://localhost:9001/proj/projectAssign?proj_id=12ef6101-e47f-41fe-814f-b13a922ece8d
+Accept: application/json
+
+###
+GET http://localhost:9001/proj/userAssign?user_id=c993aa3c-ade9-4d99-a56b-6a5b472d9dba
+Accept: application/json
+
+###
+
+GET http://localhost:9001/proj/getInfo?proj_id=12ef6101-e47f-41fe-814f-b13a922ece8d
+Accept: application/json
+
+###
+POST http://localhost:9001/proj/createEmpty
+Content-Type: application/json
+Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYzk5M2FhM2MtYWRlOS00ZDk5LWE1NmItNmE1YjQ3MmQ5ZGJhIiwiZXhwIjoxNjI5MzY0OTI0LCJpYXQiOjE2Mjg3NjAxMjQsImlzcyI6InJvYm90LTFAcHFicy5jb20ifQ.5ifVw1DyoXsxQL092qdMoShFMcvkC3qjM2ZBThiQi7s
+
+{
+  "name": "test-project-3",
+  "Description": "this is a no.3 test-project, which is an empty project.",
+  "requirement": "nothing... just testing.",
+  "target": "test create project api.",
+  "grade_range": ["10", "12", "15"],
+  "subjects": ["go", "html"],
+  "summary": "speed up..."
+}
+
+###

@@ -100,7 +100,7 @@ func DoGetFileInfo(fileUuid string) (*response.FindFile, bool) {
 	var fileInfo FileItem
 	err := database.MgoFileRecords.Find(context.Background(), bson.M{"uuid": fileUuid}).One(&fileInfo)
 	if err != nil {
-		fmt.Println("err: ", err.Error())
+		log.Logger.Warn("err: ", err.Error())
 		return &response.FindFile{
 			FileID:      fileUuid,
 			Description: constant.FileMsg.Fail,
