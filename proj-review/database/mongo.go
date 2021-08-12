@@ -109,8 +109,11 @@ func init() {
 	MgoTempTestPaper = qmgoClient.Database(mongoDbName).Collection(mongoColls.TempTestPapers)
 	MgoFinalQuestions = qmgoClient.Database(mongoDbName).Collection(mongoColls.FinalTestPaper)
 
-	// todo: 需要 uuid 索引和 unique
-	defer mongoClose()
+	//defer func() {
+	//	if err = MongoClient.Close(context.Background()); err != nil {
+	//		panic(err)
+	//	}
+	//}()
 	return
 }
 

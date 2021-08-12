@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	beego "github.com/beego/beego/v2/server/web"
+	"github.com/qiniu/qmgo/field"
 	"github.com/qiniu/qmgo/options"
 	"go.mongodb.org/mongo-driver/bson"
 	"proj-review/constant"
@@ -17,15 +18,15 @@ import (
 
 // FileItem
 type FileItem struct {
-	Uuid        string    `json:"uuid" bson:"uuid"`
-	Name        string    `json:"name" bson:"name"`
-	Type        string    `json:"type" bson:"type"`
-	Description string    `json:"description" bson:"description"`
-	Tags        []string  `json:"tags" bson:"tags"`
-	Path        string    `json:"path" bson:"path"`
-	Owner       string    `json:"owner" bson:"owner"` // uploader's uuid
-	CreatedTime time.Time `json:"created_time" bson:"created_time"`
-	IsDeleted   bool      `json:"is_deleted" bson:"is_deleted"`
+	// qmgo default filed (id, create, update)
+	field.DefaultField `bson:",inline"`
+	Uuid               string   `json:"uuid" bson:"uuid"`
+	Name               string   `json:"name" bson:"name"`
+	Type               string   `json:"type" bson:"type"`
+	Description        string   `json:"description" bson:"description"`
+	Tags               []string `json:"tags" bson:"tags"`
+	Path               string   `json:"path" bson:"path"`
+	Owner              string   `json:"owner" bson:"owner"` // uploader's uuid
 }
 
 // FileStoreConfig define the location of files to save.
@@ -43,11 +44,13 @@ func init() {
 		fmt.Println("Load file store config error:", err.Error())
 	}
 	FileStore.RootPath = fileStoreRootPath
+	// insert test data
+	//insertDemoFile()
 	// create the index of files-collections
 	err = database.MgoFileRecords.CreateIndexes(
 		context.Background(),
 		[]options.IndexModel{
-			{Key: []string{"uuid"}, Unique: true}, // uuid is unique
+			{Key: []string{"uuid"}, Unique: true},
 			{Key: []string{"tags", "name", "type"}, Unique: false},
 		},
 	)
@@ -61,16 +64,14 @@ func init() {
 
 // DoRecordFileInfo 在mongo中记录文件索引表
 func DoRecordFileInfo(uploadReq *request.UploadFile) (*response.FileDefault, bool) {
-	fileID := utils.GenUuidV4()
+	fileUuid := utils.GenUuidV4()
 	file := FileItem{
-		Uuid:        fileID,
 		Name:        uploadReq.FileName,
 		Type:        uploadReq.Type,
 		Description: uploadReq.Description,
 		Tags:        uploadReq.Tags,
-		Path:        genFilesPath(fileID, uploadReq.Type),
+		Path:        genFilesPath(fileUuid, uploadReq.Type),
 		Owner:       uploadReq.UserId, // record the uploader's id
-		CreatedTime: time.Now(),
 	}
 	insertRes, err := database.MgoFileRecords.InsertOne(context.Background(), file)
 	if err != nil {
@@ -119,6 +120,35 @@ func DoSearchFile(searchReq *request.SearchFile) (*response.SearchFiles, bool) {
 	return nil, true
 }
 
+// DoDeleteFile
+func DoDeleteFile(fileID string) (*response.FileDefault, bool) {
+	toDelete := FileItem{}
+	err := database.MgoFileRecords.Find(context.Background(), bson.M{
+		"uuid": fileID,
+	}).One(&toDelete)
+	if err != nil || toDelete.Path == "" {
+		return &response.FileDefault{
+			FileID:      fileID,
+			Description: constant.FileMsg.Fail,
+		}, false
+	}
+	err = database.MgoFileRecords.Remove(context.Background(), bson.M{
+		"uuid": fileID,
+	})
+	if err != nil {
+		log.Logger.Error("[File Delete] " + err.Error())
+		return &response.FileDefault{
+			FileID:      fileID,
+			Description: constant.FileMsg.Unknown,
+		}, false
+	}
+	return &response.FileDefault{
+		FileID:      fileID,
+		FileName:    toDelete.Name,
+		Description: constant.FileMsg.Ok,
+	}, true
+}
+
 /*
 	additional functions:
 */
@@ -133,4 +163,31 @@ func genFilesPath(fileID string, fileType string) string {
 		utils.CreateDateDir(FileStore.RootPath)
 	}
 	return todayPath + "/" + fileID + fileType
+}
+
+// insertDemoFile (test)
+func insertDemoFile() {
+	demoName := "robot-demo"
+	fileName := utils.GenSha256(demoName)
+	count, err := database.MgoFileRecords.Find(context.Background(), bson.M{
+		"name": fileName,
+	}).Count()
+	if err != nil || count == 0 {
+		toIndsert := FileItem{
+			Uuid:        utils.GenUuidV4(),
+			Name:        fileName,
+			Type:        "empty",
+			Description: "this is a demo file, develop testing",
+			Path:        "no path",
+		}
+		result, err := database.MgoFileRecords.InsertOne(context.Background(), &toIndsert)
+		if err != nil {
+			log.Logger.Error("[Mongo File] Init error: " + err.Error())
+		}
+		log.Logger.Info(fmt.Sprintf("[Mongo File] init insert ok: %s", result.InsertedID))
+		return
+	}
+	log.Logger.Info("[Mongo File] No Insert operation")
+	return
+
 }

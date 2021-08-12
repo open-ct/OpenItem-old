@@ -34,6 +34,8 @@ type BasicMessage struct {
 	DownloadFileFail    string
 	GetFileInfoSuccess  string
 	GetFileInfoFail     string
+	DeleteFileSuccess   string
+	DeleteFileFail      string
 }
 
 var BasicMsg = BasicMessage{
@@ -68,6 +70,8 @@ var BasicMsg = BasicMessage{
 	DownloadFileSuccess: "下载文件成功",
 	GetFileInfoFail:     "获取文件信息失败",
 	GetFileInfoSuccess:  "获取文件信息成功",
+	DeleteFileSuccess:   "文件删除成功",
+	DeleteFileFail:      "文件删除失败",
 }
 
 // 用户框架 各个操作的详细消息反馈
@@ -125,6 +129,18 @@ type GetInfoMessage struct {
 }
 
 var GetInfoMsg = GetInfoMessage{
+	Ok:      "ok",
+	Fail:    "获取信息失败",
+	Unknown: "其他错误",
+}
+
+type DeleteUserMessage struct {
+	Ok      string
+	Fail    string
+	Unknown string
+}
+
+var DeleteUserMsg = DeleteUserMessage{
 	Ok:      "ok",
 	Fail:    "获取信息失败",
 	Unknown: "其他错误",

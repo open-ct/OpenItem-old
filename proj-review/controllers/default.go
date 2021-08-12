@@ -29,6 +29,7 @@ func unmarshalBody(body []byte, obj interface{}) error {
 	// marshal json body
 	if err := json.Unmarshal(body, obj); err != nil {
 		log.Logger.Warn("[JSON] " + err.Error())
+		return err
 	}
 	return nil
 }
@@ -40,4 +41,11 @@ func parseUserToken(token string) (string, error) {
 		return "", err
 	}
 	return tokenData.UserID, nil
+}
+
+func checkHttpBodyEmpty(body []byte) bool {
+	if len(body) == 0 {
+		return false
+	}
+	return true
 }

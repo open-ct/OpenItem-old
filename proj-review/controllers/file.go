@@ -149,3 +149,34 @@ func (f *FileController) GetFileInfo() {
 func (f *FileController) SearchFile() {
 
 }
+
+// DeleteFile
+func (f *FileController) DeleteFile() {
+	fileId := f.GetString("file_id")
+	if fileId == "" {
+		log.Logger.Warn("[File] " + errors.New("Invalid file ID").Error())
+		f.respondJson(
+			http.StatusOK,
+			constant.FAIL,
+			constant.BasicMsg.GetInfoFail,
+		)
+		return
+	}
+	deleteResp, ok := models.DoDeleteFile(fileId)
+	if !ok {
+		f.respondJson(
+			http.StatusOK,
+			constant.FAIL,
+			constant.BasicMsg.DeleteFileFail,
+			deleteResp,
+		)
+	} else {
+		f.respondJson(
+			http.StatusOK,
+			constant.SUCCESS,
+			constant.BasicMsg.DeleteFileSuccess,
+			deleteResp,
+		)
+	}
+	return
+}

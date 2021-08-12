@@ -3,8 +3,11 @@ package models
 import (
 	"context"
 	"fmt"
+	"github.com/qiniu/qmgo"
+	"github.com/qiniu/qmgo/field"
 	"github.com/qiniu/qmgo/options"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
 	"proj-review/auth"
 	"proj-review/constant"
 	"proj-review/database"
@@ -12,28 +15,24 @@ import (
 	"proj-review/request"
 	"proj-review/response"
 	"proj-review/utils"
-	"time"
 )
 
 // User user data.
 type User struct {
+	field.DefaultField `bson:",inline"`
 	// 基本信息
 	Uuid     string `json:"uuid" bson:"uuid"`
-	Name     string `json:"name" bson:"name" gorm:"column:name;not null"`
-	Email    string `json:"email" bson:"email" gorm:"column:email;unique;not null"`
-	Phone    string `json:"phone" bson:"phone" gorm:"column:phone;unique;not null"`
-	Gender   bool   `json:"gender" bson:"gender" gorm:"column:gender;not null"`
-	Degree   string `json:"degree" bson:"degree" gorm:"column:degree"`
-	Position string `json:"position" bson:"position" gorm:"column:position"`
-	Employer string `json:"employer" bson:"employer" gorm:"column:employer"`
-	Major    string `json:"major" bson:"major" gorm:"column:major"`
+	Name     string `json:"name" bson:"name" `
+	Email    string `json:"email" bson:"email" validate:"required"`
+	Phone    string `json:"phone" bson:"phone" validate:"required"`
+	Gender   bool   `json:"gender" bson:"gender" `
+	Degree   string `json:"degree" bson:"degree" `
+	Position string `json:"position" bson:"position" `
+	Employer string `json:"employer" bson:"employer" `
+	Major    string `json:"major" bson:"major"`
 	// 系统信息
-	Password string `json:"password" bson:"password" gorm:"column:password;not null"`
-	Salt     string `json:"salt" bson:"salt" gorm:"column:salt;not null"`
-	// 信息更新
-	CreatedAt time.Time `json:"created_at" bson:"created_at"`
-	UpdatedAt time.Time `json:"updated_at" bson:"updated_at"`
-	IsDeleted bool      `json:"is_deleted" bson:"is_deleted"`
+	Password string `json:"password" bson:"password"`
+	Salt     string `json:"salt" bson:"salt"`
 }
 
 type UserBasicInfo struct {
@@ -47,8 +46,13 @@ func init() {
 	err := database.MgoUsers.CreateIndexes(
 		context.Background(),
 		[]options.IndexModel{
-			{Key: []string{"uuid", "email", "phone"}, Unique: true},
-			{Key: []string{"name", "major", "position", "employer"}, Unique: false},
+			{Key: []string{"uuid"}, Unique: true},
+			{Key: []string{"email"}, Unique: true},
+			{Key: []string{"phone"}, Unique: true},
+			{Key: []string{"name"}, Unique: false},
+			{Key: []string{"position"}, Unique: false},
+			{Key: []string{"employer"}, Unique: false},
+			{Key: []string{"major"}, Unique: false},
 		},
 	)
 	if err != nil {
@@ -62,24 +66,17 @@ func init() {
 // DoUserRegister
 func DoUserRegister(registerReq *request.UserRegister) (*response.UserDefault, bool) {
 	newUser := User{
-		Uuid:      utils.GenUuidV4(),
-		Name:      registerReq.Name,
-		Email:     registerReq.Email,
-		Phone:     registerReq.Phone,
-		Gender:    registerReq.Gender,
-		Degree:    registerReq.Degree,
-		Position:  registerReq.Position,
-		Employer:  registerReq.Employer,
-		Major:     registerReq.Major,
-		CreatedAt: time.Now(),
-		UpdatedAt: time.Now(),
-		IsDeleted: false,
+		Uuid:     utils.GenUuidV4(),
+		Name:     registerReq.Name,
+		Email:    registerReq.Email,
+		Phone:    registerReq.Phone,
+		Gender:   registerReq.Gender,
+		Degree:   registerReq.Degree,
+		Position: registerReq.Position,
+		Employer: registerReq.Employer,
+		Major:    registerReq.Major,
 	}
-	if isDuplicate(newUser) {
-		return &response.UserDefault{
-			Description: constant.RegisterMsg.RepeatUser,
-		}, false
-	}
+
 	// new user, build password
 	saltKey, pwdHash, ok := genPasswordHash(registerReq.Password)
 	if !ok {
@@ -89,12 +86,19 @@ func DoUserRegister(registerReq *request.UserRegister) (*response.UserDefault, b
 	}
 	newUser.Password = pwdHash
 	newUser.Salt = saltKey
-	createResult, err := database.MgoUsers.InsertOne(context.Background(), newUser)
+	createResult, err := database.MgoUsers.InsertOne(context.Background(), &newUser)
 	if err != nil {
-		log.Logger.Error("[Mongo] " + err.Error())
-		return &response.UserDefault{
-			Description: constant.RegisterMsg.Unknown,
-		}, false
+		if qmgo.IsDup(err) {
+			log.Logger.Error("[Mongo] duplicate user info: " + err.Error())
+			return &response.UserDefault{
+				Description: constant.RegisterMsg.RepeatUser,
+			}, false
+		} else {
+			log.Logger.Error("[Mongo] " + err.Error())
+			return &response.UserDefault{
+				Description: constant.RegisterMsg.Unknown,
+			}, false
+		}
 	}
 	log.Logger.Info(fmt.Sprintf("[User] New user created, operation ID: %s", createResult.InsertedID))
 	return &response.UserDefault{
@@ -216,15 +220,7 @@ func DoUpdateUserInfo(updateInfoReq *request.UserUpdateInfo) (*response.UserDefa
 		}, false
 
 	}
-	// 检测邮箱 & 电话重复
-	isDup := isDuplicate(User{Email: updateInfoReq.Email, Phone: updateInfoReq.Phone})
-	if isDup {
-		return &response.UserDefault{
-			UserID:      updateInfoReq.ID,
-			Name:        orgUser.Name,
-			Description: constant.UpdateInfoMsg.InfoRepeat,
-		}, false
-	}
+
 	// todo: 其他信息检查
 
 	err := database.MgoUsers.UpdateOne(context.Background(), bson.M{"uuid": updateInfoReq.ID}, bson.M{
@@ -239,13 +235,24 @@ func DoUpdateUserInfo(updateInfoReq *request.UserUpdateInfo) (*response.UserDefa
 			"major":    updateInfoReq.Major,
 		},
 	})
+	// if email or phone repeat, mongo throw the error:
+
 	if err != nil {
-		log.Logger.Error("[Mongo] Update user info error: " + err.Error())
-		return &response.UserDefault{
-			UserID:      updateInfoReq.ID,
-			Name:        orgUser.Name,
-			Description: constant.UpdateInfoMsg.Unknown,
-		}, false
+		if qmgo.IsDup(err) {
+			log.Logger.Warn("[Mongo User] Duplicate user email or phone: " + err.Error())
+			return &response.UserDefault{
+				UserID:      updateInfoReq.ID,
+				Name:        orgUser.Name,
+				Description: constant.UpdateInfoMsg.InfoRepeat,
+			}, false
+		} else {
+			log.Logger.Error("[Mongo] Update user info error: " + err.Error())
+			return &response.UserDefault{
+				UserID:      updateInfoReq.ID,
+				Name:        orgUser.Name,
+				Description: constant.UpdateInfoMsg.Unknown,
+			}, false
+		}
 	}
 	return &response.UserDefault{
 		UserID:      orgUser.Uuid,
@@ -280,6 +287,29 @@ func DoGetUserInfo(userId string) (*response.UserInfo, bool) {
 // DoSearchUsers
 
 // DoDeleteUser
+func DoDeleteUser(userId string) (*response.UserDefault, bool) {
+	toDelete, ok := getUserById(userId)
+	if !ok {
+		return &response.UserDefault{
+			UserID:      userId,
+			Description: constant.DeleteUserMsg.Fail,
+		}, false
+	}
+	err := database.MgoUsers.Remove(context.Background(), bson.M{
+		"uuid": toDelete.Uuid,
+	})
+	if err != nil {
+		log.Logger.Error("[User Delete] " + err.Error())
+		return &response.UserDefault{
+			UserID:      userId,
+			Description: constant.DeleteUserMsg.Fail,
+		}, false
+	}
+	return &response.UserDefault{
+		UserID:      userId,
+		Description: constant.DeleteUserMsg.Ok,
+	}, true
+}
 
 /*
 	addition functions
@@ -287,11 +317,12 @@ func DoGetUserInfo(userId string) (*response.UserInfo, bool) {
 
 // isUserExist
 func isUserExist(userID string) bool {
-	count, err := database.MgoUsers.Find(context.Background(), bson.M{
+	var users []User
+	err := database.MgoUsers.Find(context.Background(), bson.M{
 		"uuid": userID,
-	}).Count()
-	if err != nil || count == 0 {
-		log.Logger.Warn("[User] " + err.Error())
+	}).All(&users)
+	if err == mongo.ErrNoDocuments || len(users) == 0 {
+		log.Logger.Warn("[User] cannot find user record")
 		return false
 	}
 	return true
@@ -306,9 +337,10 @@ func isDuplicate(toCheck User) bool {
 		},
 	}).Count()
 	if err != nil || count == 0 {
-		log.Logger.Warn("[User] " + err.Error())
+		log.Logger.Warn("[User] cannot find user record")
 		return false
 	}
+
 	return true
 }
 

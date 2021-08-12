@@ -20,7 +20,7 @@ type UserRegister struct {
 	Major    string `json:"major"`
 }
 
-// UserUpdatePassword define the update password req format
+// UserUpdatePassword define the update password req format 请求更新密码
 type UserUpdatePassword struct {
 	ID          string `json:"id"`
 	OldPassword string `json:"old_password"`
