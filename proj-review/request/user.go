@@ -1,6 +1,12 @@
 package request
 
-// UserLogin define the user login struct
+// CheckDuplicate
+type CheckDuplicate struct {
+	Phone string `json:"phone"`
+	Email string `json:"email"`
+}
+
+//UserLogin define the user login struct
 type UserLogin struct {
 	Phone    string `json:"phone"`
 	Email    string `json:"email"`

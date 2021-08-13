@@ -1,3 +1,12 @@
+POST http://localhost:9001/user/checkInfo
+Content-Type: application/json
+
+{
+  "phone": "13000000011",
+  "email": "robot-1@pqbs.com"
+}
+
+###
 POST http://localhost:9001/user/updateInfo
 Content-Type: application/json
 

@@ -63,6 +63,38 @@ func init() {
 	return
 }
 
+// DoCheckDuplicate
+func DoCheckDuplicate(checkReq *request.CheckDuplicate) (*response.CheckDuplicate, bool) {
+	emailCount, err := database.MgoUsers.Find(context.Background(), bson.M{
+		"email": checkReq.Email,
+	}).Count()
+	if err != nil {
+		log.Logger.Warn("[User Mongo] " + err.Error())
+	}
+	if emailCount > 0 {
+		return &response.CheckDuplicate{
+			Result:      false,
+			Description: "email already exist.",
+		}, false
+	}
+	phoneCount, err := database.MgoUsers.Find(context.Background(), bson.M{
+		"phone": checkReq.Phone,
+	}).Count()
+	if err != nil {
+		log.Logger.Warn("[User Mongo] " + err.Error())
+	}
+	if phoneCount > 0 {
+		return &response.CheckDuplicate{
+			Result:      false,
+			Description: "phone already exist.",
+		}, false
+	}
+	return &response.CheckDuplicate{
+		Result:      true,
+		Description: "ok",
+	}, true
+}
+
 // DoUserRegister
 func DoUserRegister(registerReq *request.UserRegister) (*response.UserDefault, bool) {
 	newUser := User{

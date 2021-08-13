@@ -7,6 +7,7 @@ import (
 
 func init() {
 	// 用户登录 & 注册路由
+	beego.Router("/user/checkInfo", &controllers.UserController{}, "post:CheckDuplicate")
 	beego.Router("/user/register", &controllers.UserController{}, "post:UserRegister")
 	beego.Router("/user/login", &controllers.UserController{}, "post:UserLogin")
 	// todo: 用户退出登陆操作

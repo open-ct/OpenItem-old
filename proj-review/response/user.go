@@ -34,3 +34,9 @@ type LoginResponse struct {
 	Token       string   `json:"token"`
 	Description string   `json:"description"`
 }
+
+// CheckDuplicate
+type CheckDuplicate struct {
+	Result      bool   `json:"result"`
+	Description string `json:"description"`
+}

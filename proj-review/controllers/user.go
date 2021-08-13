@@ -32,6 +32,39 @@ func (u *UserController) respondJson(httpCode int, opCode int, message string, d
 	u.ServeJSON()
 }
 
+// CheckDuplicate
+func (u *UserController) CheckDuplicate() {
+	checkReq := new(request.CheckDuplicate)
+	err := unmarshalBody(u.Ctx.Input.RequestBody, checkReq)
+	if err != nil {
+		log.Logger.Warn("[Register] " + err.Error())
+		u.respondJson(
+			http.StatusOK,
+			constant.FAIL,
+			constant.BasicMsg.RegisterFail,
+			checkReq,
+		)
+		return
+	}
+	checkResp, ok := models.DoCheckDuplicate(checkReq)
+	if !ok {
+		u.respondJson(
+			http.StatusOK,
+			constant.FAIL,
+			constant.BasicMsg.RegisterFail,
+			checkResp,
+		)
+	} else {
+		u.respondJson(
+			http.StatusOK,
+			constant.SUCCESS,
+			"ok", // todo
+			checkResp,
+		)
+	}
+	return
+}
+
 // UserRegister
 func (u *UserController) UserRegister() {
 	registerReq := new(request.UserRegister)
