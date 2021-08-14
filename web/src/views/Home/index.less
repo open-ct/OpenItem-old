@@ -5,7 +5,7 @@
         display: flex;
         justify-content: space-between;
         align-items: flex-start;
-        padding: 0rem 1rem;
+        padding: 0rem 1.44rem;
         height: .58rem;
         background: #1890FF;
         box-sizing: border-box;
@@ -53,7 +53,7 @@
                 height: .64rem;
                 > .ant-menu{
                     background-color: #1890FF;  
-                    height: .64rem;    
+                    height: .64rem;   
                     > .ant-menu-item{
                         line-height: .64rem;
                         > span{
@@ -73,6 +73,9 @@
                         &:hover::after{
                             border-top: .02rem solid white;
                         }
+                    }
+                    > .ant-menu-item-selected::after{                    
+                        border-top: .02rem solid white;
                     }
                 }
             }

@@ -1,8 +1,14 @@
 /*
  * @Author: your name
- * @Date: 2021-07-31 16:58:43
- * @LastEditTime: 2021-07-31 17:02:55
+ * @Date: 2021-08-13 01:12:32
+ * @LastEditTime: 2021-08-13 01:23:29
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
- * @FilePath: \OpenItem\web-client\src\store\index.js
+ * @FilePath: \OpenItem\web\src\store\user\index.js
  */
+import { createStore } from 'redux';
+import reducer from './reducer';
+
+const store = createStore(reducer);
+
+export default store;

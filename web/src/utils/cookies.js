@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-08-12 00:25:43
- * @LastEditTime: 2021-08-12 00:31:18
+ * @LastEditTime: 2021-08-12 23:18:32
  * @LastEditors: Please set LastEditors
  * @Description: 操作Cookie
  * @FilePath: \OpenItem\web\src\utils\cookies.js
@@ -32,11 +32,11 @@ function setCookie(name,value){
  * @return {*}
  */
 function getCookie(name){
-    var name = name + "=";
+    name = name + "=";
     var ca = document.cookie.split(';');
     for(var i=0; i<ca.length; i++) {
         var c = ca[i].trim();
-        if (c.indexOf(name)==0) { return c.substring(name.length,c.length); }
+        if (c.indexOf(name)===0) { return c.substring(name.length,c.length); }
     }
     return null;
 }

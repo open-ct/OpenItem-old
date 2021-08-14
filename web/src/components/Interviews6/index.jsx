@@ -625,7 +625,7 @@ export default class index extends Component {
                 )
             }]
         }],
-        identity:'teacher',
+        identity:['expert','assistant','teacher'][this.randomNum(0,2)],
         reviewResultsVisible:false,
         modifyRecordVisible:false
     }
@@ -633,6 +633,22 @@ export default class index extends Component {
     downLoadFile = ()=>{
         message.success('下载成功')
     }
+
+    componentDidMount = ()=>{
+        message.success('当前身份：'+this.state.identity)
+    }
+
+    randomNum(minNum,maxNum){ 
+        switch(arguments.length){ 
+            case 1: 
+                return parseInt(Math.random()*minNum+1,10); 
+            case 2: 
+                return parseInt(Math.random()*(maxNum-minNum+1)+minNum,10); 
+            default: 
+                return 0; 
+        } 
+    } 
+
 
     render() {
         return (

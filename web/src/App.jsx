@@ -1,14 +1,14 @@
 /*
  * @Author: your name
  * @Date: 2021-07-31 16:42:56
- * @LastEditTime: 2021-08-12 06:13:59
+ * @LastEditTime: 2021-08-14 04:24:11
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \OpenItem\web-client\src\App.js
  */
 import './App.less';
 import React, { Component } from 'react'
-import {Switch,Route,Redirect,BrowserRouter as Router} from 'react-router-dom'
+import {Switch,Route,Redirect,HashRouter as Router} from 'react-router-dom'
 import Login from './views/Login'
 import Home from './views/Home'
 import NotFound from './views/errors/404'

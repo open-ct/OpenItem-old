@@ -9,6 +9,7 @@
     "antd": "^4.16.9",
     "axios": "^0.21.1",
     "customize-cra": "^1.0.0",
+    "http-proxy-middleware": "^2.0.1",
     "less": "^4.1.1",
     "less-loader": "5.0.0",
     "prop-types": "^15.7.2",
@@ -45,5 +46,7 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "homepage":".",
+  "proxy": "http://49.232.73.36:8081"
 }

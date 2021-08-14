@@ -1,7 +1,9 @@
 import React, { Component} from 'react'
 import DocumentTitle from 'react-document-title'
-import { Button, Table, Tag, Space, Pagination, Menu, Layout, Dropdown, Input } from 'antd';
+import { Button, Table, Tag, Space, Pagination, Menu, Layout, Dropdown, Input, Spin } from 'antd';
 import { DownOutlined, PlusCircleOutlined } from '@ant-design/icons';
+import request from '../../utils/request'
+import store from '../../store'
 import './index.less'
 
 const { Header, Footer, Content } = Layout;
@@ -17,6 +19,10 @@ export default class index extends Component {
           pageSizeOptions:[5,10,15,20],
           showSizeChanger:true,
           total:50
+        },
+        loadingState:{
+          show:false,
+          title:'加载中...'
         }
     }
     columns = [
@@ -128,6 +134,37 @@ export default class index extends Component {
     seekProjectManagement = ()=>{
       this.props.history.push('/home/project-management')
     }
+
+    getProjectList = ()=>{
+      this.setState({
+        loadingState:{
+          show:true,
+          title:'数据加载中...'
+        }
+      })
+      request({ method:'GET', url:`/proj/userAssign?user_id=${store.getState().userInfo.user_id}`}).then(res=>{
+        console.log('res',res)
+        this.setState({
+          loadingState:{
+            show:false,
+            title:''
+          }
+        })
+      }).catch(err=>{
+        console.log('err',err)
+        this.setState({
+          loadingState:{
+            show:false,
+            title:''
+          }
+        })
+      })
+    }
+
+    // componentDidMount = ()=>{
+    //   this.getProjectList()
+    // }
+
     render() {
         return (
             <DocumentTitle title="命题与题库系统-待处理任务">
@@ -144,14 +181,16 @@ export default class index extends Component {
                     </div>
                   </Header>
                   <Content>
-                    <Table 
-                      columns={this.columns} 
-                      dataSource={this.state.data} 
-                      rowSelection={{}} 
-                      size="small" 
-                      pagination={false}
-                      scroll={{ y: 'calc(100vh - 2.2rem)'}}
-                    />
+                    <Spin spinning={this.state.loadingState.show} size="large" tip={this.state.loadingState.title}>
+                      <Table 
+                        columns={this.columns} 
+                        dataSource={this.state.data} 
+                        rowSelection={{}} 
+                        size="small" 
+                        pagination={false}
+                        scroll={{ y: 'calc(100vh - 2.2rem)'}}
+                      />
+                    </Spin>
                   </Content>
                   <Footer>
                     <Pagination
