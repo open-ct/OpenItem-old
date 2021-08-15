@@ -54,7 +54,7 @@ func GenApiDoc() {
 
 	result := markdownToHTML(string(res))
 	// 写入到文件
-	dstFile, err := os.Create("views/apidoc.html")
+	dstFile, err := os.Create("views/api.html")
 	if err != nil {
 		log.Logger.Warn("Build API docs error: " + err.Error())
 		return

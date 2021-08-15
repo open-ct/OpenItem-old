@@ -19,8 +19,12 @@ func (c *MainController) Get() {
 	c.TplName = "index.tpl"
 }
 
-func (c *MainController) ApiDoc() {
+func (c *MainController) Doc() {
 	c.TplName = "api.html"
+}
+
+func (c *MainController) Demo() {
+	c.Ctx.Output.Download("tests/api-test.http", "api.http")
 }
 
 // universal functions in controller
