@@ -9,20 +9,21 @@
 - [ ] /user/resetPwd：重置密码；
 - [ ] /user/logout：退出登录；
 - [x] /user/delete：删除用户；
-- [ ] /user/search：搜索用户；
+- [x] /user/search：搜索用户；
  
 # File
 - [x] /file/upload：上传文件
 - [x] /file/download：使用id下载文件
 - [x] /file/getInfo：获取文件记录信息；
 - [x] /file/delete：删除文件记录（不在磁盘上删除）
-- [ ] /file/search：文件搜索；
+- [x] /file/search：文件搜索；
 
 # Project
 - [x] /proj/createEmpty：创建空项目（创建项目管理员关联）；
 - [ ] /proj/createTemplate：创建模板项目（7个标准流程）
 - [ ] /proj/set：设置项目信息；
 - [ ] /proj/makeAssign：创建项目人员分配角色；
+- [ ] /proj/makeGroupAssigns：批量进行人员分配；
 - [ ] /proj/changeAssign：更改项目人员分配角色；
 - [x] /proj/userAssign：获取某个用户参与的项目角色；
 - [x] /proj/projectAssign：获取某个项目的人员分配信息

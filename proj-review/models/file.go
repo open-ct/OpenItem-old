@@ -117,10 +117,55 @@ func DoGetFileInfo(fileUuid string) (*response.FindFile, bool) {
 	}, true
 }
 
-// todo: 文件搜素
+// DoSearchFile
 func DoSearchFile(searchReq *request.SearchFile) (*response.SearchFiles, bool) {
 	// operations
-	return nil, true
+	var files []FileItem
+	filter := bson.M{}
+	if searchReq.FileName != "" {
+		filter["name"] = searchReq.FileName
+	}
+	if searchReq.Type != "" {
+		filter["type"] = searchReq.Type
+	}
+	if searchReq.Tags != nil {
+		filter["tag"] = bson.M{
+			"$all": searchReq.Tags,
+		}
+	}
+	err := database.MgoFileRecords.Find(context.Background(), filter).All(&files)
+	if err != nil {
+		log.Logger.Error("[Mongo Search File] " + err.Error())
+		return &response.SearchFiles{
+			SearchCount: 0,
+			Description: constant.FileMsg.Fail,
+		}, false
+	}
+	var fileLists []response.FileItem
+	for _, file := range files {
+		var fileOwner User
+		fileItem := response.FileItem{
+			FileName:        file.Name,
+			FileID:          file.Uuid,
+			FilePath:        file.Path,
+			FileType:        file.Type,
+			FileTags:        file.Tags,
+			FileDescription: file.Description,
+		}
+		err := database.MgoUsers.Find(context.Background(), bson.M{"uuid": file.Owner}).One(&fileOwner)
+		if err != nil {
+			log.Logger.Warn("[File owner] " + err.Error())
+			fileItem.FileOwner = "unknown user"
+		} else {
+			fileItem.FileOwner = fileOwner.Name + "(" + fileOwner.Email + ")"
+		}
+		fileLists = append(fileLists, fileItem)
+	}
+	return &response.SearchFiles{
+		SearchCount: len(files),
+		Results:     fileLists,
+		Description: "ok",
+	}, true
 }
 
 // DoDeleteFile

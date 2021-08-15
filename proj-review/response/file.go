@@ -24,11 +24,11 @@ type FindFile struct {
 // SearchFiles
 type SearchFiles struct {
 	SearchCount int        `json:"search_count"`
-	Results     []fileItem `json:"results"`
+	Results     []FileItem `json:"results"`
 	Description string     `json:"description"`
 }
 
-type fileItem struct {
+type FileItem struct {
 	FileID          string   `json:"file_id"`
 	FileName        string   `json:"file_name"`
 	FileType        string   `json:"file_type"`

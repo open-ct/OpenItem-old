@@ -3,7 +3,7 @@ Content-Type: application/json
 
 {
   "phone": "13000000011",
-  "email": "robot-1@pqbs.com"
+  "email": "robot-5@pqbs.com"
 }
 
 ###
@@ -47,22 +47,18 @@ Content-Type: application/json
 
 {
   "email": "robot-1@pqbs.com",
-  "password": "abcdef"
+  "password": "123456"
 }
-
-<> 2021-08-12T113532.200.json
-<> 2021-08-12T113428.200.html
-<> 2021-08-12T113339.200.html
 
 ###
 POST http://localhost:9001/user/register
 Content-Type: application/json
 
 {
-  "name": "robot-0",
+  "name": "robot-2",
   "password": "123456",
-  "email": "robot-0@pqbs.com",
-  "phone": "13000000000",
+  "email": "robot-2@pqbs.com",
+  "phone": "13000000002",
   "gender": false,
   "degree": "robot",
   "position": "robot-man",
@@ -70,6 +66,13 @@ Content-Type: application/json
   "major": "test"
 }
 
-<> 2021-08-12T113524.200.json
-<> 2021-08-12T113507.200.html
 
+###
+POST http://localhost:9001/user/search
+Content-Type: application/json
+
+{
+  "name": "robot-3",
+  "employer": "developer",
+  "major": "test"
+}

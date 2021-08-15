@@ -24,7 +24,11 @@ type UserInfo struct {
 	Description string `json:"description"`
 }
 
-type userInfo struct {
+// UserList
+type UserList struct {
+	UserList    []UserInfo `json:"user_list"`
+	Count       int        `json:"count"`
+	Description string     `json:"description"`
 }
 
 // LoginResponse defines login result response

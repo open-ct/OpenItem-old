@@ -35,6 +35,7 @@ func (f *FileController) respondJson(httpCode int, opCode int, message string, d
 }
 
 // UploadFile (need to record the user id)
+// todo : 解析 tags/description 表单条目, 确定文件tag
 func (f *FileController) UploadFile() {
 	// 获取前端上传文件
 	file, fileHeader, err := f.GetFile("filename")
@@ -148,7 +149,20 @@ func (f *FileController) GetFileInfo() {
 
 // todo: 文件搜素
 func (f *FileController) SearchFile() {
-
+	searchReq := new(request.SearchFile)
+	err := unmarshalBody(f.Ctx.Input.RequestBody, searchReq)
+	if err != nil {
+		log.Logger.Warn("[File Search] " + err.Error())
+		f.respondJson(http.StatusOK, constant.FAIL, "参数错误", searchReq)
+		return
+	}
+	searchResp, ok := models.DoSearchFile(searchReq)
+	if !ok {
+		f.respondJson(http.StatusOK, constant.FAIL, "搜素出错", searchResp)
+	} else {
+		f.respondJson(http.StatusOK, constant.SUCCESS, "ok", searchResp)
+	}
+	return
 }
 
 // DeleteFile todo:

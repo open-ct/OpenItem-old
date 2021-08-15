@@ -49,7 +49,13 @@ type UserUpdateInfo struct {
 // GetUserInfo: just using http-get with url params
 // UserLogout: just using http-get with url params
 
-// todo:
-// UserSearch define search users
+// UserSearch define search users struct
 type UserSearch struct {
+	Phone    string `json:"phone"`
+	Email    string `json:"email"`
+	Name     string `json:"name"`
+	Degree   string `json:"degree"`
+	Position string `json:"position"`
+	Employer string `json:"employer"`
+	Major    string `json:"major"`
 }

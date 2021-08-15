@@ -15,11 +15,9 @@ type UploadFile struct {
 
 // SearchFile define the search request format, todo
 type SearchFile struct {
-	FileName    string   `json:"file_name"`
-	Type        string   `json:"type"`
-	Description string   `json:"description"`
-	Tags        []string `json:"tags"`
-	KeyWords    []string `json:"key_words"`
+	FileName string   `json:"file_name"`
+	Type     string   `json:"type"`
+	Tags     []string `json:"tags"`
 }
 
 // GetFileInfo: just using http-get with url params

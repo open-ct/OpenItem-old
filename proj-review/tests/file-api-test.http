@@ -1,3 +1,12 @@
+POST http://localhost:9001/file/search
+Content-Type: application/json
+
+{
+  "file_name": "雷达图.png",
+  "type": ".png"
+}
+
+###
 GET http://localhost:9001/file/delete?file_id=9094ce1c-e402-4e07-a363-a3383a471010
 Accept: application/json
 

@@ -238,7 +238,25 @@ func (u *UserController) UpdateUserInfo() {
 
 // SearchUser todo:
 func (u *UserController) SearchUser() {
-
+	searchReq := new(request.UserSearch)
+	err := unmarshalBody(u.Ctx.Input.RequestBody, searchReq)
+	if err != nil {
+		log.Logger.Warn("[Update] " + err.Error())
+		u.respondJson(
+			http.StatusOK,
+			constant.FAIL,
+			"搜索参数错误, 请重试", // todo
+			searchReq,
+		)
+		return
+	}
+	searchResp, ok := models.DoSearchUsers(searchReq)
+	if !ok {
+		u.respondJson(http.StatusOK, constant.FAIL, "出现错误", searchResp)
+	} else {
+		u.respondJson(http.StatusOK, constant.SUCCESS, "ok", searchResp)
+	}
+	return
 }
 
 // DeleteUser

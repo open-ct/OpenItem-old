@@ -317,6 +317,61 @@ func DoGetUserInfo(userId string) (*response.UserInfo, bool) {
 }
 
 // DoSearchUsers
+func DoSearchUsers(searchReq *request.UserSearch) (*response.UserList, bool) {
+	var userList []User
+	filter := bson.M{}
+	if searchReq.Email != "" {
+		filter["email"] = searchReq.Email
+	}
+	if searchReq.Phone != "" {
+		filter["phone"] = searchReq.Phone
+	}
+	if searchReq.Name != "" {
+		filter["name"] = searchReq.Name
+	}
+	if searchReq.Major != "" {
+		filter["major"] = searchReq.Major
+	}
+	if searchReq.Position != "" {
+		filter["position"] = searchReq.Position
+	}
+	if searchReq.Degree != "" {
+		filter["degree"] = searchReq.Degree
+	}
+	if searchReq.Employer != "" {
+		filter["employer"] = searchReq.Employer
+	}
+	err := database.MgoUsers.Find(context.Background(), filter).All(&userList)
+	if err != nil {
+		return &response.UserList{
+			Count:       0,
+			Description: constant.GetInfoMsg.Fail,
+		}, false
+	}
+	var searchRes []response.UserInfo
+	for _, user := range userList {
+		userItem := response.UserInfo{
+			UserID:   user.Uuid,
+			Name:     user.Name,
+			Email:    user.Email,
+			Phone:    user.Phone,
+			Gender:   user.Gender,
+			Degree:   user.Degree,
+			Position: user.Position,
+			Major:    user.Major,
+			Employer: user.Employer,
+		}
+		searchRes = append(searchRes, userItem)
+	}
+	//
+
+	return &response.UserList{
+		Count:       len(userList),
+		UserList:    searchRes,
+		Description: "ok",
+	}, true
+
+}
 
 // DoDeleteUser
 func DoDeleteUser(userId string) (*response.UserDefault, bool) {

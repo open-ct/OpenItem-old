@@ -19,7 +19,7 @@ func (c *MainController) Get() {
 	c.TplName = "index.tpl"
 }
 
-func (c *MainController) Doc() {
+func (c *MainController) List() {
 	c.TplName = "api.html"
 }
 
@@ -48,6 +48,10 @@ func parseUserToken(token string) (string, error) {
 	if err != nil {
 		return "", err
 	}
+	//
+	fmt.Println("recv user: ", tokenData.UserID)
+	fmt.Println("recv token time from ", tokenData.IssuedAt, " to ", tokenData.ExpiresAt)
+	//
 	return tokenData.UserID, nil
 }
 
