@@ -1,6 +1,6 @@
 # User 用户操作接口演示
 ### 注册前信息检查
-POST http://localhost:9001/user/checkInfo
+POST http://49.232.73.36:8081/user/checkInfo
 Content-Type: application/json
 
 {
@@ -9,7 +9,7 @@ Content-Type: application/json
 }
 
 ### 更新用户信息
-POST http://localhost:9001/user/updateInfo
+POST http://49.232.73.36:8081/user/updateInfo
 Content-Type: application/json
 
 {
@@ -25,15 +25,15 @@ Content-Type: application/json
 }
 
 ### 删除用户
-GET http://localhost:9001/user/delete?user_id=c2dbc93b-f1c0-43b8-b4fc-6ecea7f52591
+GET http://49.232.73.36:8081/user/delete?user_id=c2dbc93b-f1c0-43b8-b4fc-6ecea7f52591
 Accept: application/json
 
 ### 获取用户信息
-GET http://localhost:9001/user/getInfo?user_id=c993aa3c-ade9-4d99-a56b-6a5b472d9dba
+GET http://49.232.73.36:8081/user/getInfo?user_id=c993aa3c-ade9-4d99-a56b-6a5b472d9dba
 Accept: application/json
 
 ### 用户搜索
-POST http://localhost:9001/user/search
+POST http://49.232.73.36:8081/user/search
 Content-Type: application/json
 
 {
@@ -47,7 +47,7 @@ Content-Type: application/json
 }
 
 ### 更新用户密码
-POST http://localhost:9001/user/updatePwd
+POST http://49.232.73.36:8081/user/updatePwd
 Content-Type: application/json
 
 {
@@ -58,7 +58,7 @@ Content-Type: application/json
 
 
 ### 用户登录
-POST http://localhost:9001/user/login
+POST http://49.232.73.36:8081/user/login
 Content-Type: application/json
 
 {
@@ -67,7 +67,7 @@ Content-Type: application/json
 }
 
 ### 用户注册
-POST http://localhost:9001/user/register
+POST http://49.232.73.36:8081/user/register
 Content-Type: application/json
 
 {
@@ -84,11 +84,11 @@ Content-Type: application/json
 ###
 # File 文件操作
 ### 删除文件（根据id）
-GET http://localhost:9001/file/delete?file_id=9094ce1c-e402-4e07-a363-a3383a471010
+GET http://49.232.73.36:8081/file/delete?file_id=9094ce1c-e402-4e07-a363-a3383a471010
 Accept: application/json
 
 ### 文件搜素
-POST http://localhost:9001/file/search
+POST http://49.232.73.36:8081/file/search
 Content-Type: application/json
 
 {
@@ -98,15 +98,15 @@ Content-Type: application/json
 }
 
 ### 获取文件信息
-GET http://localhost:9001/file/getInfo?file_id=9094ce1c-e402-4e07-a363-a3383a471010
+GET http://49.232.73.36:8081/file/getInfo?file_id=9094ce1c-e402-4e07-a363-a3383a471010
 Accept: application/json
 
 ### 下载文件（id）
-GET http://localhost:9001/file/download?file_id=9094ce1c-e402-4e07-a363-a3383a471010
+GET http://49.232.73.36:8081/file/download?file_id=9094ce1c-e402-4e07-a363-a3383a471010
 Accept: application/json
 
 ### 上传文件（form  形式）
-POST http://localhost:9001/file/upload
+POST http://49.232.73.36:8081/file/upload
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
 --WebAppBoundary
@@ -117,19 +117,19 @@ Content-Disposition: form-data; name="field-name"; filename="file.txt"
 ###
 # Project 项目操作接口
 ### 获取指定项目的人员安排
-GET http://localhost:9001/proj/projectAssign?proj_id=12ef6101-e47f-41fe-814f-b13a922ece8d
+GET http://49.232.73.36:8081/proj/projectAssign?proj_id=0fad415b-5e78-4d53-8d25-163fbf26e47b
 Accept: application/json
 
 ### 获取指定用户的项目角色分配
-GET http://localhost:9001/proj/userAssign?user_id=c993aa3c-ade9-4d99-a56b-6a5b472d9dba
+GET http://49.232.73.36:8081/proj/userAssign?user_id=c993aa3c-ade9-4d99-a56b-6a5b472d9dba
 Accept: application/json
 
 ### 获取项目信息（id）
-GET http://localhost:9001/proj/getInfo?proj_id=12ef6101-e47f-41fe-814f-b13a922ece8d
+GET http://49.232.73.36:8081/proj/getInfo?proj_id=c993aa3c-ade9-4d99-a56b-6a5b472d9dba
 Accept: application/json
 
 ### 创建空项目
-POST http://localhost:9001/proj/createEmpty
+POST http://49.232.73.36:8081/proj/createEmpty
 Content-Type: application/json
 Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYzk5M2FhM2MtYWRlOS00ZDk5LWE1NmItNmE1YjQ3MmQ5ZGJhIiwiZXhwIjoxNjI5MzY0OTI0LCJpYXQiOjE2Mjg3NjAxMjQsImlzcyI6InJvYm90LTFAcHFicy5jb20ifQ.5ifVw1DyoXsxQL092qdMoShFMcvkC3qjM2ZBThiQi7s
 
@@ -142,6 +142,32 @@ Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYzk5M2FhM2MtYWRlOS00
   "subjects": ["go", "html"],
   "summary": "speed up..."
 }
+
+### 更改某个人的项目角色分配（需要token）
+POST http://49.232.73.36:8081/proj/changeAssign
+Content-Type: application/json
+Token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYzk5M2FhM2MtYWRlOS00ZDk5LWE1NmItNmE1YjQ3MmQ5ZGJhIiwiZXhwIjoxNjI5NzE2MDUxLCJpYXQiOjE2MjkxMTEyNTEsImlzcyI6InJvYm90LTFAcHFicy5jb20ifQ.D1jdCkOv56qn_BQaDym_Omg2LkHj7s6PjjTYpKstRS4
+
+{
+"assignment_id": "a33cbbc9-5497-48df-9d95-f3f25f270af9",
+"new_role": 1
+}
+
+### 创建一条人员分配（需要token）
+POST http://49.232.73.36:8081/proj/makeAssign
+Content-Type: application/json
+Token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYzk5M2FhM2MtYWRlOS00ZDk5LWE1NmItNmE1YjQ3MmQ5ZGJhIiwiZXhwIjoxNjI5NzE2MDUxLCJpYXQiOjE2MjkxMTEyNTEsImlzcyI6InJvYm90LTFAcHFicy5jb20ifQ.D1jdCkOv56qn_BQaDym_Omg2LkHj7s6PjjTYpKstRS4
+
+{
+  "user_id": "1c00da28-0c1c-42a2-bff2-b00ed5d8ac52",
+  "project_id": "17dc1bf8-7b4d-42e8-8b53-4971aa65cf0d",
+  "role": 1
+}
+
+### 删除一条分配记录
+GET http://49.232.73.36:8081/proj/removeAssign?assignment_id=b16d1aa9-8572-4152-871d-2a5b06c0e2f0
+Accept: application/json
+
 ###
 # 题库系统接口（未上线）
 

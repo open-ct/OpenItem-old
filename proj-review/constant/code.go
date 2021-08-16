@@ -2,11 +2,5 @@ package constant
 
 var (
 	SUCCESS = 1000
-
-	FAIL       = 2000
-	MYSQL_FAIL = 2001
-	MONGO_FAIL = 2002
-
-	PERMISSION_ACCESS = 3000
-	PERMISSION_DENIED = 3001
+	FAIL    = 2000
 )
