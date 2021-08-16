@@ -47,7 +47,7 @@ Content-Type: application/json
 
 {
   "email": "robot-1@pqbs.com",
-  "password": "123456"
+  "password": "abcdef"
 }
 
 ###

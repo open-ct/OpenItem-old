@@ -349,6 +349,7 @@ func DoSearchUsers(searchReq *request.UserSearch) (*response.UserList, bool) {
 		}, false
 	}
 	var searchRes []response.UserInfo
+	// convert to response type
 	for _, user := range userList {
 		userItem := response.UserInfo{
 			UserID:   user.Uuid,

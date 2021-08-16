@@ -33,14 +33,14 @@ func (p *ProjectController) respondJson(httpCode int, opCode int, message string
 }
 
 /*
-	Projects Basic operations
+	Projects
 */
 // CreateNewProject
 func (p *ProjectController) CreateNewProject() {
 	createReq := new(request.CreateProject)
 	err := unmarshalBody(p.Ctx.Input.RequestBody, createReq)
 	if err != nil {
-		log.Logger.Warn("[Login] " + err.Error())
+		log.Logger.Warn("[Project create] " + err.Error())
 		p.respondJson(
 			http.StatusOK,
 			constant.FAIL,
@@ -83,6 +83,7 @@ func (p *ProjectController) CreateNewProject() {
 // CreateTemplateProject
 
 // GetProjectInfo
+// get a project info by UUID
 func (p *ProjectController) GetProjectInfo() {
 	pid := p.GetString("proj_id")
 	if pid == "" {
@@ -151,6 +152,72 @@ func (p *ProjectController) GetProjectAssignments() {
 		p.respondJson(http.StatusOK, constant.FAIL, constant.BasicMsg.GetInfoFail, assigns)
 	} else {
 		p.respondJson(http.StatusOK, constant.SUCCESS, constant.BasicMsg.GetInfoSuccess, assigns)
+	}
+	return
+}
+
+// MakeNewAssignment
+func (p *ProjectController) MakeNewAssignment() {
+	createRequest := new(request.MakeAssignment)
+	err := unmarshalBody(p.Ctx.Input.RequestBody, createRequest)
+	if err != nil {
+		log.Logger.Warn("[Assignment] " + err.Error())
+		p.respondJson(http.StatusOK, constant.FAIL, "invalid params", createRequest)
+		return
+	}
+	// get operator id from token
+	operater, err := parseUserToken(p.Ctx.Request.Header["Token"][0])
+	if err != nil {
+		p.respondJson(http.StatusOK, constant.FAIL, "need user token", createRequest)
+		return
+	}
+	createRequest.Operator = operater
+	resp, ok := models.DoMakeAssignment(createRequest)
+	if !ok {
+		p.respondJson(http.StatusOK, constant.FAIL, "fail", resp)
+	} else {
+		p.respondJson(http.StatusOK, constant.SUCCESS, "ok", resp)
+	}
+	return
+}
+
+// ChangeAssignment
+func (p *ProjectController) ChangeAssignment() {
+	changeReq := new(request.ChangeAssignment)
+	err := unmarshalBody(p.Ctx.Input.RequestBody, changeReq)
+	if err != nil {
+		log.Logger.Warn("[Assignment] " + err.Error())
+		p.respondJson(http.StatusOK, constant.FAIL, "invalid params", changeReq)
+		return
+	}
+	// get operator id from token
+	operater, err := parseUserToken(p.Ctx.Request.Header["Token"][0])
+	if err != nil {
+		p.respondJson(http.StatusOK, constant.FAIL, "need user token", changeReq)
+		return
+	}
+	changeReq.Operator = operater
+	changeResp, ok := models.DoChangeAssignment(changeReq)
+	if !ok {
+		p.respondJson(http.StatusOK, constant.FAIL, "fail", changeResp)
+	} else {
+		p.respondJson(http.StatusOK, constant.SUCCESS, "ok", changeResp)
+	}
+	return
+}
+
+// RemoveAssignment
+func (p *ProjectController) RemoveAssignment() {
+	aid := p.GetString("assignment_id")
+	if aid == "" {
+		log.Logger.Warn("[Assignment Remove] params error")
+		p.respondJson(http.StatusOK, constant.FAIL, "invalid params", aid)
+	}
+	resp, ok := models.DoRemoveAssignment(aid)
+	if !ok {
+		p.respondJson(http.StatusOK, constant.FAIL, "delete failed", resp)
+	} else {
+		p.respondJson(http.StatusOK, constant.SUCCESS, "ok", resp)
 	}
 	return
 }

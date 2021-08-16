@@ -27,6 +27,8 @@ type Project struct {
 	Steps              []Step             `json:"steps" bson:"steps"`
 }
 
+// project status: 0-ready, 1-processing, 2-stopped, 3-terminated
+
 // 项目团队
 type ProjectGroup struct {
 	Admins     []string `json:"admin" bson:"admin"`
