@@ -1,5 +1,5 @@
 
-module warehouse
+module review
 
 go 1.15
 

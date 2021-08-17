@@ -26,4 +26,5 @@ vendor
 # temp upload file & exec file
 proj-review/static/files/*
 proj-review/proj-review
+review/static/files/*
 
