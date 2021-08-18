@@ -8,9 +8,8 @@
 package routers
 
 import (
-	"review/controllers"
-
 	beego "github.com/beego/beego/v2/server/web"
+	"review/controllers"
 )
 
 func init() {
