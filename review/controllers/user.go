@@ -1,8 +1,10 @@
 package controllers
 
 import (
-	"encoding/json"
+	"net/http"
 	"review/models"
+	"review/request"
+	"review/response"
 
 	beego "github.com/beego/beego/v2/server/web"
 )
@@ -12,107 +14,150 @@ type UserController struct {
 	beego.Controller
 }
 
-// @Title CreateUser
-// @Description create users
-// @Param	body		body 	models.User	true		"body for user content"
-// @Success 200 {int} models.User.Id
-// @Failure 403 body is empty
-// @router / [post]
-func (u *UserController) Post() {
-	var user models.User
-	json.Unmarshal(u.Ctx.Input.RequestBody, &user)
-	uid := models.AddUser(user)
-	u.Data["json"] = map[string]string{"uid": uid}
+// respondJson: do response for user operations
+func (u *UserController) respondJson(httpCode int, opCode int, message string, data ...interface{}) {
+	u.Ctx.Output.SetStatus(httpCode)
+	var d interface{}
+	if len(data) == 1 {
+		d = data[0]
+	} else {
+		d = data
+	}
+	resp := response.GenResponse(opCode, message, d)
+	u.Data["json"] = resp
 	u.ServeJSON()
+}
+
+// @Title UserRegister
+// @Description create a new user: 用户注册部分, 邮箱和手机号不能和已注册用户重复
+// @Param   json body request.UserRegister true "new users information for register"
+// @Success 200 {object} response.Default
+// @Failure 400 "parse body failed"
+// @router / [post]
+func (u *UserController) UserRegister() {
+	var user request.UserRegister
+	err := unmarshalBody(u.Ctx.Input.RequestBody, &user)
+	if err != nil {
+		u.respondJson(http.StatusBadRequest, response.FAIL, "Parse Body Failed")
+		return
+	}
+	uid, code := models.AddUser(&user)
+	u.respondJson(http.StatusOK, code, "", uid)
+	return
 }
 
 // @Title GetAll
 // @Description get all Users
-// @Success 200 {object} models.User
+// @Success 200 {array} []models.User
 // @router / [get]
 func (u *UserController) GetAll() {
-	users := models.GetAllUsers()
-	u.Data["json"] = users
-	u.ServeJSON()
+	users, code := models.GetProjectUsers()
+	u.respondJson(http.StatusOK, code, "", users)
 }
 
-// @Title Get
-// @Description get user by uid
-// @Param	uid		path 	string	true		"The key for staticblock"
-// @Success 200 {object} models.User
-// @Failure 403 :uid is empty
+// @Title GetUser
+// @Description get a user info (profile): 根据用户id获取用户信息 (用户密码不会返回)
+// @Param   toke header string true "user token recived at login"
+// @Param   uid path string true "user uuid"
+// @Success 200 {object} response.Default
+// @Failure 400 "invalid user id"
 // @router /:uid [get]
-func (u *UserController) Get() {
+func (u *UserController) GetUser() {
 	uid := u.GetString(":uid")
-	if uid != "" {
-		user, err := models.GetUser(uid)
-		if err != nil {
-			u.Data["json"] = err.Error()
-		} else {
-			u.Data["json"] = user
-		}
+	if uid == "" {
+		u.respondJson(http.StatusBadRequest, response.FAIL, "invalid user ID")
+		return
 	}
-	u.ServeJSON()
+	user, code := models.GetUser(uid)
+	u.respondJson(http.StatusOK, code, "", user)
 }
 
-// @Title Update
-// @Description update the user
-// @Param	uid		path 	string	true		"The uid you want to update"
-// @Param	body		body 	models.User	true		"body for user content"
-// @Success 200 {object} models.User
-// @Failure 403 :uid is not int
-// @router /:uid [put]
-func (u *UserController) Put() {
-	uid := u.GetString(":uid")
-	if uid != "" {
-		var user models.User
-		json.Unmarshal(u.Ctx.Input.RequestBody, &user)
-		uu, err := models.UpdateUser(uid, &user)
-		if err != nil {
-			u.Data["json"] = err.Error()
-		} else {
-			u.Data["json"] = uu
-		}
+// @Title UpdateUserInfo
+// @Description update user information: 更新用户信息 (主要提交post时必须所有选项都要填写, 没发生更改的应当填充原来的信息数据)
+// @Param   token header string true "user token get at login"
+// @Param   json body request.UserUpdateInfo true "user informaition to updata"
+// @Success 200 {object} response.Default
+// @Failure 400 "parse body error"
+// @router / [put]
+func (u *UserController) UpdateUserInfo() {
+	newInfo := request.UserUpdateInfo{}
+	err := unmarshalBody(u.Ctx.Input.RequestBody, &newInfo)
+	if err != nil {
+		u.respondJson(http.StatusBadRequest, response.FAIL, "Parse body failed")
+		return
 	}
-	u.ServeJSON()
+	res, code := models.UpdateUserInfo(&newInfo)
+	u.respondJson(http.StatusOK, code, "", res)
+	return
 }
 
-// @Title Delete
-// @Description delete the user
-// @Param	uid		path 	string	true		"The uid you want to delete"
-// @Success 200 {string} delete success!
-// @Failure 403 uid is empty
+// @Title UserDelete
+// @Description delete a user by user id: 根据id删除用户记录
+// @Param   token header string true "user token get at login"
+// @Param   uid path string true "user uuid"
+// @Success 200 {object} response.Default
+// @Failure 400 "invalid user uuid"
 // @router /:uid [delete]
-func (u *UserController) Delete() {
+func (u *UserController) UserDelete() {
 	uid := u.GetString(":uid")
-	models.DeleteUser(uid)
-	u.Data["json"] = "delete success!"
-	u.ServeJSON()
-}
-
-// @Title Login
-// @Description Logs user into the system
-// @Param	username		query 	string	true		"The username for login"
-// @Param	password		query 	string	true		"The password for login"
-// @Success 200 {string} login success
-// @Failure 403 user not exist
-// @router /login [get]
-func (u *UserController) Login() {
-	username := u.GetString("username")
-	password := u.GetString("password")
-	if models.Login(username, password) {
-		u.Data["json"] = "login success"
-	} else {
-		u.Data["json"] = "user not exist"
+	if uid == "" {
+		u.respondJson(http.StatusBadRequest, response.FAIL, "invalid user id")
+		return
 	}
-	u.ServeJSON()
+	code := models.DeleteUser(uid)
+	u.respondJson(http.StatusOK, code, "")
+	return
 }
 
-// @Title logout
-// @Description Logs out current logged in user session
-// @Success 200 {string} logout success
+// @Title UserLogin
+// @Description user login: 用户登录(邮箱 & 手机号 二选一即可登录)
+// @Param   json body request.UserLogin true "user email / phone & password"
+// @Success 200 {object} response.Default
+// @Failure 400 "parse body failed"
+// @router /login [post]
+func (u *UserController) UserLogin() {
+	var login request.UserLogin
+	err := unmarshalBody(u.Ctx.Input.RequestBody, &login)
+	if err != nil {
+		u.respondJson(http.StatusBadRequest, response.FAIL, "parse body failed")
+		return
+	}
+	res, token, code := models.UserLogin(&login)
+	u.respondJson(http.StatusOK, code, token, res)
+	return
+}
+
+// @Title UpdateUserPassword
+// @Description update user's password: 更新用户密码 todo: 更新完成后退出当前登录 (注销 token)
+// @Param   token header string true "user token get at login"
+// @Param   json body request.UserUpdatePassword true "old and new password"
+// @Success 200 {object} response.Default
+// @Failure 400 "invalid body data"
+// @router /password [put]
+func (u *UserController) UpdateUserPassword() {
+	var req request.UserUpdatePassword
+	err := unmarshalBody(u.Ctx.Input.RequestBody, &req)
+	if err != nil {
+		u.respondJson(http.StatusBadRequest, response.FAIL, "parse body failed")
+		return
+	}
+	res, code := models.UpdateUserPassword(&req)
+	u.respondJson(http.StatusOK, code, "", res)
+	return
+}
+
+// @Title UserLogout
+// @Description user logout: 用户退出, 注销token的有效期
+// @Param   token header string true "user token get at login"
+// @Success 200 {object} response.Default
+// @Failure 400 "invalid ??"
 // @router /logout [get]
-func (u *UserController) Logout() {
-	u.Data["json"] = "logout success"
-	u.ServeJSON()
+func (u *UserController) UserLogout() {
+	uid, err := parseUserToken(u.Ctx.Request.Header["Token"][0])
+	if err != nil {
+		u.respondJson(http.StatusBadRequest, response.FAIL, "need token", uid)
+		return
+	}
+	u.respondJson(http.StatusOK, response.SUCCESS, "", uid)
+	return
 }

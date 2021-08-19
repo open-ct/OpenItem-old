@@ -1,20 +1,20 @@
 swagger: "2.0"
 info:
-  title: beego Test API
+  title: OpenCT PQBS - api document
   description: beego has a very cool tools to autogenerate documents for your API
   version: 1.0.0
-  termsOfService: http://beego.me/
+  termsOfService: http://
   contact:
-    email: astaxie@gmail.com
+    email: kkoogqw@hotmail.com
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-basePath: /v1
+basePath: /review
 paths:
-  /object/:
+  /demo/:
     get:
       tags:
-      - object
+      - demo
       description: get all objects
       operationId: ObjectController.GetAll
       responses:
@@ -26,7 +26,7 @@ paths:
           description: :objectId is empty
     post:
       tags:
-      - object
+      - demo
       description: create object
       operationId: ObjectController.Create
       parameters:
@@ -41,10 +41,10 @@ paths:
           description: '{string} models.Object.Id'
         "403":
           description: body is empty
-  /object/{objectId}:
+  /demo/{objectId}:
     get:
       tags:
-      - object
+      - demo
       description: find object by objectid
       operationId: ObjectController.Get
       parameters:
@@ -62,7 +62,7 @@ paths:
           description: :objectId is empty
     put:
       tags:
-      - object
+      - demo
       description: update the object
       operationId: ObjectController.Update
       parameters:
@@ -86,7 +86,7 @@ paths:
           description: :objectId is empty
     delete:
       tags:
-      - object
+      - demo
       description: delete the object
       operationId: ObjectController.Delete
       parameters:
@@ -110,115 +110,170 @@ paths:
         "200":
           description: ""
           schema:
-            $ref: '#/definitions/models.User'
+            type: array
+            items:
+              $ref: '#/definitions/models.User'
+    put:
+      tags:
+      - user
+      description: 'update user information: 更新用户信息 (主要提交post时必须所有选项都要填写, 没发生更改的应当填充原来的信息数据)'
+      operationId: UserController.UpdateUserInfo
+      parameters:
+      - in: header
+        name: token
+        description: user token get at login
+        required: true
+        type: string
+      - in: body
+        name: json
+        description: user informaition to updata
+        required: true
+        schema:
+          $ref: '#/definitions/request.UserUpdateInfo'
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/response.Default'
+        "400":
+          description: '"parse body error"'
     post:
       tags:
       - user
-      description: create users
-      operationId: UserController.CreateUser
+      description: 'create a new user: 用户注册部分, 邮箱和手机号不能和已注册用户重复'
+      operationId: UserController.UserRegister
       parameters:
       - in: body
-        name: body
-        description: body for user content
+        name: json
+        description: new users information for register
         required: true
         schema:
-          $ref: '#/definitions/models.User'
+          $ref: '#/definitions/request.UserRegister'
       responses:
         "200":
-          description: '{int} models.User.Id'
-        "403":
-          description: body is empty
+          description: ""
+          schema:
+            $ref: '#/definitions/response.Default'
+        "400":
+          description: '"parse body failed"'
   /user/{uid}:
     get:
       tags:
       - user
-      description: get user by uid
-      operationId: UserController.Get
+      description: 'get a user info (profile): 根据用户id获取用户信息 (用户密码不会返回)'
+      operationId: UserController.GetUser
       parameters:
+      - in: header
+        name: toke
+        description: user token recived at login
+        required: true
+        type: string
       - in: path
         name: uid
-        description: The key for staticblock
+        description: user uuid
         required: true
         type: string
       responses:
         "200":
           description: ""
           schema:
-            $ref: '#/definitions/models.User'
-        "403":
-          description: :uid is empty
-    put:
-      tags:
-      - user
-      description: update the user
-      operationId: UserController.Update
-      parameters:
-      - in: path
-        name: uid
-        description: The uid you want to update
-        required: true
-        type: string
-      - in: body
-        name: body
-        description: body for user content
-        required: true
-        schema:
-          $ref: '#/definitions/models.User'
-      responses:
-        "200":
-          description: ""
-          schema:
-            $ref: '#/definitions/models.User'
-        "403":
-          description: :uid is not int
+            $ref: '#/definitions/response.Default'
+        "400":
+          description: '"invalid user id"'
     delete:
       tags:
       - user
-      description: delete the user
-      operationId: UserController.Delete
+      description: 'delete a user by user id: 根据id删除用户记录'
+      operationId: UserController.UserDelete
       parameters:
+      - in: header
+        name: token
+        description: user token get at login
+        required: true
+        type: string
       - in: path
         name: uid
-        description: The uid you want to delete
+        description: user uuid
         required: true
         type: string
       responses:
         "200":
-          description: '{string} delete success!'
-        "403":
-          description: uid is empty
+          description: ""
+          schema:
+            $ref: '#/definitions/response.Default'
+        "400":
+          description: '"invalid user uuid"'
   /user/login:
-    get:
+    post:
       tags:
       - user
-      description: Logs user into the system
-      operationId: UserController.Login
+      description: 'user login: 用户登录(邮箱 & 手机号 二选一即可登录)'
+      operationId: UserController.UserLogin
       parameters:
-      - in: query
-        name: username
-        description: The username for login
+      - in: body
+        name: json
+        description: user email / phone & password
         required: true
-        type: string
-      - in: query
-        name: password
-        description: The password for login
-        required: true
-        type: string
+        schema:
+          $ref: '#/definitions/request.UserLogin'
       responses:
         "200":
-          description: '{string} login success'
-        "403":
-          description: user not exist
+          description: ""
+          schema:
+            $ref: '#/definitions/response.Default'
+        "400":
+          description: '"parse body failed"'
   /user/logout:
     get:
       tags:
       - user
-      description: Logs out current logged in user session
-      operationId: UserController.logout
+      description: 'user logout: 用户退出, 注销token的有效期'
+      operationId: UserController.UserLogout
+      parameters:
+      - in: header
+        name: token
+        description: user token get at login
+        required: true
+        type: string
       responses:
         "200":
-          description: '{string} logout success'
+          description: ""
+          schema:
+            $ref: '#/definitions/response.Default'
+        "400":
+          description: '"invalid ??"'
+  /user/password:
+    put:
+      tags:
+      - user
+      description: 'update user''s password: 更新用户密码 todo: 更新完成后退出当前登录 (注销 token)'
+      operationId: UserController.UpdateUserPassword
+      parameters:
+      - in: header
+        name: token
+        description: user token get at login
+        required: true
+        type: string
+      - in: body
+        name: json
+        description: old and new password
+        required: true
+        schema:
+          $ref: '#/definitions/request.UserUpdatePassword'
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/response.Default'
+        "400":
+          description: '"invalid body data"'
 definitions:
+  599.0xc0003c4810.false:
+    title: "false"
+    type: object
+  field.DefaultField:
+    title: DefaultField
+    type: object
   models.Object:
     title: Object
     type: object
@@ -230,33 +285,124 @@ definitions:
       Score:
         type: integer
         format: int64
-  models.Profile:
-    title: Profile
-    type: object
-    properties:
-      Address:
-        type: string
-      Age:
-        type: integer
-        format: int64
-      Email:
-        type: string
-      Gender:
-        type: string
   models.User:
     title: User
     type: object
     properties:
-      Id:
+      password:
         type: string
-      Password:
+      profile:
+        $ref: '#/definitions/models.UserProfile'
+      salt:
         type: string
-      Profile:
-        $ref: '#/definitions/models.Profile'
-      Username:
+      uuid:
         type: string
+  models.UserProfile:
+    title: UserProfile
+    type: object
+    properties:
+      age:
+        type: integer
+        format: int64
+      degree:
+        type: string
+      email:
+        type: string
+      employer:
+        type: string
+      gender:
+        type: boolean
+      locaion:
+        type: string
+      major:
+        type: string
+      name:
+        type: string
+      phone:
+        type: string
+      position:
+        type: string
+  request.UserLogin:
+    title: UserLogin
+    type: object
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+      phone:
+        type: string
+  request.UserRegister:
+    title: UserRegister
+    type: object
+    properties:
+      degree:
+        type: string
+      email:
+        type: string
+      employer:
+        type: string
+      gender:
+        type: boolean
+      location:
+        type: string
+      major:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+      phone:
+        type: string
+      position:
+        type: string
+  request.UserUpdateInfo:
+    title: UserUpdateInfo
+    type: object
+    properties:
+      degree:
+        type: string
+      email:
+        type: string
+      employer:
+        type: string
+      gender:
+        type: boolean
+      id:
+        type: string
+      location:
+        type: string
+      major:
+        type: string
+      name:
+        type: string
+      phone:
+        type: string
+      position:
+        type: string
+  request.UserUpdatePassword:
+    title: UserUpdatePassword
+    type: object
+    properties:
+      id:
+        type: string
+      new_password:
+        type: string
+      old_password:
+        type: string
+  response.Default:
+    title: Default
+    type: object
+    properties:
+      data:
+        $ref: '#/definitions/599.0xc0003c4810.false'
+      message:
+        type: string
+      operation_code:
+        type: integer
+        format: int64
 tags:
-- name: object
+- name: demo
   description: |
     Operations about object
 - name: user
