@@ -1,0 +1,18 @@
+{
+  "operation_code": 1000,
+  "message": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiZTU5YmRjNDAtZTU1MS00MjM2LTljZjAtNzNlMmRmNmE3OGNmIiwiZXhwIjoxNjI5OTY5Mjk0LCJpYXQiOjE2MjkzNjQ0OTQsImlzcyI6InJvYm90MUBvcGVuY3QuY29tIn0._0bGgd_Icp7FkW3K1hCWpBkeuAjHiI3Ce1BXwPG-Lvk",
+  "data": [
+    {
+      "name": "robot1",
+      "age": 0,
+      "locaion": "china",
+      "email": "robot1@openct.com",
+      "phone": "10000000001",
+      "gender": true,
+      "degree": "本科",
+      "position": "developer",
+      "employer": "openct-community",
+      "major": "program"
+    }
+  ]
+}

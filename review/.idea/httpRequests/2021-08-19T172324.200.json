@@ -1,0 +1,24 @@
+{
+  "operation_code": 1000,
+  "message": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiZTU5YmRjNDAtZTU1MS00MjM2LTljZjAtNzNlMmRmNmE3OGNmIiwiZXhwIjoxNjI5OTY5ODA0LCJpYXQiOjE2MjkzNjUwMDQsImlzcyI6InJvYm90MUBvcGVuY3QuY29tIn0.AVd_2XAiSmjGN9pCuXN-jSC33Ps6qyvjPyaa1M7bdYk",
+  "data": {
+    "Id": "611e1e4dfe69b544cb451d3e",
+    "CreateAt": "2021-08-19T09:03:09.604Z",
+    "UpdateAt": "2021-08-19T09:03:09.604Z",
+    "uuid": "e59bdc40-e551-4236-9cf0-73e2df6a78cf",
+    "profile": {
+      "name": "robot1",
+      "age": 0,
+      "locaion": "china",
+      "email": "robot1@openct.com",
+      "phone": "10000000001",
+      "gender": true,
+      "degree": "本科",
+      "position": "developer",
+      "employer": "openct-community",
+      "major": "program"
+    },
+    "password": "",
+    "salt": ""
+  }
+}

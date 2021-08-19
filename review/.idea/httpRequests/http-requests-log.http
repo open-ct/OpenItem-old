@@ -1,0 +1,529 @@
+PUT http://127.0.0.1:9001/review/user/
+Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiZTU5YmRjNDAtZTU1MS00MjM2LTljZjAtNzNlMmRmNmE3OGNmIiwiZXhwIjoxNjI5OTY5ODA0LCJpYXQiOjE2MjkzNjUwMDQsImlzcyI6InJvYm90MUBvcGVuY3QuY29tIn0.AVd_2XAiSmjGN9pCuXN-jSC33Ps6qyvjPyaa1M7bdYk
+Content-Type: application/json
+
+{
+  "id": "e59bdc40-e551-4236-9cf0-73e2df6a78cf",
+  "degree": "本科",
+  "email": "robot1@openct.com",
+  "employer": "openct-community",
+  "gender": true,
+  "location": "china",
+  "major": "program",
+  "name": "robot1",
+  "phone": "10000000001",
+  "position": "developer"
+}
+
+<> 2021-08-19T173745.200.json
+
+###
+
+PUT http://127.0.0.1:9001/review/user/
+Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiZTU5YmRjNDAtZTU1MS00MjM2LTljZjAtNzNlMmRmNmE3OGNmIiwiZXhwIjoxNjI5OTY5ODA0LCJpYXQiOjE2MjkzNjUwMDQsImlzcyI6InJvYm90MUBvcGVuY3QuY29tIn0.AVd_2XAiSmjGN9pCuXN-jSC33Ps6qyvjPyaa1M7bdYk
+Content-Type: application/json
+
+{
+  "degree": "本科",
+  "email": "robot1@openct.com",
+  "employer": "openct-community",
+  "gender": true,
+  "location": "china",
+  "major": "program",
+  "name": "robot1",
+  "phone": "10000000001",
+  "position": "developer"
+}
+
+<> 2021-08-19T173650.200.json
+
+###
+
+PUT http://127.0.0.1:9001/review/user/
+Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiZTU5YmRjNDAtZTU1MS00MjM2LTljZjAtNzNlMmRmNmE3OGNmIiwiZXhwIjoxNjI5OTY5ODA0LCJpYXQiOjE2MjkzNjUwMDQsImlzcyI6InJvYm90MUBvcGVuY3QuY29tIn0.AVd_2XAiSmjGN9pCuXN-jSC33Ps6qyvjPyaa1M7bdYk
+Content-Type: application/json
+
+{
+  "degree": "研究生",
+  "gender": true,
+  "id": "e59bdc40-e551-4236-9cf0-73e2df6a78cf",
+  "location": "beijing",
+  "position": "test-man"
+}
+
+<> 2021-08-19T173531.200.json
+
+###
+
+PUT http://127.0.0.1:9001/review/user/
+Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiZTU5YmRjNDAtZTU1MS00MjM2LTljZjAtNzNlMmRmNmE3OGNmIiwiZXhwIjoxNjI5OTY5ODA0LCJpYXQiOjE2MjkzNjUwMDQsImlzcyI6InJvYm90MUBvcGVuY3QuY29tIn0.AVd_2XAiSmjGN9pCuXN-jSC33Ps6qyvjPyaa1M7bdYk
+Content-Type: application/json
+
+{
+  "degree": "研究生",
+  "email": "robot2@openct.com",
+  "gender": true,
+  "id": "e59bdc40-e551-4236-9cf0-73e2df6a78cf",
+  "location": "beijing",
+  "position": "test-man"
+}
+
+<> 2021-08-19T173453.200.json
+
+###
+
+PUT http://127.0.0.1:9001/review/user/
+Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiZTU5YmRjNDAtZTU1MS00MjM2LTljZjAtNzNlMmRmNmE3OGNmIiwiZXhwIjoxNjI5OTY5ODA0LCJpYXQiOjE2MjkzNjUwMDQsImlzcyI6InJvYm90MUBvcGVuY3QuY29tIn0.AVd_2XAiSmjGN9pCuXN-jSC33Ps6qyvjPyaa1M7bdYk
+Content-Type: application/json
+
+{
+  "degree": "研究生",
+  "email": "robot2@openct.com",
+  "gender": true,
+  "id": "e59bdc40-e551-4236-9cf0-73e2df6a78cf",
+  "location": "beijing",
+  "position": "test-man"
+}
+
+<> 2021-08-19T173351.200.json
+
+###
+
+POST http://127.0.0.1:9001/review/user/login
+Content-Type: application/json
+
+{
+  "email": "robot1@openct.com",
+  "password": "abcdef"
+}
+
+<> 2021-08-19T173234.200.json
+
+###
+
+DELETE http://127.0.0.1:9001/review/user/40f98bd5-e074-4951-8a56-615ed9258ce4
+Accept: application/json
+
+<> 2021-08-19T172827.200.json
+
+###
+
+POST http://127.0.0.1:9001/review/user
+Content-Type: application/json
+
+{
+  "degree": "本科",
+  "email": "robot0@openct.com",
+  "employer": "openct-community",
+  "gender": true,
+  "location": "china",
+  "major": "program",
+  "name": "robot0",
+  "password": "123456",
+  "phone": "10000000000",
+  "position": "developer"
+}
+
+<> 2021-08-19T172709.200.json
+
+###
+
+GET http://127.0.0.1:9001/review/user/logout
+Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiZTU5YmRjNDAtZTU1MS00MjM2LTljZjAtNzNlMmRmNmE3OGNmIiwiZXhwIjoxNjI5OTY5ODA0LCJpYXQiOjE2MjkzNjUwMDQsImlzcyI6InJvYm90MUBvcGVuY3QuY29tIn0.AVd_2XAiSmjGN9pCuXN-jSC33Ps6qyvjPyaa1M7bdYk
+Accept: application/json
+
+<> 2021-08-19T172647.200.json
+
+###
+
+GET http://127.0.0.1:9001/review/user/logout
+Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiZTU5YmRjNDAtZTU1MS00MjM2LTljZjAtNzNlMmRmNmE3OGNmIiwiZXhwIjoxNjI5OTY5ODA0LCJpYXQiOjE2MjkzNjUwMDQsImlzcyI6InJvYm90MUBvcGVuY3QuY29tIn0.AVd_2XAiSmjGN9pCuXN-jSC33Ps6qyvjPyaa1M7bdYk
+Accept: application/json
+
+<> 2021-08-19T172636.200.html
+
+###
+
+GET http://127.0.0.1:9001/review/user/logout
+Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiZTU5YmRjNDAtZTU1MS00MjM2LTljZjAtNzNlMmRmNmE3OGNmIiwiZXhwIjoxNjI5OTY5ODA0LCJpYXQiOjE2MjkzNjUwMDQsImlzcyI6InJvYm90MUBvcGVuY3QuY29tIn0.AVd_2XAiSmjGN9pCuXN-jSC33Ps6qyvjPyaa1M7bdYk
+Accept: application/json
+
+<> 2021-08-19T172629.200.html
+
+###
+
+GET http://127.0.0.1:9001/review/user/logout
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiZTU5YmRjNDAtZTU1MS00MjM2LTljZjAtNzNlMmRmNmE3OGNmIiwiZXhwIjoxNjI5OTY5ODA0LCJpYXQiOjE2MjkzNjUwMDQsImlzcyI6InJvYm90MUBvcGVuY3QuY29tIn0.AVd_2XAiSmjGN9pCuXN-jSC33Ps6qyvjPyaa1M7bdYk
+Accept: application/json
+
+<> 2021-08-19T172607.200.html
+
+###
+
+GET http://127.0.0.1:9001/review/user/logout
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiZTU5YmRjNDAtZTU1MS00MjM2LTljZjAtNzNlMmRmNmE3OGNmIiwiZXhwIjoxNjI5OTY5ODA0LCJpYXQiOjE2MjkzNjUwMDQsImlzcyI6InJvYm90MUBvcGVuY3QuY29tIn0.AVd_2XAiSmjGN9pCuXN-jSC33Ps6qyvjPyaa1M7bdYk
+Accept: application/json
+
+<> 2021-08-19T172352.200.json
+
+###
+
+POST http://127.0.0.1:9001/review/user/login
+Content-Type: application/json
+
+{
+  "email": "robot1@openct.com",
+  "password": "abcdef"
+}
+
+<> 2021-08-19T172324.200.json
+
+###
+
+GET http://127.0.0.1:9001/review/user/e59bdc40-e551-4236-9cf0-73e2df6a78cf
+Accept: application/json
+
+<> 2021-08-19T172234.200.json
+
+###
+
+GET http://127.0.0.1:9001/review/user/e59bdc40-e551-4236-9cf0-73e2df6a78cf
+Accept: application/json
+
+<> 2021-08-19T172053.200.json
+
+###
+
+POST http://127.0.0.1:9001/review/user/login
+Content-Type: application/json
+
+{
+  "email": "robot1@openct.com",
+  "password": "abcdef"
+}
+
+<> 2021-08-19T171957.200.json
+
+###
+
+POST http://127.0.0.1:9001/review/user/login
+Content-Type: application/json
+
+{
+  "email": "robot1@openct.com",
+  "password": "123456"
+}
+
+<> 2021-08-19T171944.200.json
+
+###
+
+PUT http://127.0.0.1:9001/review/user/password
+Content-Type: application/json
+
+{
+  "id": "e59bdc40-e551-4236-9cf0-73e2df6a78cf",
+  "new_password": "abcdef",
+  "old_password": "123456"
+}
+
+<> 2021-08-19T171855.200.json
+
+###
+
+PUT http://127.0.0.1:9001/review/user/password
+Content-Type: application/json
+
+{
+  "id": "e59bdc40-e551-4236-9cf0-73e2df6a78cf",
+  "new_password": "abcdef",
+  "old_password": "123456"
+}
+
+<> 2021-08-19T171820.400.json
+
+###
+
+POST http://127.0.0.1:9001/review/user/password
+Content-Type: application/json
+
+{
+  "id": "e59bdc40-e551-4236-9cf0-73e2df6a78cf",
+  "new_password": "abcdef",
+  "old_password": "123456"
+}
+
+<> 2021-08-19T171810.404.html
+
+###
+
+POST http://127.0.0.1:9001/review/user/login
+Content-Type: application/json
+
+{
+  "email": "robot1@openct.com",
+  "password": "123456"
+}
+
+<> 2021-08-19T171716.200.json
+
+###
+
+POST http://127.0.0.1:9001/review/user/login
+Content-Type: application/json
+
+{
+  "email": "robot1@openct.com",
+  "password": "123456"
+}
+
+<> 2021-08-19T171454.200.json
+
+###
+
+POST http://127.0.0.1:9001/review/user/login
+Content-Type: application/json
+
+{
+  "email": "robot1@openct.com",
+  "password": "123456"
+}
+
+<> 2021-08-19T171401.200.json
+
+###
+
+POST http://127.0.0.1:9001/review/user/login
+Content-Type: application/json
+
+{
+  "email": "robot1@openct.com",
+  "password": "123456"
+}
+
+<> 2021-08-19T171040.200.json
+
+###
+
+POST http://127.0.0.1:9001/review/user/login
+Content-Type: application/json
+
+{
+  "email": "robot1@openct.com",
+  "password": "123456"
+}
+
+<> 2021-08-19T170954.200.json
+
+###
+
+POST http://127.0.0.1:9001/review/user/login
+Content-Type: application/json
+
+{
+  "email": "robot1@openct.com",
+  "password": "123456"
+}
+
+<> 2021-08-19T170925.200.json
+
+###
+
+POST http://127.0.0.1:9001/review/user
+Content-Type: application/json
+
+{
+  "degree": "本科",
+  "email": "robot1@openct.com",
+  "employer": "openct-community",
+  "gender": true,
+  "location": "china",
+  "major": "program",
+  "name": "robot1",
+  "password": "123456",
+  "phone": "10000000001",
+  "position": "developer"
+}
+
+<> 2021-08-19T170309.200.json
+
+###
+
+PUT http://127.0.0.1:9001/review/user
+Content-Type: application/json
+
+{
+  "degree": "本科",
+  "email": "robot1@openct.com",
+  "employer": "openct-community",
+  "gender": true,
+  "location": "china",
+  "major": "program",
+  "name": "robot1",
+  "password": "123456",
+  "phone": "10000000001",
+  "position": "developer"
+}
+
+<> 2021-08-19T170231.200.json
+
+###
+
+PUT http://127.0.0.1:9001/review/user
+Content-Type: application/json
+
+{
+  "degree": "本科",
+  "email": "robot1@openct.com",
+  "employer": "openct-community",
+  "gender": true,
+  "location": "china",
+  "major": "program",
+  "name": "robot1",
+  "password": "123456",
+  "phone": "10000000001",
+  "position": "developer"
+}
+
+<> 2021-08-19T170212.200.json
+
+###
+
+PUT http://127.0.0.1:9001/review/user
+Content-Type: application/json
+
+{
+  "degree": "本科",
+  "email": "robot1@openct.com",
+  "employer": "openct-community",
+  "gender": true,
+  "location": "china",
+  "major": "program",
+  "name": "robot1",
+  "password": "123456",
+  "phone": "10000000001",
+  "position": "developer"
+}
+
+<> 2021-08-19T165944.200.json
+
+###
+
+PUT http://127.0.0.1:9001/review/user
+Content-Type: application/json
+
+{
+  "degree": "本科",
+  "email": "robot1@openct.com",
+  "employer": "openct-community",
+  "gender": true,
+  "location": "china",
+  "major": "program",
+  "name": "robot1",
+  "password": "123456",
+  "phone": "10000000001",
+  "position": "developer"
+}
+
+<> 2021-08-19T165600.404.html
+
+###
+
+PUT http://127.0.0.1:9001/review/user/
+Content-Type: application/json
+
+{
+  "degree": "本科",
+  "email": "robot1@openct.com",
+  "employer": "openct-community",
+  "gender": true,
+  "location": "china",
+  "major": "program",
+  "name": "robot1",
+  "password": "123456",
+  "phone": "10000000001",
+  "position": "developer"
+}
+
+<> 2021-08-19T165549.404.html
+
+###
+
+POST http://127.0.0.1:9001/review/user/
+Content-Type: application/json
+
+{
+  "degree": "本科",
+  "email": "robot1@openct.com",
+  "employer": "openct-community",
+  "gender": true,
+  "location": "china",
+  "major": "program",
+  "name": "robot1",
+  "password": "123456",
+  "phone": "10000000001",
+  "position": "developer"
+}
+
+<> 2021-08-19T165444.404.html
+
+###
+
+POST http://localhost:9001/review/user/
+Content-Type: application/json
+
+{
+  "degree": "本科",
+  "email": "robot1@openct.com",
+  "employer": "openct-community",
+  "gender": true,
+  "location": "china",
+  "major": "program",
+  "name": "robot1",
+  "password": "123456",
+  "phone": "10000000001",
+  "position": "developer"
+}
+
+<> 2021-08-19T165423.404.html
+
+###
+
+POST http://localhost:9001
+Content-Type: application/json
+
+{
+  "degree": "本科",
+  "email": "robot1@openct.com",
+  "employer": "openct-community",
+  "gender": true,
+  "location": "china",
+  "major": "program",
+  "name": "robot1",
+  "password": "123456",
+  "phone": "10000000001",
+  "position": "developer"
+}
+
+<> 2021-08-19T165001.404.html
+
+###
+
+POST http://localhost:900
+Content-Type: application/json
+
+{
+  "degree": "本科",
+  "email": "robot1@openct.com",
+  "employer": "openct-community",
+  "gender": true,
+  "location": "china",
+  "major": "program",
+  "name": "robot1",
+  "password": "123456",
+  "phone": "10000000001",
+  "position": "developer"
+}
+
+###
+

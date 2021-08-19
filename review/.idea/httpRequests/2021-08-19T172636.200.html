@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>beego application error</title>
+    <style>
+        html, body, body * {
+            padding: 0;
+            margin: 0;
+        }
+
+        #header {
+            background: #ffd;
+            border-bottom: solid 2px #A31515;
+            padding: 20px 10px;
+        }
+
+        #header h2 {
+        }
+
+        #footer {
+            border-top: solid 1px #aaa;
+            padding: 5px 10px;
+            font-size: 12px;
+            color: green;
+        }
+
+        #content {
+            padding: 5px;
+        }
+
+        #content .stack b {
+            font-size: 13px;
+            color: red;
+        }
+
+        #content .stack pre {
+            padding-left: 10px;
+        }
+
+        table {
+        }
+
+        td.t {
+            text-align: right;
+            padding-right: 5px;
+            color: #888;
+        }
+    </style>
+    <script type="text/javascript">
+    </script>
+</head>
+<body>
+<div id="header">
+    <h2>PQBS_review_module:runtime error: index out of range [0] with length 0</h2>
+</div>
+<div id="content">
+    <table>
+        <tr>
+            <td class="t">Request Method:</td>
+            <td>GET</td>
+        </tr>
+        <tr>
+            <td class="t">Request URL:</td>
+            <td>/review/user/logout</td>
+        </tr>
+        <tr>
+            <td class="t">RemoteAddr:</td>
+            <td>127.0.0.1</td>
+        </tr>
+    </table>
+    <div class="stack">
+        <b>Stack</b>
+        <pre>C:/DevTools/golang/go_17/src/runtime/panic.go:1038
+C:/DevTools/golang/go_17/src/runtime/panic.go:90
+D:/OpenCT/OpenItem/review/controllers/user.go:156
+C:/DevTools/golang/go_17/src/reflect/value.go:543
+C:/DevTools/golang/go_17/src/reflect/value.go:339
+C:/Users/kkoog/go/pkg/mod/github.com/beego/beego/v2@v2.0.1/server/web/router.go:883
+C:/Users/kkoog/go/pkg/mod/github.com/beego/beego/v2@v2.0.1/server/web/filter.go:81
+C:/Users/kkoog/go/pkg/mod/github.com/beego/beego/v2@v2.0.1/server/web/router.go:664
+C:/DevTools/golang/go_17/src/net/http/server.go:2878
+C:/DevTools/golang/go_17/src/net/http/server.go:1929
+C:/DevTools/golang/go_17/src/runtime/asm_amd64.s:1581
+</pre>
+    </div>
+</div>
+<div id="footer">
+    <p>beego 2.0.0 (beego framework)</p>
+    <p>golang version: go1.17</p>
+</div>
+</body>
+</html>
