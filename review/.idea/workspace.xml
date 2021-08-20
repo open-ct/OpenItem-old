@@ -4,22 +4,7 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e43682a1-e80b-47da-ad31-77747a1df769" name="Changes" comment="feat (file basic operation)&#10;&#10;1. finish the file upload / download / search / delete / get APIs.">
-      <change afterPath="$PROJECT_DIR$/controllers/file.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/file.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/request/file.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/file-test.http" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/response/code.go" beforeDir="false" afterPath="$PROJECT_DIR$/response/code.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routers/commentsRouter_controllers.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/routers/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/routers/router.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/swagger/swagger.json" beforeDir="false" afterPath="$PROJECT_DIR$/swagger/swagger.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/swagger/swagger.yml" beforeDir="false" afterPath="$PROJECT_DIR$/swagger/swagger.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/user-test.http" beforeDir="false" afterPath="$PROJECT_DIR$/tests/user-test.http" afterDir="false" />
-    </list>
+    <list default="true" id="e43682a1-e80b-47da-ad31-77747a1df769" name="Changes" comment="feat (file basic operation)&#10;&#10;1. finish the file upload / download / search / delete / get APIs." />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
