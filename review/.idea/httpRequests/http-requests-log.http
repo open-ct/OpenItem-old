@@ -1,3 +1,133 @@
+POST http://127.0.0.1:9001/review/user/login
+Content-Type: application/json
+
+{
+  "email": "robot1@openct.com",
+  "password": "123456"
+}
+
+<> 2021-08-20T185859.200.json
+
+###
+
+POST http://127.0.0.1:9001/review/user/login
+Content-Type: application/json
+
+{
+  "email": "robot1@openct.com",
+  "password": "abcdef"
+}
+
+<> 2021-08-20T185844.200.json
+
+###
+
+GET http://127.0.0.1:9001/review/user/38509279-4363-4fa4-b3b8-f7e8cf711690
+Accept: application/json
+
+<> 2021-08-20T173717.200.json
+
+###
+
+POST http://127.0.0.1:9001/review/user
+Content-Type: application/json
+
+{
+  "degree": "本科",
+  "email": "robot2@openct.com",
+  "employer": "openct-community",
+  "gender": true,
+  "location": "china",
+  "major": "program",
+  "name": "robot2",
+  "password": "123456",
+  "phone": "10000000002",
+  "position": "developer"
+}
+
+<> 2021-08-20T173556.200.json
+
+###
+
+POST http://127.0.0.1:9001/review/user
+Content-Type: application/json
+
+{
+  "degree": "本科",
+  "email": "robot1@openct.com",
+  "employer": "openct-community",
+  "gender": true,
+  "location": "china",
+  "major": "program",
+  "name": "robot1",
+  "password": "123456",
+  "phone": "10000000001",
+  "position": "developer"
+}
+
+<> 2021-08-20T173545.200.json
+
+###
+
+POST http://127.0.0.1:9001/review/user
+Content-Type: application/json
+
+{
+  "degree": "本科",
+  "email": "robot0@openct.com",
+  "employer": "openct-community",
+  "gender": true,
+  "location": "china",
+  "major": "program",
+  "name": "robot0",
+  "password": "123456",
+  "phone": "10000000000",
+  "position": "developer"
+}
+
+<> 2021-08-20T173526.200.json
+
+###
+
+POST http://127.0.0.1:9001/review/user
+Content-Type: application/json
+
+{
+  "degree": "本科",
+  "email": "robot0@openct.com",
+  "employer": "openct-community",
+  "gender": true,
+  "location": "china",
+  "major": "program",
+  "name": "robot0",
+  "password": "123456",
+  "phone": "10000000000",
+  "position": "developer"
+}
+
+<> 2021-08-20T173509.200.json
+
+###
+
+DELETE http://127.0.0.1:9001/review/user/75ea985b-c9c8-43da-94d0-d3b22f461838
+Accept: application/json
+
+<> 2021-08-20T173441.200.json
+
+###
+
+DELETE http://127.0.0.1:9001/review/user/e59bdc40-e551-4236-9cf0-73e2df6a78cf
+Accept: application/json
+
+<> 2021-08-20T173424.200.json
+
+###
+
+DELETE http://127.0.0.1:9001/review/user/e59bdc40-e551-4236-9cf0-73e2df6a78cf
+Accept: application/json
+
+###
+
 PUT http://127.0.0.1:9001/review/user/
 Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiZTU5YmRjNDAtZTU1MS00MjM2LTljZjAtNzNlMmRmNmE3OGNmIiwiZXhwIjoxNjI5OTY5ODA0LCJpYXQiOjE2MjkzNjUwMDQsImlzcyI6InJvYm90MUBvcGVuY3QuY29tIn0.AVd_2XAiSmjGN9pCuXN-jSC33Ps6qyvjPyaa1M7bdYk
 Content-Type: application/json

@@ -6,7 +6,12 @@ var (
 	FAIL = 2000 // operation exec failed with default error
 
 	// Database operations (mongodb)
-	DatabaseError = 2001
+	DatabaseDefaultError       = 2001
+	DatabaseInsertError        = 2002
+	DatabaseUpdateError        = 2003
+	DatabaseDeleteError        = 2004
+	DatabaseNoRecord           = 2005
+	DatabaseUniqueKeyDuplicate = 2006
 
 	// user operations
 	UserRegisterFail          = 2100
@@ -16,4 +21,9 @@ var (
 	UserNotExist              = 2104
 	UserGenerateTokenError    = 2105
 	UserUpdatePasswordError   = 2106
+
+	// file operations
+	FileUploadFail       = 2200
+	FileGetFileFail      = 2201
+	FileDownloadFileFail = 2202
 )

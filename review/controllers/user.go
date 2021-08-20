@@ -57,7 +57,7 @@ func (u *UserController) GetAll() {
 
 // @Title GetUser
 // @Description get a user info (profile): 根据用户id获取用户信息 (用户密码不会返回)
-// @Param   toke header string true "user token recived at login"
+// @Param   token header string true "user token recived at login"
 // @Param   uid path string true "user uuid"
 // @Success 200 {object} response.Default
 // @Failure 400 "invalid user id"

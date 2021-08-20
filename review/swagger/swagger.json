@@ -150,6 +150,195 @@
                 }
             }
         },
+        "/file/": {
+            "post": {
+                "tags": [
+                    "file"
+                ],
+                "description": "upload a file, need use token to define the creater(owner)",
+                "operationId": "FileController.UploadFile",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "filename",
+                        "description": "file user want to upload",
+                        "required": true,
+                        "type": "file"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "description",
+                        "description": "the details and comment of file to uploaded",
+                        "type": "string"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "tags",
+                        "description": "file's tags",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid file\""
+                    }
+                }
+            }
+        },
+        "/file/info/{fid}": {
+            "get": {
+                "tags": [
+                    "file"
+                ],
+                "description": "just get file information, do not download file",
+                "operationId": "FileController.GetFileInfo",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "fid",
+                        "description": "file uuid",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid file uuid\""
+                    }
+                }
+            }
+        },
+        "/file/search": {
+            "post": {
+                "tags": [
+                    "file"
+                ],
+                "description": "search files using conditions",
+                "operationId": "FileController.SearchFiles",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "json",
+                        "description": "the search conditions",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.SearchFile"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid conditions (parse body failed)\""
+                    }
+                }
+            }
+        },
+        "/file/{fid}": {
+            "get": {
+                "tags": [
+                    "file"
+                ],
+                "description": "download a file by file id",
+                "operationId": "FileController.DownloadFile",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "fid",
+                        "description": "file uuid",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid file uuid\""
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "file"
+                ],
+                "description": "delete a file record in database (keep on the disk)",
+                "operationId": "FileController.DeleteFile",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "fid",
+                        "description": "the file's uuid you want to delete",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid file id\""
+                    }
+                }
+            }
+        },
         "/user/": {
             "get": {
                 "tags": [
@@ -343,7 +532,7 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "name": "toke",
+                        "name": "token",
                         "description": "user token recived at login",
                         "required": true,
                         "type": "string"
@@ -405,7 +594,7 @@
         }
     },
     "definitions": {
-        "599.0xc0003c4810.false": {
+        "895.0xc000408b10.false": {
             "title": "false",
             "type": "object"
         },
@@ -480,6 +669,24 @@
                     "type": "string"
                 },
                 "position": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.SearchFile": {
+            "title": "SearchFile",
+            "type": "object",
+            "properties": {
+                "file_name": {
+                    "type": "string"
+                },
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "type": {
                     "type": "string"
                 }
             }
@@ -591,7 +798,7 @@
             "type": "object",
             "properties": {
                 "data": {
-                    "$ref": "#/definitions/599.0xc0003c4810.false"
+                    "$ref": "#/definitions/895.0xc000408b10.false"
                 },
                 "message": {
                     "type": "string"
@@ -611,6 +818,10 @@
         {
             "name": "user",
             "description": "Operations about Users\n"
+        },
+        {
+            "name": "file",
+            "description": "Operations of files\n"
         }
     ]
 }

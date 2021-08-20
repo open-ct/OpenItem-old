@@ -87,7 +87,7 @@ func AddUser(req *request.UserRegister) (string, int) {
 	// check duplicate step move to "access"
 	if err != nil {
 		logger.Recorder.Error("[Mongo] " + err.Error())
-		return "", response.DatabaseError
+		return "", response.DatabaseInsertError
 	}
 	logger.Recorder.Info(fmt.Sprintf("[User] New user created, operation ID: %s", createResult.InsertedID))
 	return newUser.Uuid, response.SUCCESS
@@ -104,7 +104,7 @@ func UserLogin(req *request.UserLogin) (*User, string, int) {
 	user, ok := getUserByContact(toLogin)
 	fmt.Println("user id: ", user.Uuid)
 	if !ok {
-		return nil, "", response.DatabaseError
+		return nil, "", response.DatabaseNoRecord
 	}
 	isPass := passwordAuth(req.Password, user)
 	if !isPass {
@@ -129,7 +129,7 @@ func GetUser(uid string) (*UserProfile, int) {
 	}).One(&user)
 	if err != nil {
 		logger.Recorder.Warning("[Mongo] find user:" + uid + " error")
-		return nil, response.DatabaseError
+		return nil, response.DatabaseNoRecord
 	}
 	return &user.Profile, response.SUCCESS
 }
@@ -162,7 +162,7 @@ func UpdateUserInfo(req *request.UserUpdateInfo) (string, int) {
 	})
 	if err != nil {
 		logger.Recorder.Warning("[mongo] update user info: " + err.Error())
-		return req.ID, response.DatabaseError
+		return req.ID, response.DatabaseUpdateError
 	}
 	return req.ID, response.SUCCESS
 }
@@ -190,7 +190,7 @@ func UpdateUserPassword(req *request.UserUpdatePassword) (string, int) {
 	)
 	if err != nil {
 		logger.Recorder.Error("[Mongo] update user password: " + err.Error())
-		return user.Uuid, response.DatabaseError
+		return user.Uuid, response.DatabaseUpdateError
 	}
 	return user.Uuid, response.SUCCESS
 }
@@ -206,7 +206,7 @@ func DeleteUser(uid string) int {
 	})
 	if err != nil {
 		logger.Recorder.Error("[User Delete] failed: " + err.Error())
-		return response.DatabaseError
+		return response.DatabaseDeleteError
 	}
 	return response.SUCCESS
 }
