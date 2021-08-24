@@ -52,47 +52,92 @@ func init() {
 			Filters:          nil,
 			Params:           nil})
 
-	beego.GlobalControllerRouter["review/controllers:ObjectController"] = append(beego.GlobalControllerRouter["review/controllers:ObjectController"],
+	beego.GlobalControllerRouter["review/controllers:ProjectController"] = append(beego.GlobalControllerRouter["review/controllers:ProjectController"],
 		beego.ControllerComments{
-			Method:           "Post",
+			Method:           "CreateEmptyProject",
 			Router:           "/",
 			AllowHTTPMethods: []string{"post"},
 			MethodParams:     param.Make(),
 			Filters:          nil,
 			Params:           nil})
 
-	beego.GlobalControllerRouter["review/controllers:ObjectController"] = append(beego.GlobalControllerRouter["review/controllers:ObjectController"],
+	beego.GlobalControllerRouter["review/controllers:ProjectController"] = append(beego.GlobalControllerRouter["review/controllers:ProjectController"],
 		beego.ControllerComments{
-			Method:           "GetAll",
+			Method:           "UpdateProjectInfo",
 			Router:           "/",
-			AllowHTTPMethods: []string{"get"},
-			MethodParams:     param.Make(),
-			Filters:          nil,
-			Params:           nil})
-
-	beego.GlobalControllerRouter["review/controllers:ObjectController"] = append(beego.GlobalControllerRouter["review/controllers:ObjectController"],
-		beego.ControllerComments{
-			Method:           "Get",
-			Router:           "/:objectId",
-			AllowHTTPMethods: []string{"get"},
-			MethodParams:     param.Make(),
-			Filters:          nil,
-			Params:           nil})
-
-	beego.GlobalControllerRouter["review/controllers:ObjectController"] = append(beego.GlobalControllerRouter["review/controllers:ObjectController"],
-		beego.ControllerComments{
-			Method:           "Put",
-			Router:           "/:objectId",
 			AllowHTTPMethods: []string{"put"},
 			MethodParams:     param.Make(),
 			Filters:          nil,
 			Params:           nil})
 
-	beego.GlobalControllerRouter["review/controllers:ObjectController"] = append(beego.GlobalControllerRouter["review/controllers:ObjectController"],
+	beego.GlobalControllerRouter["review/controllers:ProjectController"] = append(beego.GlobalControllerRouter["review/controllers:ProjectController"],
 		beego.ControllerComments{
-			Method:           "Delete",
-			Router:           "/:objectId",
+			Method:           "MakeOneAssignment",
+			Router:           "/assign",
+			AllowHTTPMethods: []string{"post"},
+			MethodParams:     param.Make(),
+			Filters:          nil,
+			Params:           nil})
+
+	beego.GlobalControllerRouter["review/controllers:ProjectController"] = append(beego.GlobalControllerRouter["review/controllers:ProjectController"],
+		beego.ControllerComments{
+			Method:           "ChangeAssignment",
+			Router:           "/assign",
+			AllowHTTPMethods: []string{"patch"},
+			MethodParams:     param.Make(),
+			Filters:          nil,
+			Params:           nil})
+
+	beego.GlobalControllerRouter["review/controllers:ProjectController"] = append(beego.GlobalControllerRouter["review/controllers:ProjectController"],
+		beego.ControllerComments{
+			Method:           "DeleteAssignment",
+			Router:           "/assign/:aid",
 			AllowHTTPMethods: []string{"delete"},
+			MethodParams:     param.Make(),
+			Filters:          nil,
+			Params:           nil})
+
+	beego.GlobalControllerRouter["review/controllers:ProjectController"] = append(beego.GlobalControllerRouter["review/controllers:ProjectController"],
+		beego.ControllerComments{
+			Method:           "GetProjectAssignments",
+			Router:           "/assign/:pid",
+			AllowHTTPMethods: []string{"get"},
+			MethodParams:     param.Make(),
+			Filters:          nil,
+			Params:           nil})
+
+	beego.GlobalControllerRouter["review/controllers:ProjectController"] = append(beego.GlobalControllerRouter["review/controllers:ProjectController"],
+		beego.ControllerComments{
+			Method:           "ConfirmAssignment",
+			Router:           "/assign/confirm/:aid",
+			AllowHTTPMethods: []string{"get"},
+			MethodParams:     param.Make(),
+			Filters:          nil,
+			Params:           nil})
+
+	beego.GlobalControllerRouter["review/controllers:ProjectController"] = append(beego.GlobalControllerRouter["review/controllers:ProjectController"],
+		beego.ControllerComments{
+			Method:           "GetBasicInfo",
+			Router:           "/basic/:pid",
+			AllowHTTPMethods: []string{"get"},
+			MethodParams:     param.Make(),
+			Filters:          nil,
+			Params:           nil})
+
+	beego.GlobalControllerRouter["review/controllers:ProjectController"] = append(beego.GlobalControllerRouter["review/controllers:ProjectController"],
+		beego.ControllerComments{
+			Method:           "MakeAssignmentGroup",
+			Router:           "/group",
+			AllowHTTPMethods: []string{"post"},
+			MethodParams:     param.Make(),
+			Filters:          nil,
+			Params:           nil})
+
+	beego.GlobalControllerRouter["review/controllers:ProjectController"] = append(beego.GlobalControllerRouter["review/controllers:ProjectController"],
+		beego.ControllerComments{
+			Method:           "GetUserAssignments",
+			Router:           "/user/:uid",
+			AllowHTTPMethods: []string{"get"},
 			MethodParams:     param.Make(),
 			Filters:          nil,
 			Params:           nil})

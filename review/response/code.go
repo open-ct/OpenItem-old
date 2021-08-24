@@ -26,4 +26,18 @@ var (
 	FileUploadFail       = 2200
 	FileGetFileFail      = 2201
 	FileDownloadFileFail = 2202
+
+	// project operations
+	ProjectCreateFail  = 2301
+	ProjectNotExist    = 2302
+	ProjectGetInfoFail = 2303
+	ProjectUpdateFail  = 2304
+
+	// project-assignment operations
+	AssignmentCreateFail     = 2310
+	AssignmentUserGetFail    = 2311
+	AssignmentProjectGetFail = 2312
+	AssignmentChangeFail     = 2313
+	AssignmentDeleteFail     = 2314
+	AssignConfirmFail        = 2315
 )

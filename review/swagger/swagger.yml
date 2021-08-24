@@ -11,100 +11,11 @@ info:
     url: http://www.apache.org/licenses/LICENSE-2.0.html
 basePath: /review
 paths:
-  /demo/:
-    get:
-      tags:
-      - demo
-      description: get all objects
-      operationId: ObjectController.GetAll
-      responses:
-        "200":
-          description: ""
-          schema:
-            $ref: '#/definitions/models.Object'
-        "403":
-          description: :objectId is empty
-    post:
-      tags:
-      - demo
-      description: create object
-      operationId: ObjectController.Create
-      parameters:
-      - in: body
-        name: body
-        description: The object content
-        required: true
-        schema:
-          $ref: '#/definitions/models.Object'
-      responses:
-        "200":
-          description: '{string} models.Object.Id'
-        "403":
-          description: body is empty
-  /demo/{objectId}:
-    get:
-      tags:
-      - demo
-      description: find object by objectid
-      operationId: ObjectController.Get
-      parameters:
-      - in: path
-        name: objectId
-        description: the objectid you want to get
-        required: true
-        type: string
-      responses:
-        "200":
-          description: ""
-          schema:
-            $ref: '#/definitions/models.Object'
-        "403":
-          description: :objectId is empty
-    put:
-      tags:
-      - demo
-      description: update the object
-      operationId: ObjectController.Update
-      parameters:
-      - in: path
-        name: objectId
-        description: The objectid you want to update
-        required: true
-        type: string
-      - in: body
-        name: body
-        description: The body
-        required: true
-        schema:
-          $ref: '#/definitions/models.Object'
-      responses:
-        "200":
-          description: ""
-          schema:
-            $ref: '#/definitions/models.Object'
-        "403":
-          description: :objectId is empty
-    delete:
-      tags:
-      - demo
-      description: delete the object
-      operationId: ObjectController.Delete
-      parameters:
-      - in: path
-        name: objectId
-        description: The objectId you want to delete
-        required: true
-        type: string
-      responses:
-        "200":
-          description: '{string} delete success!'
-        "403":
-          description: objectId is empty
   /file/:
     post:
       tags:
       - file
-      description: upload a file, need use token to define the creater(owner)
+      description: 文件上传, 使用post form格式上传, 会自动解析token获得对应的上传者id
       operationId: FileController.UploadFile
       parameters:
       - in: header
@@ -114,16 +25,16 @@ paths:
         type: string
       - in: formData
         name: filename
-        description: file user want to upload
+        description: 文件名
         required: true
         type: file
       - in: formData
         name: description
-        description: the details and comment of file to uploaded
+        description: 文件注释和说明
         type: string
       - in: formData
         name: tags
-        description: file's tags
+        description: 文件标签
         type: string
       responses:
         "200":
@@ -136,7 +47,7 @@ paths:
     get:
       tags:
       - file
-      description: download a file by file id
+      description: download a file by file id(根据文件id下载文件)
       operationId: FileController.DownloadFile
       parameters:
       - in: header
@@ -159,12 +70,13 @@ paths:
     delete:
       tags:
       - file
-      description: delete a file record in database (keep on the disk)
+      description: 删除文件上传记录(不在磁盘存储中删除文件)
       operationId: FileController.DeleteFile
       parameters:
       - in: header
         name: token
         description: user token get at login
+        required: true
         type: string
       - in: path
         name: fid
@@ -182,12 +94,13 @@ paths:
     get:
       tags:
       - file
-      description: just get file information, do not download file
+      description: 只获取文件信息, 不执行下载
       operationId: FileController.GetFileInfo
       parameters:
       - in: header
         name: token
         description: user token get at login
+        required: true
         type: string
       - in: path
         name: fid
@@ -205,16 +118,17 @@ paths:
     post:
       tags:
       - file
-      description: search files using conditions
+      description: 条件搜素文件, 搜索结果 (待完善)
       operationId: FileController.SearchFiles
       parameters:
       - in: header
         name: token
         description: user token get at login
+        required: true
         type: string
       - in: body
         name: json
-        description: the search conditions
+        description: 搜索条件
         required: true
         schema:
           $ref: '#/definitions/request.SearchFile'
@@ -225,11 +139,253 @@ paths:
             $ref: '#/definitions/response.Default'
         "400":
           description: '"invalid conditions (parse body failed)"'
+  /proj/:
+    put:
+      tags:
+      - proj
+      description: 更新项目相关信息
+      operationId: ProjectController.UpdateProjectInfo
+      parameters:
+      - in: header
+        name: token
+        description: user token get at login
+        required: true
+        type: string
+      - in: body
+        name: json
+        description: 要更新的项目信息数据
+        required: true
+        schema:
+          $ref: '#/definitions/request.UpdateProjectInfo'
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/response.Default'
+        "400":
+          description: '"invalid body"'
+    post:
+      tags:
+      - proj
+      description: 创建一个空项目(不创建相关流程和任务)
+      operationId: ProjectController.CreateEmptyProject
+      parameters:
+      - in: header
+        name: token
+        description: user token get at login
+        required: true
+        type: string
+      - in: body
+        name: json
+        description: 基本的项目信息, 创建人(creator)一项不需要填写,会根据token自动解析填充
+        required: true
+        schema:
+          $ref: '#/definitions/request.CreateProject'
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/response.Default'
+        "400":
+          description: '"invalid project json body(token)"'
+  /proj/assign:
+    post:
+      tags:
+      - proj
+      description: 'create a user assignment for a project (创建一个人员分配记录: 项目-用户-角色)'
+      operationId: ProjectController.MakeOneAssignment
+      parameters:
+      - in: header
+        name: token
+        description: user token get at login
+        required: true
+        type: string
+      - in: body
+        name: json
+        description: assignment information
+        required: true
+        schema:
+          $ref: '#/definitions/request.MakeOneAssignment'
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/response.Default'
+        "400":
+          description: '"invalid token(body)"'
+    patch:
+      tags:
+      - proj
+      description: 更改一个角色分配
+      operationId: ProjectController.ChangeAssignment
+      parameters:
+      - in: header
+        name: token
+        description: user token get at login
+        required: true
+        type: string
+      - in: body
+        name: json
+        description: new role to change
+        required: true
+        schema:
+          $ref: '#/definitions/request.ChangeAssignment'
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/response.Default'
+        "400":
+          description: '"invalid bodu"'
+  /proj/assign/{aid}:
+    delete:
+      tags:
+      - proj
+      description: 删除一条角色分配
+      operationId: ProjectController.DeleteAssignment
+      parameters:
+      - in: header
+        name: token
+        description: user token get at login
+        required: true
+        type: string
+      - in: path
+        name: aid
+        description: uuid of assignment to delete
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/response.Default'
+        "400":
+          description: '"invalid uuid"'
+  /proj/assign/{pid}:
+    get:
+      tags:
+      - proj
+      description: 获取一个项目的所有人员分配情况
+      operationId: ProjectController.GetProjectAssignment
+      parameters:
+      - in: header
+        name: token
+        description: user token get at login
+        required: true
+        type: string
+      - in: path
+        name: pid
+        description: project id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/response.Default'
+        "400":
+          description: '"invalid project id"'
+  /proj/assign/confirm/{aid}:
+    get:
+      tags:
+      - proj
+      description: 用户端确认角色分配申请
+      operationId: ProjectController.ConfirmAssignment
+      parameters:
+      - in: header
+        name: token
+        description: user token get at login
+        required: true
+        type: string
+      - in: path
+        name: aid
+        description: "true"
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/response.Default'
+        "400":
+          description: '"invalid uuid"'
+  /proj/basic/{pid}:
+    get:
+      tags:
+      - proj
+      description: 获取项目的基本信息数据
+      operationId: ProjectController.GetBasicInfo
+      parameters:
+      - in: header
+        name: token
+        description: user token get at login
+        required: true
+        type: string
+      - in: path
+        name: pid
+        description: 项目的uuid
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/response.Default'
+        "400":
+          description: '"invalid project id"'
+  /proj/group:
+    post:
+      tags:
+      - proj
+      description: 创建一个项目的人员分配(同时分配多种角色)
+      operationId: ProjectController.MakeAssignmentGroup
+      parameters:
+      - in: header
+        name: token
+        description: user token get at login
+        required: true
+        type: string
+      - in: body
+        name: json
+        description: 需要每种角色的user id
+        required: true
+        schema:
+          $ref: '#/definitions/request.MakeAssignmentGroup'
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/response.Default'
+        "400":
+          description: '"invalid token(body)"'
+  /proj/user/{uid}:
+    get:
+      tags:
+      - proj
+      description: 获取某一个用户的所有项目参与情况(即参与各个项目的角色分配情况)
+      operationId: ProjectController.GetUserAssignment
+      parameters:
+      - in: header
+        name: token
+        description: user token get at login
+        required: true
+        type: string
+      - in: path
+        name: uid
+        description: user id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/response.Default'
+        "400":
+          description: '"invalid user id"'
   /user/:
     get:
       tags:
       - user
-      description: get all Users
+      description: get all Users (已废弃)
       operationId: UserController.GetAll
       responses:
         "200":
@@ -241,7 +397,7 @@ paths:
     put:
       tags:
       - user
-      description: 'update user information: 更新用户信息 (主要提交post时必须所有选项都要填写, 没发生更改的应当填充原来的信息数据)'
+      description: 更新用户信息 (主要提交post时必须所有选项都要填写, 没发生更改的应当填充原来的信息数据)
       operationId: UserController.UpdateUserInfo
       parameters:
       - in: header
@@ -251,7 +407,7 @@ paths:
         type: string
       - in: body
         name: json
-        description: user informaition to updata
+        description: 要更新的用户信息数据
         required: true
         schema:
           $ref: '#/definitions/request.UserUpdateInfo'
@@ -265,12 +421,12 @@ paths:
     post:
       tags:
       - user
-      description: 'create a new user: 用户注册部分, 邮箱和手机号不能和已注册用户重复'
+      description: 用户注册部分, 邮箱和手机号不能和已注册用户重复
       operationId: UserController.UserRegister
       parameters:
       - in: body
         name: json
-        description: new users information for register
+        description: 要注册的用户信息
         required: true
         schema:
           $ref: '#/definitions/request.UserRegister'
@@ -285,7 +441,7 @@ paths:
     get:
       tags:
       - user
-      description: 'get a user info (profile): 根据用户id获取用户信息 (用户密码不会返回)'
+      description: 'get a user info (profile): 根据用户id获取用户基本信息 (用户密码不会返回)'
       operationId: UserController.GetUser
       parameters:
       - in: header
@@ -295,7 +451,7 @@ paths:
         type: string
       - in: path
         name: uid
-        description: user uuid
+        description: user 的 uuid
         required: true
         type: string
       responses:
@@ -371,7 +527,8 @@ paths:
     put:
       tags:
       - user
-      description: 'update user''s password: 更新用户密码 todo: 更新完成后退出当前登录 (注销 token)'
+      description: 'update user''s password: 更新用户密码(需要重新认证原密码) todo: 更新完成后退出当前登录 (注销
+        token)'
       operationId: UserController.UpdateUserPassword
       parameters:
       - in: header
@@ -381,7 +538,7 @@ paths:
         type: string
       - in: body
         name: json
-        description: old and new password
+        description: 需要填写旧密码和新密码
         required: true
         schema:
           $ref: '#/definitions/request.UserUpdatePassword'
@@ -393,23 +550,12 @@ paths:
         "400":
           description: '"invalid body data"'
 definitions:
-  895.0xc000408b10.false:
+  1260.0xc00048b590.false:
     title: "false"
     type: object
   field.DefaultField:
     title: DefaultField
     type: object
-  models.Object:
-    title: Object
-    type: object
-    properties:
-      ObjectId:
-        type: string
-      PlayerName:
-        type: string
-      Score:
-        type: integer
-        format: int64
   models.User:
     title: User
     type: object
@@ -447,6 +593,82 @@ definitions:
         type: string
       position:
         type: string
+  request.ChangeAssignment:
+    title: ChangeAssignment
+    type: object
+    properties:
+      assignment_id:
+        type: string
+      new_role:
+        type: integer
+        format: int64
+      operator:
+        type: string
+  request.CreateProject:
+    title: CreateProject
+    type: object
+    properties:
+      description:
+        type: string
+      grade_range:
+        type: array
+        items:
+          type: string
+      name:
+        type: string
+      requirement:
+        type: string
+      subjects:
+        type: array
+        items:
+          type: string
+      summary:
+        type: string
+      target:
+        type: string
+      user_id:
+        type: string
+  request.MakeAssignmentGroup:
+    title: MakeAssignmentGroup
+    type: object
+    properties:
+      admin:
+        type: array
+        items:
+          type: string
+      assistant:
+        type: array
+        items:
+          type: string
+      expert:
+        type: array
+        items:
+          type: string
+      operator:
+        type: string
+      out_experts:
+        type: array
+        items:
+          type: string
+      project_id:
+        type: string
+      teachers:
+        type: array
+        items:
+          type: string
+  request.MakeOneAssignment:
+    title: MakeOneAssignment
+    type: object
+    properties:
+      operator:
+        type: string
+      project_id:
+        type: string
+      role:
+        type: integer
+        format: int64
+      user_id:
+        type: string
   request.SearchFile:
     title: SearchFile
     type: object
@@ -458,6 +680,30 @@ definitions:
         items:
           type: string
       type:
+        type: string
+  request.UpdateProjectInfo:
+    title: UpdateProjectInfo
+    type: object
+    properties:
+      description:
+        type: string
+      grade_range:
+        type: array
+        items:
+          type: string
+      name:
+        type: string
+      project_id:
+        type: string
+      requirement:
+        type: string
+      subjects:
+        type: array
+        items:
+          type: string
+      summary:
+        type: string
+      target:
         type: string
   request.UserLogin:
     title: UserLogin
@@ -532,16 +778,13 @@ definitions:
     type: object
     properties:
       data:
-        $ref: '#/definitions/895.0xc000408b10.false'
+        $ref: '#/definitions/1260.0xc00048b590.false'
       message:
         type: string
       operation_code:
         type: integer
         format: int64
 tags:
-- name: demo
-  description: |
-    Operations about object
 - name: user
   description: |
     Operations about Users

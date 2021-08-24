@@ -32,11 +32,11 @@ func (f *FileController) respondJson(httpCode int, opCode int, message string, d
 }
 
 // @Title UploadFile
-// @Description upload a file, need use token to define the creater(owner)
+// @Description 文件上传, 使用post form格式上传, 会自动解析token获得对应的上传者id
 // @Param   token header string true "user token get at login"
-// @Param   filename formData file true "file user want to upload"
-// @Param   description formData string false "the details and comment of file to uploaded"
-// @Param   tags formData string false "file's tags"
+// @Param   filename formData file true "文件名"
+// @Param   description formData string false "文件注释和说明"
+// @Param   tags formData string false "文件标签"
 // @Success 200 {object} response.Default
 // @Failure 400 "invalid file"
 // @router / [post]
@@ -69,7 +69,7 @@ func (f *FileController) UploadFile() {
 }
 
 // @Title DownloadFile
-// @Description download a file by file id
+// @Description download a file by file id(根据文件id下载文件)
 // @Param   token header string true "user token get at login"
 // @Param   fid path string true "file uuid"
 // @Success 200 {object} response.Default
@@ -91,8 +91,8 @@ func (f *FileController) DownloadFile() {
 }
 
 // @Title GetFileInfo
-// @Description just get file information, do not download file
-// @Param   token header string false "user token get at login"
+// @Description 只获取文件信息, 不执行下载
+// @Param   token header string true "user token get at login"
 // @Param   fid path string true "file uuid"
 // @Success 200 {object} response.Default
 // @Failure 400 "invalid file uuid"
@@ -109,9 +109,9 @@ func (f *FileController) GetFileInfo() {
 }
 
 // @Title SearchFiles
-// @Description search files using conditions
-// @Param   token header string false "user token get at login"
-// @Param   json body request.SearchFile true "the search conditions"
+// @Description 条件搜素文件, 搜索结果 (待完善)
+// @Param   token header string true "user token get at login"
+// @Param   json body request.SearchFile true "搜索条件"
 // @Success 200 {object} response.Default
 // @Failure 400 "invalid conditions (parse body failed)"
 // @router /search [post]
@@ -129,8 +129,8 @@ func (f *FileController) SearchFiles() {
 }
 
 // @Title DeleteFile
-// @Description delete a file record in database (keep on the disk)
-// @Param   token header string false "user token get at login"
+// @Description 删除文件上传记录(不在磁盘存储中删除文件)
+// @Param   token header string true "user token get at login"
 // @Param   fid path string true "the file's uuid you want to delete"
 // @Success 200 {object} response.Default
 // @Failure 400 "invalid file id"

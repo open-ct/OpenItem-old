@@ -29,8 +29,8 @@ func (u *UserController) respondJson(httpCode int, opCode int, message string, d
 }
 
 // @Title UserRegister
-// @Description create a new user: 用户注册部分, 邮箱和手机号不能和已注册用户重复
-// @Param   json body request.UserRegister true "new users information for register"
+// @Description 用户注册部分, 邮箱和手机号不能和已注册用户重复
+// @Param   json body request.UserRegister true "要注册的用户信息"
 // @Success 200 {object} response.Default
 // @Failure 400 "parse body failed"
 // @router / [post]
@@ -47,7 +47,7 @@ func (u *UserController) UserRegister() {
 }
 
 // @Title GetAll
-// @Description get all Users
+// @Description get all Users (已废弃)
 // @Success 200 {array} []models.User
 // @router / [get]
 func (u *UserController) GetAll() {
@@ -56,9 +56,9 @@ func (u *UserController) GetAll() {
 }
 
 // @Title GetUser
-// @Description get a user info (profile): 根据用户id获取用户信息 (用户密码不会返回)
+// @Description get a user info (profile): 根据用户id获取用户基本信息 (用户密码不会返回)
 // @Param   token header string true "user token recived at login"
-// @Param   uid path string true "user uuid"
+// @Param   uid path string true "user 的 uuid"
 // @Success 200 {object} response.Default
 // @Failure 400 "invalid user id"
 // @router /:uid [get]
@@ -73,9 +73,9 @@ func (u *UserController) GetUser() {
 }
 
 // @Title UpdateUserInfo
-// @Description update user information: 更新用户信息 (主要提交post时必须所有选项都要填写, 没发生更改的应当填充原来的信息数据)
+// @Description 更新用户信息 (主要提交post时必须所有选项都要填写, 没发生更改的应当填充原来的信息数据)
 // @Param   token header string true "user token get at login"
-// @Param   json body request.UserUpdateInfo true "user informaition to updata"
+// @Param   json body request.UserUpdateInfo true "要更新的用户信息数据"
 // @Success 200 {object} response.Default
 // @Failure 400 "parse body error"
 // @router / [put]
@@ -128,9 +128,9 @@ func (u *UserController) UserLogin() {
 }
 
 // @Title UpdateUserPassword
-// @Description update user's password: 更新用户密码 todo: 更新完成后退出当前登录 (注销 token)
+// @Description update user's password: 更新用户密码(需要重新认证原密码) todo: 更新完成后退出当前登录 (注销 token)
 // @Param   token header string true "user token get at login"
-// @Param   json body request.UserUpdatePassword true "old and new password"
+// @Param   json body request.UserUpdatePassword true "需要填写旧密码和新密码"
 // @Success 200 {object} response.Default
 // @Failure 400 "invalid body data"
 // @router /password [put]
@@ -158,6 +158,7 @@ func (u *UserController) UserLogout() {
 		u.respondJson(http.StatusBadRequest, response.FAIL, "need token", uid)
 		return
 	}
+	// todo
 	u.respondJson(http.StatusOK, response.SUCCESS, "", uid)
 	return
 }

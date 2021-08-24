@@ -44,7 +44,7 @@ POST http://127.0.0.1:9001/review/user/login
 Content-Type: application/json
 
 {
-  "email": "robot1@openct.com",
+  "email": "testman-3@openct.com",
   "password": "123456"
 }
 
@@ -54,15 +54,15 @@ Content-Type: application/json
 
 {
   "degree": "本科",
-  "email": "robot2@openct.com",
+  "email": "testman-0@openct.com",
   "employer": "openct-community",
   "gender": true,
   "location": "china",
   "major": "program",
-  "name": "robot2",
+  "name": "test-man-0",
   "password": "123456",
-  "phone": "10000000002",
-  "position": "developer"
+  "phone": "11000000000",
+  "position": "test-man"
 }
 
 ###

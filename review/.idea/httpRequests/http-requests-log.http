@@ -2,6 +2,242 @@ POST http://127.0.0.1:9001/review/user/login
 Content-Type: application/json
 
 {
+  "email": "testman-3@openct.com",
+  "password": "123456"
+}
+
+<> 2021-08-24T175026.200.json
+
+###
+
+POST http://127.0.0.1:9001/review/user/login
+Content-Type: application/json
+
+{
+  "email": "testman-1@openct.com",
+  "password": "123456"
+}
+
+<> 2021-08-24T092901.200.json
+
+###
+
+POST http://127.0.0.1:9001/review/user
+Content-Type: application/json
+
+{
+  "degree": "本科",
+  "email": "testman-0@openct.com",
+  "employer": "openct-community",
+  "gender": true,
+  "location": "china",
+  "major": "program",
+  "name": "test-man-0",
+  "password": "123456",
+  "phone": "11000000000",
+  "position": "test-man"
+}
+
+<> 2021-08-24T085622.200.json
+
+###
+
+POST http://127.0.0.1:9001/review/user
+Content-Type: application/json
+
+{
+  "degree": "本科",
+  "email": "testman-9@openct.com",
+  "employer": "openct-community",
+  "gender": true,
+  "location": "china",
+  "major": "program",
+  "name": "test-man-9",
+  "password": "123456",
+  "phone": "11000000009",
+  "position": "test-man"
+}
+
+<> 2021-08-24T085607.200.json
+
+###
+
+POST http://127.0.0.1:9001/review/user
+Content-Type: application/json
+
+{
+  "degree": "本科",
+  "email": "testman-8@openct.com",
+  "employer": "openct-community",
+  "gender": true,
+  "location": "china",
+  "major": "program",
+  "name": "test-man-8",
+  "password": "123456",
+  "phone": "11000000008",
+  "position": "test-man"
+}
+
+<> 2021-08-24T085559.200.json
+
+###
+
+POST http://127.0.0.1:9001/review/user
+Content-Type: application/json
+
+{
+  "degree": "本科",
+  "email": "testman-7@openct.com",
+  "employer": "openct-community",
+  "gender": true,
+  "location": "china",
+  "major": "program",
+  "name": "test-man-7",
+  "password": "123456",
+  "phone": "11000000007",
+  "position": "test-man"
+}
+
+<> 2021-08-24T085550.200.json
+
+###
+
+POST http://127.0.0.1:9001/review/user
+Content-Type: application/json
+
+{
+  "degree": "本科",
+  "email": "testman-6@openct.com",
+  "employer": "openct-community",
+  "gender": true,
+  "location": "china",
+  "major": "program",
+  "name": "test-man-6",
+  "password": "123456",
+  "phone": "11000000006",
+  "position": "test-man"
+}
+
+<> 2021-08-24T085529.200.json
+
+###
+
+POST http://127.0.0.1:9001/review/user
+Content-Type: application/json
+
+{
+  "degree": "本科",
+  "email": "testman-5@openct.com",
+  "employer": "openct-community",
+  "gender": true,
+  "location": "china",
+  "major": "program",
+  "name": "test-man-5",
+  "password": "123456",
+  "phone": "11000000005",
+  "position": "test-man"
+}
+
+<> 2021-08-24T085520.200.json
+
+###
+
+POST http://127.0.0.1:9001/review/user
+Content-Type: application/json
+
+{
+  "degree": "本科",
+  "email": "testman-4@openct.com",
+  "employer": "openct-community",
+  "gender": true,
+  "location": "china",
+  "major": "program",
+  "name": "test-man-4",
+  "password": "123456",
+  "phone": "11000000004",
+  "position": "test-man"
+}
+
+<> 2021-08-24T085511.200.json
+
+###
+
+POST http://127.0.0.1:9001/review/user
+Content-Type: application/json
+
+{
+  "degree": "本科",
+  "email": "testman-3@openct.com",
+  "employer": "openct-community",
+  "gender": true,
+  "location": "china",
+  "major": "program",
+  "name": "test-man-3",
+  "password": "123456",
+  "phone": "11000000003",
+  "position": "test-man"
+}
+
+<> 2021-08-24T085502.200.json
+
+###
+
+POST http://127.0.0.1:9001/review/user
+Content-Type: application/json
+
+{
+  "degree": "本科",
+  "email": "testman-2@openct.com",
+  "employer": "openct-community",
+  "gender": true,
+  "location": "china",
+  "major": "program",
+  "name": "test-man-2",
+  "password": "123456",
+  "phone": "11000000002",
+  "position": "test-man"
+}
+
+<> 2021-08-24T085452.200.json
+
+###
+
+POST http://127.0.0.1:9001/review/user
+Content-Type: application/json
+
+{
+  "degree": "本科",
+  "email": "testman-1@openct.com",
+  "employer": "openct-community",
+  "gender": true,
+  "location": "china",
+  "major": "program",
+  "name": "test-man-1",
+  "password": "123456",
+  "phone": "11000000001",
+  "position": "test-man"
+}
+
+<> 2021-08-24T085435.200.json
+
+###
+
+POST http://127.0.0.1:9001/review/user/login
+Content-Type: application/json
+
+{
+  "email": "robot1@openct.com",
+  "password": "123456"
+}
+
+<> 2021-08-23T111250.200.json
+
+###
+
+POST http://127.0.0.1:9001/review/user/login
+Content-Type: application/json
+
+{
   "email": "robot1@openct.com",
   "password": "123456"
 }
@@ -456,204 +692,6 @@ Content-Type: application/json
 }
 
 <> 2021-08-19T170925.200.json
-
-###
-
-POST http://127.0.0.1:9001/review/user
-Content-Type: application/json
-
-{
-  "degree": "本科",
-  "email": "robot1@openct.com",
-  "employer": "openct-community",
-  "gender": true,
-  "location": "china",
-  "major": "program",
-  "name": "robot1",
-  "password": "123456",
-  "phone": "10000000001",
-  "position": "developer"
-}
-
-<> 2021-08-19T170309.200.json
-
-###
-
-PUT http://127.0.0.1:9001/review/user
-Content-Type: application/json
-
-{
-  "degree": "本科",
-  "email": "robot1@openct.com",
-  "employer": "openct-community",
-  "gender": true,
-  "location": "china",
-  "major": "program",
-  "name": "robot1",
-  "password": "123456",
-  "phone": "10000000001",
-  "position": "developer"
-}
-
-<> 2021-08-19T170231.200.json
-
-###
-
-PUT http://127.0.0.1:9001/review/user
-Content-Type: application/json
-
-{
-  "degree": "本科",
-  "email": "robot1@openct.com",
-  "employer": "openct-community",
-  "gender": true,
-  "location": "china",
-  "major": "program",
-  "name": "robot1",
-  "password": "123456",
-  "phone": "10000000001",
-  "position": "developer"
-}
-
-<> 2021-08-19T170212.200.json
-
-###
-
-PUT http://127.0.0.1:9001/review/user
-Content-Type: application/json
-
-{
-  "degree": "本科",
-  "email": "robot1@openct.com",
-  "employer": "openct-community",
-  "gender": true,
-  "location": "china",
-  "major": "program",
-  "name": "robot1",
-  "password": "123456",
-  "phone": "10000000001",
-  "position": "developer"
-}
-
-<> 2021-08-19T165944.200.json
-
-###
-
-PUT http://127.0.0.1:9001/review/user
-Content-Type: application/json
-
-{
-  "degree": "本科",
-  "email": "robot1@openct.com",
-  "employer": "openct-community",
-  "gender": true,
-  "location": "china",
-  "major": "program",
-  "name": "robot1",
-  "password": "123456",
-  "phone": "10000000001",
-  "position": "developer"
-}
-
-<> 2021-08-19T165600.404.html
-
-###
-
-PUT http://127.0.0.1:9001/review/user/
-Content-Type: application/json
-
-{
-  "degree": "本科",
-  "email": "robot1@openct.com",
-  "employer": "openct-community",
-  "gender": true,
-  "location": "china",
-  "major": "program",
-  "name": "robot1",
-  "password": "123456",
-  "phone": "10000000001",
-  "position": "developer"
-}
-
-<> 2021-08-19T165549.404.html
-
-###
-
-POST http://127.0.0.1:9001/review/user/
-Content-Type: application/json
-
-{
-  "degree": "本科",
-  "email": "robot1@openct.com",
-  "employer": "openct-community",
-  "gender": true,
-  "location": "china",
-  "major": "program",
-  "name": "robot1",
-  "password": "123456",
-  "phone": "10000000001",
-  "position": "developer"
-}
-
-<> 2021-08-19T165444.404.html
-
-###
-
-POST http://localhost:9001/review/user/
-Content-Type: application/json
-
-{
-  "degree": "本科",
-  "email": "robot1@openct.com",
-  "employer": "openct-community",
-  "gender": true,
-  "location": "china",
-  "major": "program",
-  "name": "robot1",
-  "password": "123456",
-  "phone": "10000000001",
-  "position": "developer"
-}
-
-<> 2021-08-19T165423.404.html
-
-###
-
-POST http://localhost:9001
-Content-Type: application/json
-
-{
-  "degree": "本科",
-  "email": "robot1@openct.com",
-  "employer": "openct-community",
-  "gender": true,
-  "location": "china",
-  "major": "program",
-  "name": "robot1",
-  "password": "123456",
-  "phone": "10000000001",
-  "position": "developer"
-}
-
-<> 2021-08-19T165001.404.html
-
-###
-
-POST http://localhost:900
-Content-Type: application/json
-
-{
-  "degree": "本科",
-  "email": "robot1@openct.com",
-  "employer": "openct-community",
-  "gender": true,
-  "location": "china",
-  "major": "program",
-  "name": "robot1",
-  "password": "123456",
-  "phone": "10000000001",
-  "position": "developer"
-}
 
 ###
 
