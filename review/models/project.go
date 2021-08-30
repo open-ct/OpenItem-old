@@ -70,9 +70,9 @@ type ProjectFullInfo struct {
 	Materials ProjectMaterials `json:"materials" bson:"materials"`
 	// todo:
 	//Steps
-	//Tasks
-	//References
-	//Reviews
+	//Submits
+	//Audits
+	//
 }
 
 /*
@@ -197,6 +197,55 @@ func GetProjectBasicInfo(pid string) (*Project, int) {
 	return &p, response.SUCCESS
 }
 
-func GetProjectFullInfo(pid string) {
+// todo:
+func GetProjectFullInfo(pid string) (map[string]interface{}, int) {
+	projectInfo := make(map[string]interface{})
+	basicInfo, res := GetProjectBasicInfo(pid)
+	if res > 1000 {
+		return nil, response.ProjectGetInfoFail
+	}
+	projectInfo["basic_info"] = basicInfo
+	// get group
+	projectGroup, res := GetProjectAssignment(pid)
+	if res > 1000 {
+		return nil, response.ProjectGetInfoFail
+	}
+	projectInfo["group"] = projectGroup
+	// get steps & all references
+	projectSteps := []Step{}
 
+	err := database.MgoSteps.Find(context.Background(), bson.M{
+		"project_id": pid,
+	}).All(&projectSteps)
+	if err != nil {
+		return nil, response.ProjectGetInfoFail
+	}
+	projectInfo["steps"] = projectSteps
+	// find in submit
+	var projectMaterials ProjectMaterials
+	for _, step := range projectSteps {
+		submits := []Submit{}
+		err := database.MgoSubmits.Find(context.Background(), bson.M{
+			"step_id": step.Uuid,
+		}).All(&submits)
+		if err != nil {
+			return nil, response.ProjectGetInfoFail
+		}
+		for _, submit := range submits {
+			for _, content := range submit.Contents {
+				if content.Type == 0 {
+					projectMaterials.Files = append(projectMaterials.Files, content.ItemId)
+				}
+				if content.Type == 1 {
+					projectMaterials.Questions = append(projectMaterials.Questions, content.ItemId)
+				}
+				if content.Type == 2 {
+					projectMaterials.ExamPapers = append(projectMaterials.ExamPapers, content.ItemId)
+				}
+			}
+		}
+	}
+	projectInfo["materials"] = projectMaterials
+
+	return projectInfo, response.SUCCESS
 }

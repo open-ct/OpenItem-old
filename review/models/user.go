@@ -26,19 +26,21 @@ type User struct {
 }
 
 type UserProfile struct {
-	Name     string `json:"name" bson:"name" `
-	Age      int    `json:"age" bson:"age"`
-	Locaion  string `json:"locaion" bson:"locaion"`
-	Email    string `json:"email" bson:"email" validate:"required"`
-	Phone    string `json:"phone" bson:"phone" validate:"required"`
-	Gender   bool   `json:"gender" bson:"gender" `
-	Degree   string `json:"degree" bson:"degree" `
-	Position string `json:"position" bson:"position" `
-	Employer string `json:"employer" bson:"employer" `
-	Major    string `json:"major" bson:"major"`
+	Name         string `json:"name" bson:"name" `
+	Age          int    `json:"age" bson:"age"`
+	Locaion      string `json:"locaion" bson:"locaion"`
+	Email        string `json:"email" bson:"email" validate:"required"`
+	Phone        string `json:"phone" bson:"phone" validate:"required"`
+	Gender       bool   `json:"gender" bson:"gender" `
+	Organization string `json:"organization" bson:"organization"`
+	Degree       string `json:"degree" bson:"degree" `
+	Position     string `json:"position" bson:"position" `
+	Employer     string `json:"employer" bson:"employer" `
+	Major        string `json:"major" bson:"major"`
 }
 
 func init() {
+	database.MgoUsers.DropAllIndexes(context.Background())
 	// create the index of user in mongo db.
 	err := database.MgoUsers.CreateIndexes(
 		context.Background(),

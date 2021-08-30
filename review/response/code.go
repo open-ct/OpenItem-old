@@ -40,4 +40,28 @@ var (
 	AssignmentChangeFail     = 2313
 	AssignmentDeleteFail     = 2314
 	AssignConfirmFail        = 2315
+
+	// project-step operations
+	StepCreateFail          = 2320
+	StepAddAttachmentsFail  = 2321
+	StepUpdateInfoFail      = 2322
+	StepChangeStatusFail    = 2323
+	StepGetInfoFail         = 2324
+	StepSetTimePointFail    = 2325
+	StepDeleteTimePointFail = 2326
+	StepDeleteFail          = 2327
+	StepGetStatisticFail    = 2328
+
+	// project-submit operations
+	SubmitGetInfoFail  = 2330
+	SubmitCreateFail   = 2331
+	SubmitUpdateFail   = 2332
+	SubmitWithdrawFail = 2333
+	SubmitDeleteFail   = 2334
+
+	// project-audit operations
+	AuditGetInfoFail = 2340
+	AuditCreateFail  = 2341
+	AuditCorrectFail = 2342
+	AuditDeleteFail  = 2343
 )

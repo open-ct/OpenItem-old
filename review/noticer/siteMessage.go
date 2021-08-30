@@ -1,0 +1,3 @@
+package noticer
+
+// site message

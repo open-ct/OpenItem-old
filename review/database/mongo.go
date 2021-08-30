@@ -18,7 +18,8 @@ type MongoCollections struct {
 	Steps       string
 	Tasks       string
 	FileRecords string
-	References  string
+	Submits     string
+	Audits      string
 
 	TempQuestions  string
 	FinalQuestions string
@@ -35,7 +36,8 @@ var (
 	MgoTasks          *qmgo.Collection
 	MgoAssignments    *qmgo.Collection
 	MgoFileRecords    *qmgo.Collection
-	MgoReferences     *qmgo.Collection
+	MgoSubmits        *qmgo.Collection
+	MgoAudits         *qmgo.Collection
 	MgoTempQuestions  *qmgo.Collection
 	MgoFinalQuestions *qmgo.Collection
 	MgoTempTestPaper  *qmgo.Collection
@@ -103,7 +105,8 @@ func init() {
 	MgoTasks = qmgoClient.Database(mongoDbName).Collection(mongoColls.Tasks)
 	MgoAssignments = qmgoClient.Database(mongoDbName).Collection(mongoColls.Assignments)
 	MgoFileRecords = qmgoClient.Database(mongoDbName).Collection(mongoColls.FileRecords)
-	MgoReferences = qmgoClient.Database(mongoDbName).Collection(mongoColls.References)
+	MgoSubmits = qmgoClient.Database(mongoDbName).Collection(mongoColls.Submits)
+	MgoAudits = qmgoClient.Database(mongoDbName).Collection(mongoColls.Audits)
 	MgoTempQuestions = qmgoClient.Database(mongoDbName).Collection(mongoColls.TempQuestions)
 	MgoFinalQuestions = qmgoClient.Database(mongoDbName).Collection(mongoColls.FinalQuestions)
 	MgoTempTestPaper = qmgoClient.Database(mongoDbName).Collection(mongoColls.TempTestPapers)
@@ -149,7 +152,17 @@ func loadMongoCollectionsName() (*MongoCollections, error) {
 		logger.Recorder.Error("[Mongo Config] " + err.Error())
 		return nil, err
 	}
-	ref, err := beego.AppConfig.String("mongo-collections::references")
+	//ref, err := beego.AppConfig.String("mongo-collections::references")
+	//if err != nil {
+	//	logger.Recorder.Error("[Mongo Config] " + err.Error())
+	//	return nil, err
+	//}
+	sub, err := beego.AppConfig.String("mongo-collections::submits")
+	if err != nil {
+		logger.Recorder.Error("[Mongo Config] " + err.Error())
+		return nil, err
+	}
+	audit, err := beego.AppConfig.String("mongo-collections::audits")
 	if err != nil {
 		logger.Recorder.Error("[Mongo Config] " + err.Error())
 		return nil, err
@@ -182,7 +195,8 @@ func loadMongoCollectionsName() (*MongoCollections, error) {
 		Steps:          steps,
 		Tasks:          tasks,
 		FileRecords:    fileRec,
-		References:     ref,
+		Submits:        sub,
+		Audits:         audit,
 		TempQuestions:  tempQ,
 		FinalQuestions: finalQ,
 		TempTestPapers: tempTP,

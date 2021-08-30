@@ -54,15 +54,6 @@ func init() {
 
 	beego.GlobalControllerRouter["review/controllers:ProjectController"] = append(beego.GlobalControllerRouter["review/controllers:ProjectController"],
 		beego.ControllerComments{
-			Method:           "CreateEmptyProject",
-			Router:           "/",
-			AllowHTTPMethods: []string{"post"},
-			MethodParams:     param.Make(),
-			Filters:          nil,
-			Params:           nil})
-
-	beego.GlobalControllerRouter["review/controllers:ProjectController"] = append(beego.GlobalControllerRouter["review/controllers:ProjectController"],
-		beego.ControllerComments{
 			Method:           "UpdateProjectInfo",
 			Router:           "/",
 			AllowHTTPMethods: []string{"put"},
@@ -72,8 +63,8 @@ func init() {
 
 	beego.GlobalControllerRouter["review/controllers:ProjectController"] = append(beego.GlobalControllerRouter["review/controllers:ProjectController"],
 		beego.ControllerComments{
-			Method:           "MakeOneAssignment",
-			Router:           "/assign",
+			Method:           "CreateEmptyProject",
+			Router:           "/",
 			AllowHTTPMethods: []string{"post"},
 			MethodParams:     param.Make(),
 			Filters:          nil,
@@ -84,6 +75,15 @@ func init() {
 			Method:           "ChangeAssignment",
 			Router:           "/assign",
 			AllowHTTPMethods: []string{"patch"},
+			MethodParams:     param.Make(),
+			Filters:          nil,
+			Params:           nil})
+
+	beego.GlobalControllerRouter["review/controllers:ProjectController"] = append(beego.GlobalControllerRouter["review/controllers:ProjectController"],
+		beego.ControllerComments{
+			Method:           "MakeOneAssignment",
+			Router:           "/assign",
+			AllowHTTPMethods: []string{"post"},
 			MethodParams:     param.Make(),
 			Filters:          nil,
 			Params:           nil})
@@ -117,6 +117,51 @@ func init() {
 
 	beego.GlobalControllerRouter["review/controllers:ProjectController"] = append(beego.GlobalControllerRouter["review/controllers:ProjectController"],
 		beego.ControllerComments{
+			Method:           "DeleteAudit",
+			Router:           "/audit",
+			AllowHTTPMethods: []string{"delete"},
+			MethodParams:     param.Make(),
+			Filters:          nil,
+			Params:           nil})
+
+	beego.GlobalControllerRouter["review/controllers:ProjectController"] = append(beego.GlobalControllerRouter["review/controllers:ProjectController"],
+		beego.ControllerComments{
+			Method:           "CreateOneAudit",
+			Router:           "/audit",
+			AllowHTTPMethods: []string{"post"},
+			MethodParams:     param.Make(),
+			Filters:          nil,
+			Params:           nil})
+
+	beego.GlobalControllerRouter["review/controllers:ProjectController"] = append(beego.GlobalControllerRouter["review/controllers:ProjectController"],
+		beego.ControllerComments{
+			Method:           "CorrectAudit",
+			Router:           "/audit",
+			AllowHTTPMethods: []string{"put"},
+			MethodParams:     param.Make(),
+			Filters:          nil,
+			Params:           nil})
+
+	beego.GlobalControllerRouter["review/controllers:ProjectController"] = append(beego.GlobalControllerRouter["review/controllers:ProjectController"],
+		beego.ControllerComments{
+			Method:           "GetOneAudit",
+			Router:           "/audit/:auditId",
+			AllowHTTPMethods: []string{"get"},
+			MethodParams:     param.Make(),
+			Filters:          nil,
+			Params:           nil})
+
+	beego.GlobalControllerRouter["review/controllers:ProjectController"] = append(beego.GlobalControllerRouter["review/controllers:ProjectController"],
+		beego.ControllerComments{
+			Method:           "GetAuditsInSubmit",
+			Router:           "/audits/:submitId",
+			AllowHTTPMethods: []string{"get"},
+			MethodParams:     param.Make(),
+			Filters:          nil,
+			Params:           nil})
+
+	beego.GlobalControllerRouter["review/controllers:ProjectController"] = append(beego.GlobalControllerRouter["review/controllers:ProjectController"],
+		beego.ControllerComments{
 			Method:           "GetBasicInfo",
 			Router:           "/basic/:pid",
 			AllowHTTPMethods: []string{"get"},
@@ -128,6 +173,159 @@ func init() {
 		beego.ControllerComments{
 			Method:           "MakeAssignmentGroup",
 			Router:           "/group",
+			AllowHTTPMethods: []string{"post"},
+			MethodParams:     param.Make(),
+			Filters:          nil,
+			Params:           nil})
+
+	beego.GlobalControllerRouter["review/controllers:ProjectController"] = append(beego.GlobalControllerRouter["review/controllers:ProjectController"],
+		beego.ControllerComments{
+			Method:           "CreateOneStep",
+			Router:           "/step",
+			AllowHTTPMethods: []string{"post"},
+			MethodParams:     param.Make(),
+			Filters:          nil,
+			Params:           nil})
+
+	beego.GlobalControllerRouter["review/controllers:ProjectController"] = append(beego.GlobalControllerRouter["review/controllers:ProjectController"],
+		beego.ControllerComments{
+			Method:           "UpdateStepInfo",
+			Router:           "/step",
+			AllowHTTPMethods: []string{"put"},
+			MethodParams:     param.Make(),
+			Filters:          nil,
+			Params:           nil})
+
+	beego.GlobalControllerRouter["review/controllers:ProjectController"] = append(beego.GlobalControllerRouter["review/controllers:ProjectController"],
+		beego.ControllerComments{
+			Method:           "DeleteStep",
+			Router:           "/step/:stepId",
+			AllowHTTPMethods: []string{"delete"},
+			MethodParams:     param.Make(),
+			Filters:          nil,
+			Params:           nil})
+
+	beego.GlobalControllerRouter["review/controllers:ProjectController"] = append(beego.GlobalControllerRouter["review/controllers:ProjectController"],
+		beego.ControllerComments{
+			Method:           "GetOneStepInfo",
+			Router:           "/step/:stepId",
+			AllowHTTPMethods: []string{"get"},
+			MethodParams:     param.Make(),
+			Filters:          nil,
+			Params:           nil})
+
+	beego.GlobalControllerRouter["review/controllers:ProjectController"] = append(beego.GlobalControllerRouter["review/controllers:ProjectController"],
+		beego.ControllerComments{
+			Method:           "UploadStepAttachment",
+			Router:           "/step/attachment",
+			AllowHTTPMethods: []string{"post"},
+			MethodParams:     param.Make(),
+			Filters:          nil,
+			Params:           nil})
+
+	beego.GlobalControllerRouter["review/controllers:ProjectController"] = append(beego.GlobalControllerRouter["review/controllers:ProjectController"],
+		beego.ControllerComments{
+			Method:           "SetStepStatus",
+			Router:           "/step/status",
+			AllowHTTPMethods: []string{"put"},
+			MethodParams:     param.Make(),
+			Filters:          nil,
+			Params:           nil})
+
+	beego.GlobalControllerRouter["review/controllers:ProjectController"] = append(beego.GlobalControllerRouter["review/controllers:ProjectController"],
+		beego.ControllerComments{
+			Method:           "SetStepTimePoint",
+			Router:           "/step/timepoint",
+			AllowHTTPMethods: []string{"put"},
+			MethodParams:     param.Make(),
+			Filters:          nil,
+			Params:           nil})
+
+	beego.GlobalControllerRouter["review/controllers:ProjectController"] = append(beego.GlobalControllerRouter["review/controllers:ProjectController"],
+		beego.ControllerComments{
+			Method:           "DeleteStepTimePoint",
+			Router:           "/step/timepoint",
+			AllowHTTPMethods: []string{"delete"},
+			MethodParams:     param.Make(),
+			Filters:          nil,
+			Params:           nil})
+
+	beego.GlobalControllerRouter["review/controllers:ProjectController"] = append(beego.GlobalControllerRouter["review/controllers:ProjectController"],
+		beego.ControllerComments{
+			Method:           "GetStepsInProject",
+			Router:           "/steps/:pid",
+			AllowHTTPMethods: []string{"get"},
+			MethodParams:     param.Make(),
+			Filters:          nil,
+			Params:           nil})
+
+	beego.GlobalControllerRouter["review/controllers:ProjectController"] = append(beego.GlobalControllerRouter["review/controllers:ProjectController"],
+		beego.ControllerComments{
+			Method:           "MakeOneSubmit",
+			Router:           "/submit",
+			AllowHTTPMethods: []string{"post"},
+			MethodParams:     param.Make(),
+			Filters:          nil,
+			Params:           nil})
+
+	beego.GlobalControllerRouter["review/controllers:ProjectController"] = append(beego.GlobalControllerRouter["review/controllers:ProjectController"],
+		beego.ControllerComments{
+			Method:           "SetSubmitStatus",
+			Router:           "/submit",
+			AllowHTTPMethods: []string{"put"},
+			MethodParams:     param.Make(),
+			Filters:          nil,
+			Params:           nil})
+
+	beego.GlobalControllerRouter["review/controllers:ProjectController"] = append(beego.GlobalControllerRouter["review/controllers:ProjectController"],
+		beego.ControllerComments{
+			Method:           "GetOneSubmit",
+			Router:           "/submit/:submitId",
+			AllowHTTPMethods: []string{"get"},
+			MethodParams:     param.Make(),
+			Filters:          nil,
+			Params:           nil})
+
+	beego.GlobalControllerRouter["review/controllers:ProjectController"] = append(beego.GlobalControllerRouter["review/controllers:ProjectController"],
+		beego.ControllerComments{
+			Method:           "DeleteSubmit",
+			Router:           "/submit/:submitId",
+			AllowHTTPMethods: []string{"delete"},
+			MethodParams:     param.Make(),
+			Filters:          nil,
+			Params:           nil})
+
+	beego.GlobalControllerRouter["review/controllers:ProjectController"] = append(beego.GlobalControllerRouter["review/controllers:ProjectController"],
+		beego.ControllerComments{
+			Method:           "AppendContentInStep",
+			Router:           "/submit/content",
+			AllowHTTPMethods: []string{"post"},
+			MethodParams:     param.Make(),
+			Filters:          nil,
+			Params:           nil})
+
+	beego.GlobalControllerRouter["review/controllers:ProjectController"] = append(beego.GlobalControllerRouter["review/controllers:ProjectController"],
+		beego.ControllerComments{
+			Method:           "WithdrawContentInStep",
+			Router:           "/submit/content",
+			AllowHTTPMethods: []string{"delete"},
+			MethodParams:     param.Make(),
+			Filters:          nil,
+			Params:           nil})
+
+	beego.GlobalControllerRouter["review/controllers:ProjectController"] = append(beego.GlobalControllerRouter["review/controllers:ProjectController"],
+		beego.ControllerComments{
+			Method:           "GetSubmitsInStep",
+			Router:           "/submits/:stepId",
+			AllowHTTPMethods: []string{"get"},
+			MethodParams:     param.Make(),
+			Filters:          nil,
+			Params:           nil})
+
+	beego.GlobalControllerRouter["review/controllers:ProjectController"] = append(beego.GlobalControllerRouter["review/controllers:ProjectController"],
+		beego.ControllerComments{
+			Method:           "GetUserSubmitInStep",
+			Router:           "/submits/user",
 			AllowHTTPMethods: []string{"post"},
 			MethodParams:     param.Make(),
 			Filters:          nil,
