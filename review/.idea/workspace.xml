@@ -4,28 +4,9 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e43682a1-e80b-47da-ad31-77747a1df769" name="Changes" comment="feat (file basic operation)&#10;&#10;1. project: create / update / get information;&#10;2. assignment: assign someone / group to a project;&#10;3. assignment: delete / confirm / change role ;">
-      <change afterPath="$PROJECT_DIR$/conf/mail.conf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/controllers/audit.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/controllers/step.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/controllers/submit.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/audit.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/step.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/submit.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/noticer/mail.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/noticer/siteMessage.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/response/listquery.go" afterDir="false" />
+    <list default="true" id="e43682a1-e80b-47da-ad31-77747a1df769" name="Changes" comment="feat (project operations)&#10;&#10;1. step.go&#10;2. submit.go&#10;3. audit.go">
+      <change afterPath="$PROJECT_DIR$/query/query.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/conf/mongo.conf" beforeDir="false" afterPath="$PROJECT_DIR$/conf/mongo.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/mongo.go" beforeDir="false" afterPath="$PROJECT_DIR$/database/mongo.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/project.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/project.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/request/project.go" beforeDir="false" afterPath="$PROJECT_DIR$/request/project.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/response/code.go" beforeDir="false" afterPath="$PROJECT_DIR$/response/code.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routers/commentsRouter_controllers.go" beforeDir="false" afterPath="$PROJECT_DIR$/routers/commentsRouter_controllers.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/swagger/swagger.json" beforeDir="false" afterPath="$PROJECT_DIR$/swagger/swagger.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/swagger/swagger.yml" beforeDir="false" afterPath="$PROJECT_DIR$/swagger/swagger.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/quickquery.go" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,23 +55,6 @@
     <property name="settings.editor.selected.configurable" value="editing.templates" />
   </component>
   <component name="RunManager" selected="HTTP Request.user-test#6">
-    <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
-      <module name="review" />
-      <working_directory value="$PROJECT_DIR$" />
-      <kind value="FILE" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$" />
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="GoTestRunConfiguration" factoryName="Go Test">
-      <module name="review" />
-      <working_directory value="$PROJECT_DIR$" />
-      <kind value="DIRECTORY" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$" />
-      <framework value="gotest" />
-      <method v="2" />
-    </configuration>
     <configuration name="user-test#1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" path="$PROJECT_DIR$/tests/user-test.http" runType="Run single request">
       <method v="2" />
     </configuration>
@@ -137,7 +101,8 @@
     <MESSAGE value="refactor (review module)&#10;&#10;1. use &quot;beego api&quot; to create an api project;&#10;2. use swagger document (visit http://localhost:9001/swagger or online-host/swagger) to get api document,&#10;3. user api has been finished.&#10;4. add go.mod" />
     <MESSAGE value="feat (file basic operation)&#10;&#10;1. finish the file upload / download / search / delete / get APIs." />
     <MESSAGE value="feat (file basic operation)&#10;&#10;1. project: create / update / get information;&#10;2. assignment: assign someone / group to a project;&#10;3. assignment: delete / confirm / change role ;" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat (file basic operation)&#10;&#10;1. project: create / update / get information;&#10;2. assignment: assign someone / group to a project;&#10;3. assignment: delete / confirm / change role ;" />
+    <MESSAGE value="feat (project operations)&#10;&#10;1. step.go&#10;2. submit.go&#10;3. audit.go" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat (project operations)&#10;&#10;1. step.go&#10;2. submit.go&#10;3. audit.go" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
