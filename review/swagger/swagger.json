@@ -1629,7 +1629,7 @@
         }
     },
     "definitions": {
-        "1873.0xc0004ae5a0.false": {
+        "1873.0xc00045e660.false": {
             "title": "false",
             "type": "object"
         },
@@ -2220,7 +2220,7 @@
             "type": "object",
             "properties": {
                 "data": {
-                    "$ref": "#/definitions/1873.0xc0004ae5a0.false"
+                    "$ref": "#/definitions/1873.0xc00045e660.false"
                 },
                 "message": {
                     "type": "string"

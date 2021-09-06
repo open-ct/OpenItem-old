@@ -23,6 +23,8 @@ type FileItem struct {
 	Name               string   `json:"name" bson:"name"`
 	Type               string   `json:"type" bson:"type"`
 	Base               string   `json:"base" bson:"base"`
+	IsPublic           bool     `json:"is_public" bson:"is_public"`
+	Belongs            []string `json:"belongs" bson:"belongs"`
 	Description        string   `json:"description" bson:"description"`
 	Tags               []string `json:"tags" bson:"tags"`
 	Path               string   `json:"path" bson:"path"`
@@ -70,6 +72,8 @@ func CreateNewFileRecord(req *request.UploadFile) (*FileItem, int) {
 		Name:        req.FileName,
 		Type:        req.Type,
 		Base:        "root",
+		IsPublic: req.IsPublic,
+		Belongs: req.Belongs,
 		Description: req.Description,
 		Tags:        req.Tags,
 		Path:        genFilesPath(fileUuid, req.Type),
@@ -99,19 +103,22 @@ func GetFileInfo(fileUuid string) (*FileItem, int) {
 func SearchFiles(searchReq *request.SearchFile) (*[]FileItem, int) {
 	// operations
 	var files []FileItem
-	filter := bson.M{}
+	filter := []bson.M{}
+
 	if searchReq.FileName != "" {
-		filter["name"] = searchReq.FileName
+		filter = append(filter, bson.M{
+			"file_name": searchReq.Type,
+		})
 	}
 	if searchReq.Type != "" {
-		filter["type"] = searchReq.Type
+		filter = append(filter, bson.M{
+			"type": searchReq.Type,
+		})
 	}
-	if searchReq.Tags != nil {
-		filter["tag"] = bson.M{
-			"$all": searchReq.Tags,
-		}
+	searchFilter := bson.M{
+		"$or":filter,
 	}
-	err := database.MgoFileRecords.Find(context.Background(), filter).All(&files)
+	err := database.MgoFileRecords.Find(context.Background(), searchFilter).All(&files)
 	if err != nil {
 		logger.Recorder.Error("[Mongo Search File] " + err.Error())
 		return nil, response.DatabaseNoRecord

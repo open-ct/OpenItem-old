@@ -9,6 +9,8 @@ type UploadFile struct {
 	UserId      string   `json:"user_id"`
 	FileName    string   `json:"file_name"`
 	Type        string   `json:"type"`
+	IsPublic bool `json:"is_public"`
+	Belongs []string `json:"belongs"` // project id
 	Description string   `json:"description"`
 	Tags        []string `json:"tags"`
 }
