@@ -340,6 +340,69 @@ func init() {
 			Filters:          nil,
 			Params:           nil})
 
+	beego.GlobalControllerRouter["review/controllers:QueryController"] = append(beego.GlobalControllerRouter["review/controllers:QueryController"],
+		beego.ControllerComments{
+			Method:           "GetAssignmentList",
+			Router:           "/assign",
+			AllowHTTPMethods: []string{"get"},
+			MethodParams:     param.Make(),
+			Filters:          nil,
+			Params:           nil})
+
+	beego.GlobalControllerRouter["review/controllers:QueryController"] = append(beego.GlobalControllerRouter["review/controllers:QueryController"],
+		beego.ControllerComments{
+			Method:           "GetAuditList",
+			Router:           "/audit",
+			AllowHTTPMethods: []string{"get"},
+			MethodParams:     param.Make(),
+			Filters:          nil,
+			Params:           nil})
+
+	beego.GlobalControllerRouter["review/controllers:QueryController"] = append(beego.GlobalControllerRouter["review/controllers:QueryController"],
+		beego.ControllerComments{
+			Method:           "GetFilesList",
+			Router:           "/file",
+			AllowHTTPMethods: []string{"get"},
+			MethodParams:     param.Make(),
+			Filters:          nil,
+			Params:           nil})
+
+	beego.GlobalControllerRouter["review/controllers:QueryController"] = append(beego.GlobalControllerRouter["review/controllers:QueryController"],
+		beego.ControllerComments{
+			Method:           "GetProjectList",
+			Router:           "/proj",
+			AllowHTTPMethods: []string{"get"},
+			MethodParams:     param.Make(),
+			Filters:          nil,
+			Params:           nil})
+
+	beego.GlobalControllerRouter["review/controllers:QueryController"] = append(beego.GlobalControllerRouter["review/controllers:QueryController"],
+		beego.ControllerComments{
+			Method:           "GetStepList",
+			Router:           "/step",
+			AllowHTTPMethods: []string{"get"},
+			MethodParams:     param.Make(),
+			Filters:          nil,
+			Params:           nil})
+
+	beego.GlobalControllerRouter["review/controllers:QueryController"] = append(beego.GlobalControllerRouter["review/controllers:QueryController"],
+		beego.ControllerComments{
+			Method:           "GetSubmitList",
+			Router:           "/submit",
+			AllowHTTPMethods: []string{"get"},
+			MethodParams:     param.Make(),
+			Filters:          nil,
+			Params:           nil})
+
+	beego.GlobalControllerRouter["review/controllers:QueryController"] = append(beego.GlobalControllerRouter["review/controllers:QueryController"],
+		beego.ControllerComments{
+			Method:           "GetUserList",
+			Router:           "/user",
+			AllowHTTPMethods: []string{"get"},
+			MethodParams:     param.Make(),
+			Filters:          nil,
+			Params:           nil})
+
 	beego.GlobalControllerRouter["review/controllers:UserController"] = append(beego.GlobalControllerRouter["review/controllers:UserController"],
 		beego.ControllerComments{
 			Method:           "UserRegister",

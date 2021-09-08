@@ -7,6 +7,7 @@ require github.com/beego/beego/v2 v2.0.1
 require (
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/mitchellh/mapstructure v1.4.1 // indirect
+	github.com/qiniu/qmgo v1.0.3
 	github.com/smartystreets/goconvey v1.6.4
 	github.com/stretchr/testify v1.7.0 // indirect
 	go.mongodb.org/mongo-driver v1.7.2

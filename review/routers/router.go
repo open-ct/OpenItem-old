@@ -30,6 +30,11 @@ func init() {
 				&controllers.ProjectController{},
 			),
 		),
+		beego.NSNamespace("/query",
+			beego.NSInclude(
+				&controllers.QueryController{},
+			),
+		),
 	)
 	beego.AddNamespace(ns)
 }

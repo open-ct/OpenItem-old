@@ -4,34 +4,26 @@ import (
 	"context"
 	"fmt"
 	beego "github.com/beego/beego/v2/server/web"
-	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
+	"github.com/qiniu/qmgo"
 	"warehouse/logger"
 )
 
-// In this part of PQBS, using official mongo driver to connect the mongoDB
-
-type MongoDB struct {
-	Client       *mongo.Client
-	DatabaseName string
+// MongoCollections mongoDB collections name struct:
+type MongoCollections struct {
+	TempQuestions  string
+	FinalQuestions string
+	TempTestPapers string
+	FinalTestPaper string
 }
 
-type MongoConfig struct {
-	Host         string
-	Port         int
-	DatabaseName string
-	User         string
-	Password     string
-}
-
+// MongoClient qmgo 驱动配置
+var MongoClient *qmgo.Client
 var (
-	TempQuestion   *mongo.Collection
-	FinalQuestion  *mongo.Collection
-	TempTestPaper  *mongo.Collection
-	FinalTestPaper *mongo.Collection
+	MgoTempQuestions  *qmgo.Collection
+	MgoFinalQuestions *qmgo.Collection
+	MgoTempTestPaper  *qmgo.Collection
+	MgoFinalTestPaper *qmgo.Collection
 )
-
-var Mongo MongoDB
 
 func init() {
 	// 基本配置加载
@@ -56,87 +48,80 @@ func init() {
 		fmt.Println("Load mongo config error:", err.Error())
 	}
 
+	// 配置 collections name, 若配置失败, 不连接 mongo 直接返回
+	mongoColls, err := loadMongoCollectionsName()
+	if err != nil {
+		fmt.Println("Load mongo collections config error: ", err.Error())
+		return
+	}
+
+	// 配置完成后再开启mongo 连接
 	conn := fmt.Sprintf("mongodb://%s:%s", mongoAddress, mongoPort)
-	clinetOptions := options.Client().ApplyURI(conn).SetAuth(options.Credential{
-		AuthSource: mongoDbName,
-		Username:   mongoUser,
-		Password:   mongoPassword,
-	})
-	mongoClient, err := mongo.Connect(context.TODO(), clinetOptions)
+
+	// 使用 qmgo 连接
+	qmgoClient, err := qmgo.NewClient(
+		context.Background(),
+		&qmgo.Config{
+			Uri:      conn,
+			Database: mongoDbName,
+			Auth: &qmgo.Credential{
+				AuthSource: mongoDbName,
+				Username:   mongoUser,
+				Password:   mongoPassword,
+			},
+		},
+	)
+	MongoClient = qmgoClient
+
 	if err != nil {
-		logger.Recorder.Error("Connect MongoDB Error" + err.Error())
+		logger.Recorder.Error("[Mongo-qmgo]" + err.Error())
 		return
 	}
-	Mongo.Client = mongoClient
-	Mongo.DatabaseName = mongoDbName
+	logger.Recorder.Info("[Mongo-qmgo] Connected successfully")
 
-	err = loadMongoCollectionsName()
-	if err != nil {
-		logger.Recorder.Error("Init MongoDB Collections Error" + err.Error())
-		return
-	}
+	// 对接collections
+	MgoTempQuestions = qmgoClient.Database(mongoDbName).Collection(mongoColls.TempQuestions)
+	MgoFinalQuestions = qmgoClient.Database(mongoDbName).Collection(mongoColls.FinalQuestions)
+	MgoTempTestPaper = qmgoClient.Database(mongoDbName).Collection(mongoColls.TempTestPapers)
+	MgoFinalQuestions = qmgoClient.Database(mongoDbName).Collection(mongoColls.FinalTestPaper)
 
-	logger.Recorder.Info("Connect MongoDB Successfully")
 	return
 }
 
-func CloseMongo() {
-	err := Mongo.Client.Disconnect(context.TODO())
-	if err != nil {
-		logger.Recorder.Error("Disconnect MongoDB Error")
-		return
-	}
-	logger.Recorder.Info("Disconnect MongoDB Successfully")
-	return
-}
-
-func loadMongoCollectionsName() error {
+// loadMongoCollectionsName load the collections name of mongo
+func loadMongoCollectionsName() (*MongoCollections, error) {
 	tempQ, err := beego.AppConfig.String("mongo-collections::tempQuestions")
 	if err != nil {
 		logger.Recorder.Error("[Mongo Config] " + err.Error())
-		return err
+		return nil, err
 	}
 	finalQ, err := beego.AppConfig.String("mongo-collections::finalQuestions")
 	if err != nil {
 		logger.Recorder.Error("[Mongo Config] " + err.Error())
-		return err
+		return nil, err
 	}
 	tempTP, err := beego.AppConfig.String("mongo-collections::tempTestPapers")
 	if err != nil {
 		logger.Recorder.Error("[Mongo Config] " + err.Error())
-		return err
+		return nil, err
 	}
 	finalTP, err := beego.AppConfig.String("mongo-collections::finalTestPapers")
 	if err != nil {
 		logger.Recorder.Error("[Mongo Config] " + err.Error())
-		return err
+		return nil, err
 	}
-	TempQuestion = Mongo.Client.Database(Mongo.DatabaseName).Collection(tempQ)
-	FinalQuestion = Mongo.Client.Database(Mongo.DatabaseName).Collection(finalQ)
-	TempTestPaper = Mongo.Client.Database(Mongo.DatabaseName).Collection(tempTP)
-	FinalTestPaper = Mongo.Client.Database(Mongo.DatabaseName).Collection(finalTP)
-
-	return nil
+	colls := &MongoCollections{
+		TempQuestions:  tempQ,
+		FinalQuestions: finalQ,
+		TempTestPapers: tempTP,
+		FinalTestPaper: finalTP,
+	}
+	return colls, nil
 }
 
-// test database:
-type Demo struct {
-	Name  string `bson:"name"`
-	Count int    `bson:"count"`
-}
-
-func InsertDemoMongo() {
-	coll := Mongo.Client.Database(Mongo.DatabaseName).Collection("test")
-	demo := Demo{
-		Name:  "Hello",
-		Count: 12,
+// mongoClose close the mongo connection.
+func mongoClose() {
+	if err := MongoClient.Close(context.Background()); err != nil {
+		logger.Recorder.Error("[Mongo] Close Mongo Connection Error: " + err.Error())
 	}
-	insert, err := coll.InsertOne(context.TODO(), demo)
-	if err != nil {
-		fmt.Println("fail")
-		return
-	}
-	fmt.Println("success", insert.InsertedID)
-	return
-
 }

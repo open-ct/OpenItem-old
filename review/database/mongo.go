@@ -20,28 +20,19 @@ type MongoCollections struct {
 	FileRecords string
 	Submits     string
 	Audits      string
-
-	TempQuestions  string
-	FinalQuestions string
-	TempTestPapers string
-	FinalTestPaper string
 }
 
 // MongoClient qmgo 驱动配置
 var MongoClient *qmgo.Client
 var (
-	MgoUsers          *qmgo.Collection
-	MgoProjects       *qmgo.Collection
-	MgoSteps          *qmgo.Collection
-	MgoTasks          *qmgo.Collection
-	MgoAssignments    *qmgo.Collection
-	MgoFileRecords    *qmgo.Collection
-	MgoSubmits        *qmgo.Collection
-	MgoAudits         *qmgo.Collection
-	MgoTempQuestions  *qmgo.Collection
-	MgoFinalQuestions *qmgo.Collection
-	MgoTempTestPaper  *qmgo.Collection
-	MgoFinalTestPaper *qmgo.Collection
+	MgoUsers       *qmgo.Collection
+	MgoProjects    *qmgo.Collection
+	MgoSteps       *qmgo.Collection
+	MgoTasks       *qmgo.Collection
+	MgoAssignments *qmgo.Collection
+	MgoFileRecords *qmgo.Collection
+	MgoSubmits     *qmgo.Collection
+	MgoAudits      *qmgo.Collection
 )
 
 func init() {
@@ -107,10 +98,6 @@ func init() {
 	MgoFileRecords = qmgoClient.Database(mongoDbName).Collection(mongoColls.FileRecords)
 	MgoSubmits = qmgoClient.Database(mongoDbName).Collection(mongoColls.Submits)
 	MgoAudits = qmgoClient.Database(mongoDbName).Collection(mongoColls.Audits)
-	MgoTempQuestions = qmgoClient.Database(mongoDbName).Collection(mongoColls.TempQuestions)
-	MgoFinalQuestions = qmgoClient.Database(mongoDbName).Collection(mongoColls.FinalQuestions)
-	MgoTempTestPaper = qmgoClient.Database(mongoDbName).Collection(mongoColls.TempTestPapers)
-	MgoFinalQuestions = qmgoClient.Database(mongoDbName).Collection(mongoColls.FinalTestPaper)
 
 	//defer func() {
 	//	if err = MongoClient.Close(context.Background()); err != nil {
@@ -167,40 +154,15 @@ func loadMongoCollectionsName() (*MongoCollections, error) {
 		logger.Recorder.Error("[Mongo Config] " + err.Error())
 		return nil, err
 	}
-	//
-	tempQ, err := beego.AppConfig.String("mongo-collections::tempQuestions")
-	if err != nil {
-		logger.Recorder.Error("[Mongo Config] " + err.Error())
-		return nil, err
-	}
-	finalQ, err := beego.AppConfig.String("mongo-collections::finalQuestions")
-	if err != nil {
-		logger.Recorder.Error("[Mongo Config] " + err.Error())
-		return nil, err
-	}
-	tempTP, err := beego.AppConfig.String("mongo-collections::tempTestPapers")
-	if err != nil {
-		logger.Recorder.Error("[Mongo Config] " + err.Error())
-		return nil, err
-	}
-	finalTP, err := beego.AppConfig.String("mongo-collections::finalTestPapers")
-	if err != nil {
-		logger.Recorder.Error("[Mongo Config] " + err.Error())
-		return nil, err
-	}
 	colls := &MongoCollections{
-		Users:          usersColl,
-		Assignments:    assignments,
-		Projects:       proj,
-		Steps:          steps,
-		Tasks:          tasks,
-		FileRecords:    fileRec,
-		Submits:        sub,
-		Audits:         audit,
-		TempQuestions:  tempQ,
-		FinalQuestions: finalQ,
-		TempTestPapers: tempTP,
-		FinalTestPaper: finalTP,
+		Users:       usersColl,
+		Assignments: assignments,
+		Projects:    proj,
+		Steps:       steps,
+		Tasks:       tasks,
+		FileRecords: fileRec,
+		Submits:     sub,
+		Audits:      audit,
 	}
 	return colls, nil
 }

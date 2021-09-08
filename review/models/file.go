@@ -72,8 +72,8 @@ func CreateNewFileRecord(req *request.UploadFile) (*FileItem, int) {
 		Name:        req.FileName,
 		Type:        req.Type,
 		Base:        "root",
-		IsPublic: req.IsPublic,
-		Belongs: req.Belongs,
+		IsPublic:    req.IsPublic,
+		Belongs:     req.Belongs,
 		Description: req.Description,
 		Tags:        req.Tags,
 		Path:        genFilesPath(fileUuid, req.Type),
@@ -116,7 +116,7 @@ func SearchFiles(searchReq *request.SearchFile) (*[]FileItem, int) {
 		})
 	}
 	searchFilter := bson.M{
-		"$or":filter,
+		"$or": filter,
 	}
 	err := database.MgoFileRecords.Find(context.Background(), searchFilter).All(&files)
 	if err != nil {

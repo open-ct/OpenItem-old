@@ -914,6 +914,174 @@ paths:
             $ref: '#/definitions/response.Default'
         "400":
           description: '"invalid user id"'
+  /query/assign:
+    get:
+      tags:
+      - query
+      description: 根据id列表获取assignment信息
+      operationId: QueryController.GetAssignmentList
+      parameters:
+      - in: header
+        name: token
+        description: user token get at login
+        type: string
+      - in: body
+        name: json
+        description: 要获取的id 列表
+        required: true
+        schema:
+          $ref: '#/definitions/QueryRequest'
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/response.Default'
+        "400":
+          description: '"parse id list error"'
+  /query/audit:
+    get:
+      tags:
+      - query
+      description: 根据id列表获取audit信息
+      operationId: QueryController.GetAuditList
+      parameters:
+      - in: header
+        name: token
+        description: user token get at login
+        type: string
+      - in: body
+        name: json
+        description: 要获取的id 列表
+        required: true
+        schema:
+          $ref: '#/definitions/QueryRequest'
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/response.Default'
+        "400":
+          description: '"parse id list error"'
+  /query/file:
+    get:
+      tags:
+      - query
+      description: 根据id列表获取files信息
+      operationId: QueryController.GetFilesList
+      parameters:
+      - in: header
+        name: token
+        description: user token get at login
+        type: string
+      - in: body
+        name: json
+        description: 要获取的id 列表
+        required: true
+        schema:
+          $ref: '#/definitions/QueryRequest'
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/response.Default'
+        "400":
+          description: '"parse id list error"'
+  /query/proj:
+    get:
+      tags:
+      - query
+      description: 根据id列表获取user信息
+      operationId: QueryController.GetUserList
+      parameters:
+      - in: header
+        name: token
+        description: user token get at login
+        type: string
+      - in: body
+        name: json
+        description: 要获取的id 列表
+        required: true
+        schema:
+          $ref: '#/definitions/QueryRequest'
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/response.Default'
+        "400":
+          description: '"parse id list error"'
+  /query/step:
+    get:
+      tags:
+      - query
+      description: 根据id列表获取step信息
+      operationId: QueryController.GetStepList
+      parameters:
+      - in: header
+        name: token
+        description: user token get at login
+        type: string
+      - in: body
+        name: json
+        description: 要获取的id 列表
+        required: true
+        schema:
+          $ref: '#/definitions/QueryRequest'
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/response.Default'
+        "400":
+          description: '"parse id list error"'
+  /query/submit:
+    get:
+      tags:
+      - query
+      description: 根据id列表获取submit信息
+      operationId: QueryController.GetSubmitList
+      parameters:
+      - in: header
+        name: token
+        description: user token get at login
+        type: string
+      - in: body
+        name: json
+        description: 要获取的id 列表
+        required: true
+        schema:
+          $ref: '#/definitions/QueryRequest'
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/response.Default'
+        "400":
+          description: '"parse id list error"'
+  /query/user:
+    get:
+      tags:
+      - query
+      description: 根据id列表获取user信息
+      operationId: QueryController.GetUserList
+      parameters:
+      - in: header
+        name: token
+        description: user token get at login
+        type: string
+      - in: body
+        name: json
+        description: 要获取的id 列表
+        required: true
+        schema:
+          $ref: '#/definitions/QueryRequest'
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/response.Default'
+        "400":
+          description: '"parse id list error"'
   /user/:
     get:
       tags:
@@ -1083,8 +1251,11 @@ paths:
         "400":
           description: '"invalid body data"'
 definitions:
-  1873.0xc00045e660.false:
+  1873.0xc0004489f0.false:
     title: "false"
+    type: object
+  QueryRequest:
+    title: QueryRequest
     type: object
   field.DefaultField:
     title: DefaultField
@@ -1484,7 +1655,7 @@ definitions:
     type: object
     properties:
       data:
-        $ref: '#/definitions/1873.0xc00045e660.false'
+        $ref: '#/definitions/1873.0xc0004489f0.false'
       message:
         type: string
       operation_code:
@@ -1497,3 +1668,6 @@ tags:
 - name: file
   description: |
     Operations of files
+- name: query
+  description: |
+    Operations about query apis

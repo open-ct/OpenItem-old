@@ -64,15 +64,13 @@ type ProjectTimePoint struct {
 }
 
 type ProjectFullInfo struct {
-	Project
+	BasicInfo Project          `json:"basic_info" bson:"basic_info"`
 	Group     ProjectGroup     `json:"group" bson:"group"`
 	TimeTable ProjectTimeTable `json:"time_table" bson:"time_table"`
 	Materials ProjectMaterials `json:"materials" bson:"materials"`
-	// todo:
-	//Steps
-	//Submits
-	//Audits
-	//
+	Steps     []Step           `json:"steps" bson:"steps"`
+	Submits   []Submit         `json:"submits" bson:"submits"`
+	Audits    []Audit          `json:"audits" bson:"audits"`
 }
 
 /*
@@ -117,14 +115,13 @@ func CreateEmptyProject(req *request.CreateProject) (string, int) {
 	}
 	// create the assignment: creator is an admin of the project
 	assign := Assignment{
-		DefaultField: field.DefaultField{},
-		Uuid:         utils.GenUuidV4(),
-		UserId:       req.UserId,
-		ProjectId:    newProject.Uuid,
-		Role:         1,
-		Operator:     "system",
-		IsConfirmed:  true,
-		Status:       0,
+		Uuid:        utils.GenUuidV4(),
+		UserId:      req.UserId,
+		ProjectId:   newProject.Uuid,
+		Role:        1,
+		Operator:    "system",
+		IsConfirmed: true,
+		Status:      0,
 	}
 	if _, err := database.MgoAssignments.InsertOne(context.Background(), &assign); err != nil {
 		logger.Recorder.Error("[Mongo] Create project's assignment error: " + err.Error())
@@ -139,11 +136,81 @@ func CreateEmptyProject(req *request.CreateProject) (string, int) {
 }
 
 func CreateTemplateProject(req *request.CreateProject) (string, int) {
-	// create an empty project
-
+	newProject := Project{
+		Uuid:    utils.GenUuidV4(),
+		Creator: req.UserId,
+		Status:  0,
+		BasicInfo: ProjectBasicInfo{
+			Name:        req.Name,
+			Description: req.Description,
+			Requirement: req.Requirement,
+			Target:      req.Target,
+			GradeRange:  req.GradeRange,
+			Subjects:    req.Subjects,
+			Summary:     req.Summary,
+		},
+	}
+	result, err := database.MgoProjects.InsertOne(context.Background(), &newProject)
+	if err != nil {
+		logger.Recorder.Error("[Mongo] create new project: " + err.Error())
+		return "", response.ProjectCreateFail
+	}
+	// create the assignment: creator is an admin of the project
+	assign := Assignment{
+		Uuid:        utils.GenUuidV4(),
+		UserId:      req.UserId,
+		ProjectId:   newProject.Uuid,
+		Role:        1,
+		Operator:    "system",
+		IsConfirmed: true,
+		Status:      0,
+	}
+	if _, err := database.MgoAssignments.InsertOne(context.Background(), &assign); err != nil {
+		logger.Recorder.Error("[Mongo] Create project's assignment error: " + err.Error())
+		// delete project
+		database.MgoProjects.Remove(context.Background(), bson.M{
+			"uuid": newProject.Uuid,
+		})
+		return "", response.ProjectCreateFail
+	}
 	// create 7 standard steps
+	// use transaction
+	ctx := context.Background()
+	callback := func(sessCtx context.Context) (interface{}, error) {
+		stepName := []string{
+			"组建团队", "测试框架与论证报告", "6人访谈", "30人测试", "试题外审", "300人测试", "定稿审查",
+		}
+		for i := 0; i < 7; i++ {
+			step := Step{
+				Uuid:      utils.GenUuidV4(),
+				ProjectId: newProject.Uuid,
+				Index:     i,
+				Name:      stepName[i],
+				Status:    0,
+				Creator:   req.UserId,
+			}
+			insert, err := database.MgoSteps.InsertOne(sessCtx, &step)
+			if err != nil {
+				return nil, err
+			}
+			logger.Recorder.Info(fmt.Sprintf("[create step] template steps successfully %s", insert.InsertedID))
+		}
+		return nil, nil
+	}
+	_, err = database.MongoClient.DoTransaction(ctx, callback)
+	if err != nil {
+		logger.Recorder.Error("[Mongo] Create project's template step error: " + err.Error()) // delete project
+		database.MgoProjects.Remove(context.Background(), bson.M{
+			"uuid": newProject.Uuid,
+		})
+		database.MgoAssignments.Remove(context.Background(), bson.M{
+			"uuid": assign.Uuid,
+		})
+		return "", response.ProjectCreateFail
+	}
 
-	return "", response.SUCCESS
+	logger.Recorder.Info(fmt.Sprintf("[Project] New project and assignment and stand steps has been created pid:%s ", result.InsertedID))
+	return newProject.Uuid, response.SUCCESS
 }
 
 func UpdateProjectInfo(req *request.UpdateProjectInfo) int {
