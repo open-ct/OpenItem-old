@@ -5,69 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e43682a1-e80b-47da-ad31-77747a1df769" name="Changes" comment="feat (project operations)&#10;&#10;1. step.go&#10;2. submit.go&#10;3. audit.go">
-      <change afterPath="$PROJECT_DIR$/../warehouse/controllers/default.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../warehouse/controllers/query.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../warehouse/models/request.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../warehouse/utils/uuid.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/access/check.go" beforeDir="false" afterPath="$PROJECT_DIR$/access/check.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/access/jwt.go" beforeDir="false" afterPath="$PROJECT_DIR$/access/jwt.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controllers/assignment.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/assignment.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/audit.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/audit.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/default.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/default.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controllers/file.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/file.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controllers/project.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/project.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/query.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/query.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/step.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/step.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/submit.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/submit.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/mongo.go" beforeDir="false" afterPath="$PROJECT_DIR$/database/mongo.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logger/log.go" beforeDir="false" afterPath="$PROJECT_DIR$/logger/log.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/assignment.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/assignment.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/audit.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/audit.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/file.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/file.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/project.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/project.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/step.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/step.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/submit.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/submit.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/versionItem.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/versionItem.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/noticer/mail.go" beforeDir="false" afterPath="$PROJECT_DIR$/noticer/mail.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/noticer/siteMessage.go" beforeDir="false" afterPath="$PROJECT_DIR$/noticer/siteMessage.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/query/query.go" beforeDir="false" afterPath="$PROJECT_DIR$/query/query.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/request/file.go" beforeDir="false" afterPath="$PROJECT_DIR$/request/file.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/request/project.go" beforeDir="false" afterPath="$PROJECT_DIR$/request/project.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/request/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/request/user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/response/code.go" beforeDir="false" afterPath="$PROJECT_DIR$/response/code.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/response/default.go" beforeDir="false" afterPath="$PROJECT_DIR$/response/default.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/response/listquery.go" beforeDir="false" afterPath="$PROJECT_DIR$/response/listquery.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routers/commentsRouter_controllers.go" beforeDir="false" afterPath="$PROJECT_DIR$/routers/commentsRouter_controllers.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routers/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/routers/router.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/swagger/swagger.json" beforeDir="false" afterPath="$PROJECT_DIR$/swagger/swagger.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/swagger/swagger.yml" beforeDir="false" afterPath="$PROJECT_DIR$/swagger/swagger.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/default_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/tests/default_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/crypto.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/crypto.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/mkdir.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/mkdir.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/uuid.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/uuid.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../warehouse/controllers/question.go" beforeDir="false" afterPath="$PROJECT_DIR$/../warehouse/controllers/question.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../warehouse/controllers/testpaper.go" beforeDir="false" afterPath="$PROJECT_DIR$/../warehouse/controllers/testpaper.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../warehouse/controllers/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/../warehouse/controllers/user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../warehouse/database/mongo.go" beforeDir="false" afterPath="$PROJECT_DIR$/../warehouse/database/mongo.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../warehouse/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/../warehouse/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../warehouse/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/../warehouse/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../warehouse/logger/logger.go" beforeDir="false" afterPath="$PROJECT_DIR$/../warehouse/logger/logger.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../warehouse/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/../warehouse/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../warehouse/models/actions.go" beforeDir="false" afterPath="$PROJECT_DIR$/../warehouse/models/actions.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../warehouse/models/query.go" beforeDir="false" afterPath="$PROJECT_DIR$/../warehouse/models/query.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../warehouse/models/question.go" beforeDir="false" afterPath="$PROJECT_DIR$/../warehouse/models/question.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../warehouse/models/testpaper.go" beforeDir="false" afterPath="$PROJECT_DIR$/../warehouse/models/testpaper.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../warehouse/models/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/../warehouse/models/user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../warehouse/routers/commentsRouter_controllers.go" beforeDir="false" afterPath="$PROJECT_DIR$/../warehouse/routers/commentsRouter_controllers.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../warehouse/routers/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/../warehouse/routers/router.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../warehouse/swagger/swagger.json" beforeDir="false" afterPath="$PROJECT_DIR$/../warehouse/swagger/swagger.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../warehouse/swagger/swagger.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../warehouse/swagger/swagger.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../warehouse/tests/default_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/../warehouse/tests/default_test.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

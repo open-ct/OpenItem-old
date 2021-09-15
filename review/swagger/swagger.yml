@@ -24,7 +24,7 @@ paths:
         required: true
         type: string
       - in: formData
-        name: filename
+        name: file
         description: 文件名
         required: true
         type: file
@@ -34,7 +34,12 @@ paths:
         type: string
       - in: formData
         name: tags
-        description: 文件标签
+        description: 文件标签(文件类型即为文件的后缀名, 自动解析)
+        type: string
+      - in: formData
+        name: source_project
+        description: 上传文件对应的项目id, 查询使用
+        required: true
         type: string
       responses:
         "200":
@@ -192,7 +197,8 @@ paths:
     post:
       tags:
       - proj
-      description: 'create a user assignment for a project (创建一个人员分配记录: 项目-用户-角色)'
+      description: 'create a user assignment for a project (创建一个人员分配记录: 项目-用户-角色)
+        json字段说明: operator-, project_id-, user_id, role-'
       operationId: ProjectController.MakeOneAssignment
       parameters:
       - in: header
@@ -216,7 +222,7 @@ paths:
     patch:
       tags:
       - proj
-      description: 更改一个角色分配
+      description: '更改一个角色分配; 字段说明: operator-, assignment_id-, new_role-,'
       operationId: ProjectController.ChangeAssignment
       parameters:
       - in: header
@@ -452,11 +458,36 @@ paths:
             $ref: '#/definitions/response.Default'
         "400":
           description: '"invalid project id"'
+  /proj/detailed/{pid}:
+    get:
+      tags:
+      - proj
+      description: 获取项目的详细信息数据(basic info 基本信息, group-人员情况, steps-项目所有流程信息, materials-项目使用的参考材料)
+      operationId: ProjectController.GetDetailedInfo
+      parameters:
+      - in: header
+        name: token
+        description: user token get at login
+        required: true
+        type: string
+      - in: path
+        name: pid
+        description: 项目的uuid
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/response.Default'
+        "400":
+          description: '"invalid project id"'
   /proj/group:
     post:
       tags:
       - proj
-      description: 创建一个项目的人员分配(同时分配多种角色)
+      description: '创建一个项目的人员分配(同时分配多种角色); 字段说明: admins-, experts-, assistants-, teachers-,
+        out_experts-, project_id-, operator-'
       operationId: ProjectController.MakeAssignmentGroup
       parameters:
       - in: header
@@ -1276,7 +1307,7 @@ paths:
         "400":
           description: '"invalid body data"'
 definitions:
-  1873.0xc00052c7e0.false:
+  1873.0xc0005af980.false:
     title: "false"
     type: object
   QueryRequest:
@@ -1392,6 +1423,9 @@ definitions:
     properties:
       creator:
         type: string
+      deadline:
+        type: integer
+        format: int64
       description:
         type: string
       index:
@@ -1588,6 +1622,9 @@ definitions:
     title: UpdateStepInfo
     type: object
     properties:
+      new_deadline:
+        type: integer
+        format: int64
       new_description:
         type: string
       new_name:
@@ -1680,7 +1717,7 @@ definitions:
     type: object
     properties:
       data:
-        $ref: '#/definitions/1873.0xc00052c7e0.false'
+        $ref: '#/definitions/1873.0xc0005af980.false'
       message:
         type: string
       operation_code:

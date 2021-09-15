@@ -117,3 +117,21 @@ func (p *ProjectController) GetBasicInfo() {
 	p.respondJson(http.StatusOK, code, "", proj)
 	return
 }
+
+// @Title GetDetailedInfo
+// @Description 获取项目的详细信息数据(basic info 基本信息, group-人员情况, steps-项目所有流程信息, materials-项目使用的参考材料)
+// @Param   token header string true "user token get at login"
+// @Param   pid path string true "项目的uuid"
+// @Success 200 {object} response.Default
+// @Failure 400 "invalid project id"
+// @router /detailed/:pid [get]
+func (p *ProjectController) GetDetailedInfo() {
+	pid := p.GetString(":pid")
+	if pid == "" {
+		p.respondJson(http.StatusBadRequest, response.FAIL, "invalid project id")
+		return
+	}
+	proj, code := models.GetProjectDetailedInfo(pid)
+	p.respondJson(http.StatusOK, code, "", proj)
+	return
+}

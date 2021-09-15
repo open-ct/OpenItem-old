@@ -11,7 +11,7 @@ import (
 // extension of ProjectController
 
 // @Title MakeOneAssignment
-// @Description create a user assignment for a project (创建一个人员分配记录: 项目-用户-角色)
+// @Description create a user assignment for a project (创建一个人员分配记录: 项目-用户-角色) json字段说明: operator-, project_id-, user_id, role-
 // @Param   token header string true "user token get at login"
 // @Param   json body request.MakeOneAssignment true "assignment information"
 // @Success 200 {object} response.Default
@@ -37,7 +37,7 @@ func (p *ProjectController) MakeOneAssignment() {
 }
 
 // @Title MakeAssignmentGroup
-// @Description 创建一个项目的人员分配(同时分配多种角色)
+// @Description 创建一个项目的人员分配(同时分配多种角色); 字段说明: admins-, experts-, assistants-, teachers-, out_experts-, project_id-, operator-
 // @Param   token header string true "user token get at login"
 // @Param   json body request.MakeAssignmentGroup true "需要每种角色的user id"
 // @Success 200 {object} response.Default
@@ -99,7 +99,7 @@ func (p *ProjectController) GetProjectAssignments() {
 }
 
 // @Title ChangeAssignment
-// @Description 更改一个角色分配
+// @Description 更改一个角色分配; 字段说明: operator-, assignment_id-, new_role-,
 // @Param   token header string true "user token get at login"
 // @Param   json body request.ChangeAssignment true "new role to change"
 // @Success 200 {object} response.Default

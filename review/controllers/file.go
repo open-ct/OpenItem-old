@@ -34,14 +34,15 @@ func (f *FileController) respondJson(httpCode int, opCode int, message string, d
 // @Title UploadFile
 // @Description 文件上传, 使用post form格式上传, 会自动解析token获得对应的上传者id
 // @Param   token header string true "user token get at login"
-// @Param   filename formData file true "文件名"
+// @Param   file formData file true "文件名"
 // @Param   description formData string false "文件注释和说明"
-// @Param   tags formData string false "文件标签"
+// @Param   tags formData string false "文件标签(文件类型即为文件的后缀名, 自动解析)"
+// @Param   source_project formData string true "上传文件对应的项目id, 查询使用"
 // @Success 200 {object} response.Default
 // @Failure 400 "invalid file"
 // @router / [post]
 func (f *FileController) UploadFile() {
-	file, fileHeader, err := f.GetFile("filename")
+	file, fileHeader, err := f.GetFile("file")
 	if err != nil {
 		logger.Recorder.Warning("[file] get file from post-request error: " + err.Error())
 		f.respondJson(http.StatusBadRequest, response.FAIL, "get file failed")
@@ -51,14 +52,16 @@ func (f *FileController) UploadFile() {
 	fmt.Println(f.GetString("description"), f.GetString("tags"))
 	fileDescription := f.GetString("description")
 	fileTags := strings.Split(f.GetString("tags"), ",")
+	fileSourceProject := f.GetString("source_project")
 	uploader, err := parseUserToken(f.Ctx.Request.Header["Token"][0])
 	// if no token, access module will block the request.
 	uploadRequest := request.UploadFile{
-		UserId:      uploader,
-		FileName:    fileHeader.Filename,
-		Type:        path.Ext(fileHeader.Filename),
-		Description: fileDescription,
-		Tags:        fileTags,
+		UserId:        uploader,
+		FileName:      fileHeader.Filename,
+		Type:          path.Ext(fileHeader.Filename),
+		SourceProject: fileSourceProject,
+		Description:   fileDescription,
+		Tags:          fileTags,
 	}
 	fileRecord, code := models.CreateNewFileRecord(&uploadRequest)
 	f.respondJson(http.StatusOK, code, "", fileRecord)

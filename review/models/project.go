@@ -266,7 +266,7 @@ func GetProjectBasicInfo(pid string) (*Project, int) {
 }
 
 // todo:
-func GetProjectFullInfo(pid string) (map[string]interface{}, int) {
+func GetProjectDetailedInfo(pid string) (map[string]interface{}, int) {
 	projectInfo := make(map[string]interface{})
 	basicInfo, res := GetProjectBasicInfo(pid)
 	if res > 1000 {

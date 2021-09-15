@@ -22,6 +22,7 @@ type Step struct {
 	Description        string             `json:"description" bson:"description"`
 	Requirement        string             `json:"requirement" bson:"requirement"`
 	Status             int                `json:"status" bson:"status"`
+	Deadline           int64              `json:"deadline" bson:"deadline"`
 	Timetable          []ProjectTimePoint `json:"timetable" bson:"timetable"`
 	Creator            string             `json:"creator" bson:"creator"`
 	Attachments        []string           `json:"attachments" bson:"attachments"` // uuid of files
@@ -57,6 +58,7 @@ func CreateOneStep(req *request.CreateStep) (string, int) {
 		Name:        req.Name,
 		Description: req.Description,
 		Requirement: req.Requirement,
+		Deadline:    req.Deadline,
 		Status:      0,
 		Creator:     req.Creator,
 	}
@@ -126,6 +128,14 @@ func UploadStepAttachments(req *request.AddStepAttachment) int {
 }
 
 func UpdateStepInfo(req *request.UpdateStepInfo) int {
+	var oldStep Step
+	err := database.MgoSteps.Find(context.Background(), bson.M{
+		"uuid": req.StepId,
+	}).One(&oldStep)
+	if err != nil {
+		logger.Recorder.Warning("[mongo] update step information: " + err.Error())
+		return response.StepUpdateInfoFail
+	}
 	filter := make(map[string]interface{})
 	if req.NewName != "" {
 		filter["name"] = req.NewName
@@ -136,7 +146,10 @@ func UpdateStepInfo(req *request.UpdateStepInfo) int {
 	if req.NewRequirement != "" {
 		filter["requirement"] = req.NewRequirement
 	}
-	err := database.MgoSteps.UpdateOne(context.Background(),
+	if req.NewDeadline != oldStep.Deadline {
+		filter["deadline"] = req.NewDeadline
+	}
+	err = database.MgoSteps.UpdateOne(context.Background(),
 		bson.M{"uuid": req.StepId},
 		bson.M{
 			"$set": filter,

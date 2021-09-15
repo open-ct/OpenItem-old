@@ -73,6 +73,7 @@ type CreateStep struct {
 	Description string      `json:"description"`
 	Requirement string      `json:"requirement"`
 	TimeTable   []TimePoint `json:"time_table"`
+	Deadline    int64       `json:"deadline"`
 	Creator     string      `json:"creator"`
 }
 
@@ -93,6 +94,7 @@ type AddStepAttachment struct {
 type UpdateStepInfo struct {
 	StepId         string `json:"step_id"`
 	NewName        string `json:"new_name"`
+	NewDeadline    int64  `json:"new_deadline"`
 	NewDescription string `json:"new_description"`
 	NewRequirement string `json:"new_requirement"`
 }

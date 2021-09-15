@@ -22,9 +22,7 @@ type FileItem struct {
 	Uuid               string   `json:"uuid" bson:"uuid"`
 	Name               string   `json:"name" bson:"name"`
 	Type               string   `json:"type" bson:"type"`
-	Base               string   `json:"base" bson:"base"`
-	IsPublic           bool     `json:"is_public" bson:"is_public"`
-	Belongs            []string `json:"belongs" bson:"belongs"`
+	SourceProject      string   `json:"source_project" bson:"source_project"`
 	Description        string   `json:"description" bson:"description"`
 	Tags               []string `json:"tags" bson:"tags"`
 	Path               string   `json:"path" bson:"path"`
@@ -69,16 +67,14 @@ func init() {
 func CreateNewFileRecord(req *request.UploadFile) (*FileItem, int) {
 	fileUuid := utils.GenUuidV4()
 	file := FileItem{
-		Uuid:        fileUuid,
-		Name:        req.FileName,
-		Type:        req.Type,
-		Base:        "root",
-		IsPublic:    req.IsPublic,
-		Belongs:     req.Belongs,
-		Description: req.Description,
-		Tags:        req.Tags,
-		Path:        genFilesPath(fileUuid, req.Type),
-		Owner:       req.UserId, // record the uploader's id
+		Uuid:          fileUuid,
+		Name:          req.FileName,
+		Type:          req.Type,
+		SourceProject: req.SourceProject,
+		Description:   req.Description,
+		Tags:          req.Tags,
+		Path:          genFilesPath(fileUuid, req.Type),
+		Owner:         req.UserId, // record the uploader's id
 	}
 	insertRes, err := database.MgoFileRecords.InsertOne(context.Background(), &file)
 	if err != nil {
