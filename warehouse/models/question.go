@@ -8,11 +8,11 @@ import (
 // define some question data structure.
 
 type QuestionInfo struct {
-	Title    string      `json:"title" bson:"title"`
-	Type     string      `json:"type" bson:"type"`
-	Body     interface{} `json:"body" bson:"body"`
-	Answer   string      `json:"answer" bson:"answer"`
-	Solution string      `json:"solution" bson:"solution"`
+	Title    string `json:"title" bson:"title"`
+	Type     string `json:"type" bson:"type"`
+	Body     string `json:"body" bson:"body"`
+	Answer   string `json:"answer" bson:"answer"`
+	Solution string `json:"solution" bson:"solution"`
 }
 
 type QuestionBasicProps struct {
@@ -70,7 +70,7 @@ type TempQuestion struct {
 	SourceProject      string                `json:"source_project" bson:"source_project"` // 项目来源
 	Author             string                `json:"author" bson:"author"`
 	Info               QuestionInfo          `json:"info" bson:"info"`
-	BasicProps         QuestionSpecProps     `json:"basic_props" bson:"basic_props"`
+	BasicProps         QuestionBasicProps    `json:"basic_props" bson:"basic_props"`
 	SpecProps          QuestionSpecProps     `json:"spec_props" bson:"spec_props"`
 	ExtraProps         QuestionExtraProps    `json:"extra_props" bson:"extra_props"`
 	AdvancedProps      QuestionAdvancedProps `json:"advanced_props" bson:"advanced_props"`
@@ -85,7 +85,7 @@ type FinalQuestion struct {
 	FinalVersion       string                `json:"final_version" bson:"final_version"`   // 录入final的最后一个版本
 	Author             string                `json:"author" bson:"author"`
 	Info               QuestionInfo          `json:"info" bson:"info"`
-	BasicProps         QuestionSpecProps     `json:"basic_props" bson:"basic_props"`
+	BasicProps         QuestionBasicProps    `json:"basic_props" bson:"basic_props"`
 	SpecProps          QuestionSpecProps     `json:"spec_props" bson:"spec_props"`
 	ExtraProps         QuestionExtraProps    `json:"extra_props" bson:"extra_props"`
 	AdvancedProps      QuestionAdvancedProps `json:"advanced_props" bson:"advanced_props"`

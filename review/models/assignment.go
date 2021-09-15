@@ -28,6 +28,7 @@ type Assignment struct {
 
 func init() {
 	// create indexes in mongo collections
+	database.MgoAssignments.DropAllIndexes(context.Background())
 	err := database.MgoAssignments.CreateIndexes(
 		context.Background(),
 		[]options.IndexModel{

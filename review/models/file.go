@@ -47,6 +47,7 @@ func init() {
 	}
 	fileStore.RootPath = fileStoreRootPath
 	// create the index of files-collections
+	database.MgoFileRecords.DropAllIndexes(context.Background())
 	err = database.MgoFileRecords.CreateIndexes(
 		context.Background(),
 		[]options.IndexModel{

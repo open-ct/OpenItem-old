@@ -39,7 +39,7 @@ type QueryRequest struct {
 // @Param   json body QueryRequest true "要获取的id 列表"
 // @Success 200 {object} response.Default
 // @Failure 400 "parse id list error"
-// @router /user [get]
+// @router /user [post]
 func (q *QueryController) GetUserList() {
 	queryRequset := new(QueryRequest)
 	err := unmarshalBody(q.Ctx.Input.RequestBody, queryRequset)
@@ -59,7 +59,7 @@ func (q *QueryController) GetUserList() {
 // @Param   json body QueryRequest true "要获取的id 列表"
 // @Success 200 {object} response.Default
 // @Failure 400 "parse id list error"
-// @router /proj [get]
+// @router /proj [post]
 func (q *QueryController) GetProjectList() {
 	queryRequset := new(QueryRequest)
 	err := unmarshalBody(q.Ctx.Input.RequestBody, queryRequset)
@@ -79,7 +79,7 @@ func (q *QueryController) GetProjectList() {
 // @Param   json body QueryRequest true "要获取的id 列表"
 // @Success 200 {object} response.Default
 // @Failure 400 "parse id list error"
-// @router /assign [get]
+// @router /assign [post]
 func (q *QueryController) GetAssignmentList() {
 	queryRequset := new(QueryRequest)
 	err := unmarshalBody(q.Ctx.Input.RequestBody, queryRequset)
@@ -99,7 +99,7 @@ func (q *QueryController) GetAssignmentList() {
 // @Param   json body QueryRequest true "要获取的id 列表"
 // @Success 200 {object} response.Default
 // @Failure 400 "parse id list error"
-// @router /file [get]
+// @router /file [post]
 func (q *QueryController) GetFilesList() {
 	queryRequset := new(QueryRequest)
 	err := unmarshalBody(q.Ctx.Input.RequestBody, queryRequset)
@@ -119,7 +119,7 @@ func (q *QueryController) GetFilesList() {
 // @Param   json body QueryRequest true "要获取的id 列表"
 // @Success 200 {object} response.Default
 // @Failure 400 "parse id list error"
-// @router /step [get]
+// @router /step [post]
 func (q *QueryController) GetStepList() {
 	queryRequset := new(QueryRequest)
 	err := unmarshalBody(q.Ctx.Input.RequestBody, queryRequset)
@@ -139,7 +139,7 @@ func (q *QueryController) GetStepList() {
 // @Param   json body QueryRequest true "要获取的id 列表"
 // @Success 200 {object} response.Default
 // @Failure 400 "parse id list error"
-// @router /submit [get]
+// @router /submit [post]
 func (q *QueryController) GetSubmitList() {
 	queryRequset := new(QueryRequest)
 	err := unmarshalBody(q.Ctx.Input.RequestBody, queryRequset)
@@ -159,7 +159,7 @@ func (q *QueryController) GetSubmitList() {
 // @Param   json body QueryRequest true "要获取的id 列表"
 // @Success 200 {object} response.Default
 // @Failure 400 "parse id list error"
-// @router /audit [get]
+// @router /audit [post]
 func (q *QueryController) GetAuditList() {
 	queryRequset := new(QueryRequest)
 	err := unmarshalBody(q.Ctx.Input.RequestBody, queryRequset)

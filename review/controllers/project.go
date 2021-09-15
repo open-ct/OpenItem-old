@@ -54,6 +54,33 @@ func (p *ProjectController) CreateEmptyProject() {
 	return
 }
 
+// @Title CreatTemplateProject
+// @Description 创建一个模板项目(创建标准的7个流程和任务)
+// @Param   token header string true "user token get at login"
+// @Param   json body request.CreateProject true "基本的项目信息, 创建人(creator)一项不需要填写,会根据token自动解析填充"
+// @Success 200 {object} response.Default
+// @Failure 400 "invalid project json body(token)"
+// @router /template [post]
+func (p *ProjectController) CreatTemplateProject() {
+	var req request.CreateProject
+	err := unmarshalBody(p.Ctx.Input.RequestBody, &req)
+	if err != nil {
+		p.respondJson(http.StatusBadRequest, response.FAIL, "parse body (project json) failed")
+		return
+	}
+	// get user id from token
+	CreatorId, err := parseUserToken(p.Ctx.Request.Header["Token"][0])
+	if err != nil {
+		logger.Recorder.Warning("[request token] invalid request token: " + err.Error())
+		p.respondJson(http.StatusBadRequest, response.FAIL, "invalid token")
+		return
+	}
+	req.UserId = CreatorId
+	projectUuid, code := models.CreateTemplateProject(&req)
+	p.respondJson(http.StatusOK, code, "", projectUuid)
+	return
+}
+
 // @Title UpdateProjectInfo
 // @Description 更新项目相关信息
 // @Param   token header string true "user token get at login"

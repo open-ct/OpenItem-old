@@ -77,6 +77,7 @@ type ProjectFullInfo struct {
 	init the database for project
 */
 func init() {
+	database.MgoProjects.DropAllIndexes(context.Background())
 	err := database.MgoProjects.CreateIndexes(
 		context.Background(),
 		[]options.IndexModel{

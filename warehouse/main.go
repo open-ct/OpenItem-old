@@ -1,9 +1,10 @@
 package main
 
 import (
-	_ "warehouse/routers"
-
 	beego "github.com/beego/beego/v2/server/web"
+	_ "warehouse/logger"
+	_ "warehouse/models"
+	_ "warehouse/routers"
 )
 
 func main() {

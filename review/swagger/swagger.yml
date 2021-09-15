@@ -890,6 +890,31 @@ paths:
             $ref: '#/definitions/response.Default'
         "400":
           description: '"invalid json"'
+  /proj/template:
+    post:
+      tags:
+      - proj
+      description: 创建一个模板项目(创建标准的7个流程和任务)
+      operationId: ProjectController.CreatTemplateProject
+      parameters:
+      - in: header
+        name: token
+        description: user token get at login
+        required: true
+        type: string
+      - in: body
+        name: json
+        description: 基本的项目信息, 创建人(creator)一项不需要填写,会根据token自动解析填充
+        required: true
+        schema:
+          $ref: '#/definitions/request.CreateProject'
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/response.Default'
+        "400":
+          description: '"invalid project json body(token)"'
   /proj/user/{uid}:
     get:
       tags:
@@ -915,7 +940,7 @@ paths:
         "400":
           description: '"invalid user id"'
   /query/assign:
-    get:
+    post:
       tags:
       - query
       description: 根据id列表获取assignment信息
@@ -939,7 +964,7 @@ paths:
         "400":
           description: '"parse id list error"'
   /query/audit:
-    get:
+    post:
       tags:
       - query
       description: 根据id列表获取audit信息
@@ -963,7 +988,7 @@ paths:
         "400":
           description: '"parse id list error"'
   /query/file:
-    get:
+    post:
       tags:
       - query
       description: 根据id列表获取files信息
@@ -987,7 +1012,7 @@ paths:
         "400":
           description: '"parse id list error"'
   /query/proj:
-    get:
+    post:
       tags:
       - query
       description: 根据id列表获取user信息
@@ -1011,7 +1036,7 @@ paths:
         "400":
           description: '"parse id list error"'
   /query/step:
-    get:
+    post:
       tags:
       - query
       description: 根据id列表获取step信息
@@ -1035,7 +1060,7 @@ paths:
         "400":
           description: '"parse id list error"'
   /query/submit:
-    get:
+    post:
       tags:
       - query
       description: 根据id列表获取submit信息
@@ -1059,7 +1084,7 @@ paths:
         "400":
           description: '"parse id list error"'
   /query/user:
-    get:
+    post:
       tags:
       - query
       description: 根据id列表获取user信息
@@ -1251,7 +1276,7 @@ paths:
         "400":
           description: '"invalid body data"'
 definitions:
-  1873.0xc0004489f0.false:
+  1873.0xc00052c7e0.false:
     title: "false"
     type: object
   QueryRequest:
@@ -1655,7 +1680,7 @@ definitions:
     type: object
     properties:
       data:
-        $ref: '#/definitions/1873.0xc0004489f0.false'
+        $ref: '#/definitions/1873.0xc00052c7e0.false'
       message:
         type: string
       operation_code:

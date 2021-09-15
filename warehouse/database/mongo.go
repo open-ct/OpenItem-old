@@ -83,7 +83,7 @@ func init() {
 	MgoTempQuestions = qmgoClient.Database(mongoDbName).Collection(mongoColls.TempQuestions)
 	MgoFinalQuestions = qmgoClient.Database(mongoDbName).Collection(mongoColls.FinalQuestions)
 	MgoTempTestPaper = qmgoClient.Database(mongoDbName).Collection(mongoColls.TempTestPapers)
-	MgoFinalQuestions = qmgoClient.Database(mongoDbName).Collection(mongoColls.FinalTestPaper)
+	MgoFinalTestPaper = qmgoClient.Database(mongoDbName).Collection(mongoColls.FinalTestPaper)
 
 	return
 }
