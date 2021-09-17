@@ -190,7 +190,7 @@ func CreateTemplateProject(req *request.CreateProject) (string, int) {
 				Status:    0,
 				Creator:   req.UserId,
 			}
-			insert, err := database.MgoSteps.InsertOne(sessCtx, &step)
+			insert, err := database.MgoSteps.InsertOne(context.Background(), &step)
 			if err != nil {
 				return nil, err
 			}

@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e43682a1-e80b-47da-ad31-77747a1df769" name="Changes" comment="feat (project operations)&#10;&#10;1. step.go&#10;2. submit.go&#10;3. audit.go">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/assignment.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/assignment.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/project.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/project.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
