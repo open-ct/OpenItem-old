@@ -4,12 +4,11 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e43682a1-e80b-47da-ad31-77747a1df769" name="Changes" comment="fix (project operations)&#10;&#10;1. fix the error about using mongodb create trans error.">
+    <list default="true" id="e43682a1-e80b-47da-ad31-77747a1df769" name="Changes" comment="fix (file operations)&#10;&#10;1. fix: when uploading file, url params dose not match, file cannot be saved on disk.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/file.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/file.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routers/commentsRouter_controllers.go" beforeDir="false" afterPath="$PROJECT_DIR$/routers/commentsRouter_controllers.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/swagger/swagger.json" beforeDir="false" afterPath="$PROJECT_DIR$/swagger/swagger.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/swagger/swagger.yml" beforeDir="false" afterPath="$PROJECT_DIR$/swagger/swagger.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/step.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/step.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/step.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/step.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/submit.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/submit.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,7 +105,8 @@
     <MESSAGE value="feat (file basic operation)&#10;&#10;1. project: create / update / get information;&#10;2. assignment: assign someone / group to a project;&#10;3. assignment: delete / confirm / change role ;" />
     <MESSAGE value="feat (project operations)&#10;&#10;1. step.go&#10;2. submit.go&#10;3. audit.go" />
     <MESSAGE value="fix (project operations)&#10;&#10;1. fix the error about using mongodb create trans error." />
-    <option name="LAST_COMMIT_MESSAGE" value="fix (project operations)&#10;&#10;1. fix the error about using mongodb create trans error." />
+    <MESSAGE value="fix (file operations)&#10;&#10;1. fix: when uploading file, url params dose not match, file cannot be saved on disk." />
+    <option name="LAST_COMMIT_MESSAGE" value="fix (file operations)&#10;&#10;1. fix: when uploading file, url params dose not match, file cannot be saved on disk." />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>

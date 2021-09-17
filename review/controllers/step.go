@@ -174,6 +174,24 @@ func (p *ProjectController) DeleteStepTimePoint() {
 	return
 }
 
+// @Title GetStepStatisticData
+// @Description 获取一个项目step的统计信息
+// @Param   token header string true "user token get at login"
+// @Param   stepId path string true "指定的step的uuid"
+// @Success 200 {object} response.Default
+// @Failure 400 "invalid project id"
+// @router /step/stat/:stepId [get]
+func (p *ProjectController) GetStepStatisticData() {
+	stepId := p.GetString(":stepId")
+	if stepId == "" {
+		p.respondJson(http.StatusBadRequest, response.FAIL, "invalid id")
+		return
+	}
+	resp, code := models.GetStepDataStatistic(stepId)
+	p.respondJson(http.StatusOK, code, "", resp)
+	return
+}
+
 // @Title DeleteStep
 // @Description 删除step
 // @Param   token header string true "user token get at login"

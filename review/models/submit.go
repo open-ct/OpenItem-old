@@ -33,7 +33,7 @@ type Content struct {
 }
 
 // type: 0-files, 1-question, 2-test paper
-// Status: 0-processing, 1-passed, 2-closed
+// Status: -1-processing, 1-passed, 2-closed
 
 func init() {
 	// clean old indexes

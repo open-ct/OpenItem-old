@@ -251,9 +251,55 @@ func DeleteStepTimePoint(req *request.DeleteStepTimePoint) int {
 	return response.SUCCESS
 }
 
-// todo:
-func GetStepDataStatistic() {
-
+func GetStepDataStatistic(stepId string) (map[string]float64, int) {
+	dataStatistic := make(map[string]float64)
+	dataStatistic["total"] = 0
+	dataStatistic["pass_rate"] = 0
+	dataStatistic["pass"] = 0
+	dataStatistic["return"] = 0
+	dataStatistic["to_upload"] = 0
+	dataStatistic["to_audit"] = 0
+	dataStatistic["to_correct"] = 0
+	var submits []Submit
+	err := database.MgoSubmits.Find(context.Background(), bson.M{
+		"step_id": stepId,
+	}).All(&submits)
+	if err != nil {
+		logger.Recorder.Warn("find submits info err: " + err.Error())
+		return nil, response.SubmitGetInfoFail
+	}
+	dataStatistic["total"] = float64(len(submits))
+	for _, submit := range submits {
+		contentCount := len(submit.Contents)
+		if contentCount == 0 {
+			dataStatistic["to_upload"] += 1
+			continue
+		}
+		lastContentId := submit.Contents[contentCount-1].Uuid
+		var lastAudit Audit
+		err := database.MgoAudits.Find(context.Background(), bson.M{
+			"submit_content": lastContentId,
+		}).One(&lastAudit)
+		if err != nil {
+			dataStatistic["to_audit"] += 1
+			continue
+		}
+		if lastAudit.Result == 0 {
+			dataStatistic["return"] += 1
+		}
+		if lastAudit.Result == 1 {
+			dataStatistic["pass"] += 1
+		}
+		if lastAudit.Result == 2 {
+			dataStatistic["to_correct"] += 1
+		}
+	}
+	if dataStatistic["total"] == 0 {
+		dataStatistic["pass_rate"] = 0
+	} else {
+		dataStatistic["pass_rate"] = dataStatistic["pass"] / dataStatistic["total"]
+	}
+	return dataStatistic, response.SUCCESS
 }
 
 func DeleteStep(stepId string) int {
