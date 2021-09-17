@@ -64,10 +64,17 @@ func (f *FileController) UploadFile() {
 		Tags:          fileTags,
 	}
 	fileRecord, code := models.CreateNewFileRecord(&uploadRequest)
-	f.respondJson(http.StatusOK, code, "", fileRecord)
 	if code == response.SUCCESS {
-		f.SaveToFile("filename", fileRecord.Path)
+		err := f.SaveToFile("file", fileRecord.Path)
+		if err != nil {
+			logger.Recorder.Error("[upload file] error:" + err.Error())
+			// delete the file record
+			models.DeleteFile(fileRecord.Uuid)
+			f.respondJson(http.StatusOK, response.FAIL, "上传文件错误", fileRecord)
+			return
+		}
 	}
+	f.respondJson(http.StatusOK, code, "", fileRecord)
 	return
 }
 
