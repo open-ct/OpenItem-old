@@ -2005,7 +2005,7 @@
         }
     },
     "definitions": {
-        "1873.0xc0005302d0.false": {
+        "1873.0xc000560c00.false": {
             "title": "false",
             "type": "object"
         },
@@ -2608,7 +2608,7 @@
             "type": "object",
             "properties": {
                 "data": {
-                    "$ref": "#/definitions/1873.0xc0005302d0.false"
+                    "$ref": "#/definitions/1873.0xc000560c00.false"
                 },
                 "message": {
                     "type": "string"
