@@ -871,6 +871,42 @@
                 }
             }
         },
+        "/proj/step/stat/{stepId}": {
+            "get": {
+                "tags": [
+                    "proj"
+                ],
+                "description": "获取一个项目step的统计信息",
+                "operationId": "ProjectController.GetStepStatisticData",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "stepId",
+                        "description": "指定的step的uuid",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid project id\""
+                    }
+                }
+            }
+        },
         "/proj/step/status": {
             "put": {
                 "tags": [
@@ -1969,7 +2005,7 @@
         }
     },
     "definitions": {
-        "1873.0xc00056bc50.false": {
+        "1873.0xc0005302d0.false": {
             "title": "false",
             "type": "object"
         },
@@ -2572,7 +2608,7 @@
             "type": "object",
             "properties": {
                 "data": {
-                    "$ref": "#/definitions/1873.0xc00056bc50.false"
+                    "$ref": "#/definitions/1873.0xc0005302d0.false"
                 },
                 "message": {
                     "type": "string"

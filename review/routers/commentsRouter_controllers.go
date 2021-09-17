@@ -234,6 +234,15 @@ func init() {
 
 	beego.GlobalControllerRouter["review/controllers:ProjectController"] = append(beego.GlobalControllerRouter["review/controllers:ProjectController"],
 		beego.ControllerComments{
+			Method:           "GetStepStatisticData",
+			Router:           "/step/stat/:stepId",
+			AllowHTTPMethods: []string{"get"},
+			MethodParams:     param.Make(),
+			Filters:          nil,
+			Params:           nil})
+
+	beego.GlobalControllerRouter["review/controllers:ProjectController"] = append(beego.GlobalControllerRouter["review/controllers:ProjectController"],
+		beego.ControllerComments{
 			Method:           "SetStepStatus",
 			Router:           "/step/status",
 			AllowHTTPMethods: []string{"put"},
