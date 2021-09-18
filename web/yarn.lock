@@ -5809,7 +5809,7 @@ http-proxy-middleware@0.19.1:
 
 http-proxy-middleware@^2.0.1:
   version "2.0.1"
-  resolved "https://registry.nlark.com/http-proxy-middleware/download/http-proxy-middleware-2.0.1.tgz?cache=0&sync_timestamp=1625174336093&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fhttp-proxy-middleware%2Fdownload%2Fhttp-proxy-middleware-2.0.1.tgz#7ef3417a479fb7666a571e09966c66a39bd2c15f"
+  resolved "https://registry.nlark.com/http-proxy-middleware/download/http-proxy-middleware-2.0.1.tgz#7ef3417a479fb7666a571e09966c66a39bd2c15f"
   integrity sha1-fvNBekeft2ZqVx4Jlmxmo5vSwV8=
   dependencies:
     "@types/http-proxy" "^1.17.5"

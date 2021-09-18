@@ -48,6 +48,5 @@
       "last 1 safari version"
     ]
   },
-  "homepage": ".",
-  "proxy": "http://49.232.73.36:8081/review"
+  "homepage": "."
 }
