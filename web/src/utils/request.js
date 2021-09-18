@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-08-12 00:21:27
- * @LastEditTime: 2021-08-14 14:41:42
+ * @LastEditTime: 2021-09-17 19:04:02
  * @LastEditors: Please set LastEditors
  * @Description: axios拦截器配置
  * @FilePath: \OpenItem\web\src\utils\request.js
@@ -28,10 +28,15 @@ request.interceptors.request.use(
 
 request.interceptors.response.use(
   response => {
-    const code = response.data.code
-    if(code===1000){
-      const res = response.data.data
-      return res
+    const code = response.data.operation_code
+    if(code===1000||!code){
+      // const res = {...response.data.data,token:response.data.message||''}
+      if(!code){
+        return response
+      }else{
+        const res = {...response.data}
+        return res
+      }
     }else if(code===2000){
       return Promise.reject(response.data)
     }else{

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Form, Input, Spin } from 'antd'
+import { Button, Form, Input, Spin, message } from 'antd'
 import DocumentTitle from 'react-document-title'
 import { InfoCircleOutlined } from '@ant-design/icons';
 import request from '../../utils/request'
@@ -11,7 +11,7 @@ export default class index extends Component {
     state = {
         mode:"login",
         errorState:{
-            show:true,
+            show:false,
             title:'登陆错误'
         },
         loadingState:{
@@ -29,13 +29,7 @@ export default class index extends Component {
     login = ()=>{
         const form = this.formRef.current
         form.validateFields().then(data=>{
-            this.setState({
-                loadingState:{
-                    show:false
-                }
-            })
-            this.props.history.push('/home')
-            request({ method:'POST', url:'/user/login', data }).then(res=>{
+            request({ method:'POST', url:'/user/login', data}).then(res=>{
                 store.dispatch(setuserinfo(res))
                 this.setState({
                     loadingState:{
@@ -46,7 +40,7 @@ export default class index extends Component {
             }).catch(err=>{
                 this.setState({
                     errorState:{
-                        title:err.message,
+                        title:err.message||"未知错误",
                         show:true
                     },
                     loadingState:{
@@ -72,8 +66,26 @@ export default class index extends Component {
     register = ()=>{
         const form = this.formRef.current
         form.validateFields().then(data=>{
-            request({ method:'POST', url:'/user/register', data }).then(res=>{
-                console.log(res)
+            data = Object.assign({
+                degree: "无",
+                employer: "无",
+                gender: true,
+                location: "无",
+                major: "无",
+                name: "stacker",
+                password: "123456",
+                phone: "12345678913",
+                position: "无"
+            },data)
+            request({ method:'POST', url:'/user', data}).then(res=>{
+                this.setState({
+                    loadingState:{
+                        show:false,
+                        title:''
+                    },
+                    mode:"register"
+                })
+                message.success("注册成功")
             }).catch(err=>{
                 console.log(err)
                 this.setState({
@@ -109,7 +121,11 @@ export default class index extends Component {
                             <div className="login-btn__change login-btn__box">
                                 <Button type="primary" shape="round" size="large" onClick={()=>{
                                     this.setState({
-                                        mode:this.state.mode==="login"?"register":"login"
+                                        mode:this.state.mode==="login"?"register":"login",
+                                        errorState:{
+                                            show:false,
+                                            title:''
+                                        }
                                     })
                                 }}>{this.state.mode==='login'?'注册':'登陆'}</Button>
                             </div>
@@ -127,7 +143,7 @@ export default class index extends Component {
                                     labelCol={{ span: 4 }}
                                     wrapperCol={{ span: 20 }}
                                     ref = {this.formRef}
-                                    initialValues = {{email:"robot-0@pqbs.com",password:"123456"}}
+                                    initialValues = {{email:"expert1@qq.com",password:"123456",phone:""}}
                                 >
                                     <Form.Item
                                         label="用户名"

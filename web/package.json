@@ -13,6 +13,7 @@
     "less": "^4.1.1",
     "less-loader": "5.0.0",
     "prop-types": "^15.7.2",
+    "qs": "^6.10.1",
     "react": "^17.0.2",
     "react-app-rewired": "^2.1.8",
     "react-document-title": "^2.0.3",
@@ -47,6 +48,6 @@
       "last 1 safari version"
     ]
   },
-  "homepage":".",
-  "proxy": "http://49.232.73.36:8081"
+  "homepage": ".",
+  "proxy": "http://49.232.73.36:8081/review"
 }

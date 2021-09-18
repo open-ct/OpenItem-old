@@ -28,7 +28,6 @@ export default class index extends Component {
     }
 
     render() {
-        console.log(store.getState())
         return (
             <DocumentTitle title="命题与题库系统">
                 <Layout className="home-page" data-component="home-page">
@@ -62,8 +61,8 @@ export default class index extends Component {
                             </div>
                             <div className="user">
                                 <Avatar icon={<UserOutlined />} size={24}/>
-                                {/* <span>{store.getState().userInfo.name}</span> */}
-                                <span>stacker</span>
+                                <span>{store.getState().userInfo.name}</span>
+                                {/* <span>stacker</span> */}
                             </div>
                         </div>
                     </Header>
@@ -71,7 +70,7 @@ export default class index extends Component {
                         <Switch>
                             <Redirect from="/home" to="/home/pending-tasks" exact></Redirect>
                             <Route path="/home/pending-tasks" component={PendingTasks} exact></Route>
-                            <Route path="/home/project-management" component={ProjectManagement}></Route>
+                            <Route path="/home/project-management/:project_id/:role" component={ProjectManagement}></Route>
                             <Route path="/home/proposition-paper" component={PropositionPaper}></Route>
                             <Route path="/402" component={Forbid} exact></Route>
                             <Route component={NotFound}></Route>

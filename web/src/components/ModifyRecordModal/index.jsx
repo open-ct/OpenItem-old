@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { Space, Tag, Modal, Table } from 'antd'
+import { Space,  Modal, Table, message,Spin } from 'antd'
 import { FileTextTwoTone } from '@ant-design/icons'
+import request from '../../utils/request'
 import './index.less'
 
 export default class index extends Component {
@@ -30,86 +31,123 @@ export default class index extends Component {
             result:3,
             reviewMaterials:'待评审材料1',
             feedback:'',
-        }], 
+        }],
+        submitInfo:{},
+        loadingState:false 
+    }
+
+    getRecordList(){
+        this.setState({
+            loadingState:true
+        })
+        request({
+            url:`/proj/submit/${this.props.submitId}`,
+            method:"GET"
+        }).then(res=>{
+            this.setState({
+                submitInfo:res.data,
+                loadingState:false
+            })
+        }).catch(err=>{
+            this.setState({
+                loadingState:false
+            })
+            message.error("加载错误")
+            this.props.onComplete()
+        })
     }
 
     recordListColums = [{
-        title: '上传时间',
-        dataIndex: 'date',
-        key: 'date',
+        title: 'ID',
+        dataIndex: 'uuid',
+        align: 'center',
+        key: 'id',
+    },{
+        title: '评论',
+        dataIndex: 'comment',
+        align: 'center',
+        key: 'comment',
     },{
         title: '评审材料',
         key: 'review-materials',
+        align: 'center',
         width:220,
         render: (text, record) => (
             <Space size="middle">
-              <span style={{cursor:'pointer'}} onClick={this.downLoadFile}>{record.reviewMaterials}</span><FileTextTwoTone />
+              <span style={{cursor:'pointer'}} onClick={this.downLoadFile.bind(this,record.uuid)}>点击下载</span><FileTextTwoTone />
             </Space>
         )
     },{
-        title: '评审结果',
-        key: 'result',
-        render: (text, record) => {
-            let levelList = [{
-                mode:'通过',
-                color:'#87D068'
-            },{
-                mode:'再修改',
-                color:'#2DB7F5'
-            },{
-                mode:'驳回',
-                color:'#FF5500'
-            },{
-                mode:'等待评审',
-                color:'default'
-            }]
-            return (
-                <Space size="middle">
-                    <Tag color={levelList[record.result].color}>{levelList[record.result].mode}</Tag>
-                </Space>
-            )
-        }
-    },{
-        title: '反馈意见',
-        key: 'feedback',
-        render: (text, record) => {
-            if(record.feedback===""){
-                return (
-                    <Space size="middle">
-                        <span style={{cursor:'pointer'}}>等待评审...</span>
-                    </Space>
-                )
-            }
-            return (
-                <Space size="middle">
-                  <span style={{cursor:'pointer'}} onClick={this.downLoadFile}>{record.feedback}</span><FileTextTwoTone />
-                </Space>
-            )
-        }
+        title: '版本',
+        dataIndex: 'version',
+        align: 'center',
+        key: 'version',
     }]
+
+    downLoadFile(file_id){
+        message.info(`开始下载文件：${file_id}！`);
+        request({
+            url:`/file/${file_id}`,
+            method: 'GET',
+            responseType:'blob'
+        }).then(res=>{
+            console.log(res)
+            const filename = res.headers["content-disposition"];
+            const blob = new Blob([res.data]);
+            var downloadElement = document.createElement("a");
+            var href = window.URL.createObjectURL(blob);
+            downloadElement.href = href;
+            downloadElement.download = decodeURIComponent(filename.split("filename*=")[1].replace("utf-8''",""));
+            document.body.appendChild(downloadElement);
+            downloadElement.click();
+            document.body.removeChild(downloadElement);
+            window.URL.revokeObjectURL(href); 
+            message.success("文件下载成功！");
+        }).catch(err=>{
+            message.error("文件下载失败！");
+        })
+    }
+
 
     render() {
         return (
-            <Modal title="修改记录" width="9.51rem" visible={this.props.show} onOk={()=>{
-                this.props.onComplete()
-            }} onCancel={()=>{
-                this.props.onCancel()
-            }}>
-                <div className="modify-record-box" data-component="modify-record-box">
-                    <div className="basic">
-                        <div className="id">
-                            材料编号:openct15646541
+            <Modal title="修改记录" 
+                width="9.51rem" 
+                visible={this.props.show}
+                cancelText="关闭" 
+                okText="确认"
+                confirmLoading={this.state.loadingState}
+                closable={!this.state.loadingState}
+                maskClosable={!this.state.loadingState}
+                keyboard={!this.state.loadingState} 
+                onOk={()=>{
+                    this.props.onComplete()
+                }} 
+                onCancel={()=>{
+                    this.props.onCancel()
+                }}
+            >
+                {
+                    this.state.loadingState?(
+                        <Spin spinning={this.state.loadingState} tip="加载中"></Spin>
+                    ):(
+                        <div className="modify-record-box" data-component="modify-record-box">
+                            <div className="basic">
+                                <div className="id">
+                                    材料编号:{this.state.submitInfo.uuid}
+                                </div>
+                                <div className="date">
+                                    截止日期:未知
+                                </div>
+                            </div>
+                            <Table 
+                                dataSource={this.state.submitInfo.contents||[]} 
+                                columns={this.recordListColums} size="small" 
+                                pagination={false} 
+                            />
                         </div>
-                        <div className="date">
-                            截止日期:2021-08-11
-                        </div>
-                    </div>
-                    <Table 
-                        dataSource={this.state.recordList} 
-                        columns={this.recordListColums} size="small" 
-                        pagination={false} 
-                    />
-                </div>
+                    )
+                }   
             </Modal>
         )
     }
