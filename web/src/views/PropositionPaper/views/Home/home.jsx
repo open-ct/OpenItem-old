@@ -126,7 +126,8 @@ export default class index extends Component {
 
         }],
         modifyRecordVisible:false,
-        upLoadQuestionVisible:false
+        upLoadQuestionVisible:false,
+        editQuestionVisible:false,
     }
 
     columns = [{
@@ -187,7 +188,11 @@ export default class index extends Component {
                         <div className="action-item b-right">
                             <LockOutlined/>
                         </div>
-                        <div className="action-item b-right">
+                        <div className="action-item b-right" onClick={()=>{
+                            this.setState({
+                                editQuestionVisible:true
+                            })
+                        }}>
                             <EditOutlined/>
                         </div>
                         <div className="action-item" onClick={()=>{
@@ -299,6 +304,85 @@ export default class index extends Component {
                     onCancel={()=>{
                         this.setState({
                             upLoadQuestionVisible:false
+                        })
+                    }}
+                >
+                    <div className="upLoad-question-title">
+                        <span>试题编号编号:absnahghj（自动生成）</span>
+                    </div>
+                    <Form 
+                        labelCol={{ span: 5 }}
+                        wrapperCol={{ span: 19 }}
+                        labelAlign="left"
+                    >
+                        <Form.Item
+                            name="project"
+                            label="项目"
+                            rules={[{ required: true, message: '请选择项目名称' }]}
+                        >
+                            <Select placeholder="选择项目名称">
+                                <Option value="male">项目一</Option>
+                                <Option value="female">项目二</Option>
+                                <Option value="other">项目三</Option>
+                            </Select>
+                        </Form.Item> 
+                        <Form.Item
+                            name="subject"
+                            label="学科"
+                            rules={[{ required: true, message: '请选择学科' }]}
+                        >
+                            <Select placeholder="选择学科">
+                                <Option value="male">学科一</Option>
+                                <Option value="female">学科二</Option>
+                                <Option value="other">学科三</Option>
+                            </Select>
+                        </Form.Item>
+                        <Form.Item
+                            name="content"
+                            label="内容纬度"
+                            rules={[{ required: true, message: '请选择内容纬度' }]}
+                        >
+                            <Select placeholder="选择内容纬度">
+                                <Option value="male">内容纬度一</Option>
+                                <Option value="female">内容纬度二</Option>
+                                <Option value="other">内容纬度三</Option>
+                            </Select>
+                        </Form.Item>
+                        <Form.Item
+                            name="ability"
+                            label="能力维度"
+                            rules={[{ required: true, message: '请选择能力维度' }]}
+                        >
+                            <Select placeholder="选择能力维度">
+                                <Option value="male">能力维度一</Option>
+                                <Option value="female">能力维度二</Option>
+                                <Option value="other">能力维度三</Option>
+                            </Select>
+                        </Form.Item>
+                        <Form.Item
+                            name="type"
+                            label="题型"
+                            rules={[{ required: true, message: '请选择题型' }]}
+                        >
+                            <Select placeholder="选择题型">
+                                <Option value="male">题型一</Option>
+                                <Option value="female">题型二</Option>
+                                <Option value="other">题型三</Option>
+                            </Select>
+                        </Form.Item>
+                    </Form>
+                </Modal>
+                <Modal 
+                    title="编辑试题信息" 
+                    cancelText="取消"
+                    okText="保存"
+                    visible={this.state.editQuestionVisible} 
+                    onOk={()=>{
+                        
+                    }} 
+                    onCancel={()=>{
+                        this.setState({
+                            editQuestionVisible:false
                         })
                     }}
                 >
