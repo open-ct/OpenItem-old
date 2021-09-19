@@ -1,0 +1,96 @@
+[data-component=create-paper-page]{
+    width: 100%;
+    > .container{
+        width: 100%;
+        box-sizing: border-box;
+        > .left-box{
+            background-color: white;
+            box-sizing: border-box;
+            padding: .22rem .1rem .4rem .22rem;
+            > .title-box{
+                width: 100%;
+                height: .32rem;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                box-sizing: border-box;
+                padding-left: .1rem;
+                padding-right: .24rem;
+                margin-bottom: .2rem;
+                > .title-value{
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+                    > .ver-line{
+                        height: .18rem;
+                        width: .06rem;
+                        background-color: #1890FF;
+                        margin-right: .06rem;
+                    }
+                    > .value{
+                        font-size: .16rem;
+                        color: #000000D9;
+                    }
+                }
+            }
+            .page-spare{
+                margin: .2rem;
+                .ant-pagination-item-link,.ant-pagination-item{
+                    background: #91D5FF;
+                    border: 1px solid #FFFEFE;
+                    box-sizing: border-box;
+                    border-radius: 2px;
+                    .anticon{
+                        color: white;
+                    }
+                }
+                
+            }
+        }
+        > .right-box{
+            background-color: #EEEEEE;
+            box-sizing: border-box;
+            padding: .16rem;
+            > .right-content{
+                width: 100%;
+                height: 100%;
+                background-color: white;
+                box-sizing: border-box;
+                padding: .62rem .73rem 0px .29rem;
+                position: relative;
+                > .top-box{
+                    > .question-params{
+                        > .title{
+                            width: 100%;
+                            height: .41rem;
+                            background: #EEEEEE;
+                            display: flex;
+                            align-items: center;
+                            box-sizing: border-box;
+                            padding-left: .1rem;
+                            > span{
+                                font-size: .14rem;
+                            }
+                        }
+                        > .params-box{
+                            box-sizing: border-box;
+                            width: 100%;
+                            padding: .17rem .07rem .18rem .1rem;
+                            border: .01rem solid #EEEEEE;
+                            margin-top: .04rem;
+                            .ant-form-item-no-colon{
+                                font-size: .14rem;
+                            }
+                        }
+                    }
+                }
+                > .btn-line{
+                    width: 100%;
+                    position: absolute;
+                    bottom: .5rem;
+                    left: .62rem;
+                }
+            }
+        }
+    }
+}

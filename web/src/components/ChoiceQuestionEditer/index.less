@@ -1,0 +1,149 @@
+[data-component=choice-question-editer]{
+    width: 100%;
+    height: auto;
+    > .question-title{
+        width: 100%;
+        line-height: .16rem;
+        > span{
+            font-size: .12rem;
+            color: #000000;
+        }
+    }
+    .question-title-editer{
+        width: 100%;
+        height: 100%;
+        > .title{
+            width: 100%;
+            height: .41rem;
+            background-color: #EEEEEE;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-sizing: border-box;
+            padding: 0rem .21rem 0rem .1rem;
+            > .title-value{
+                font-size: .14rem;
+                color: #000000;
+            }
+            > .icon{
+                font-size: .22rem;
+                cursor: pointer;
+            }
+        }
+        > .title-editer-box{
+            width: 100%;
+            height: calc(100% - .45rem);
+            box-sizing: border-box;
+            border: 1px solid #EEEEEE;
+            margin-top: .04rem;
+            padding: .17rem .07rem .18rem .1rem;
+            > .title-input{
+                border:none;
+                box-shadow: none;
+            }
+        }
+    }
+    .question-params{
+        width: 100%;
+        > .title{
+            width: 100%;
+            height: .41rem;
+            background-color: #EEEEEE;
+            display: flex;
+            align-items: center;
+            padding: 0rem .21rem 0rem .1rem;
+            box-sizing: border-box;
+            > span{
+                font-size: .14rem;
+                color: #000000;
+            }
+        }
+        > .params-list-box{
+            box-sizing: border-box;
+            width: 100%;
+            padding: .17rem .07rem .18rem .1rem;
+            border: .01rem solid #EEEEEE;
+            margin-top: .04rem;
+            .ant-form-item-no-colon{
+                font-size: .14rem;
+            }
+        }
+    }
+    .option-list-box{
+        width: 100%;
+        margin-top: .15rem;
+        > .title{
+            width: 100%;
+            height: .41rem;
+            background-color: #EEEEEE;
+            > .title-line{
+                width: 100%;
+                height: 100%;
+                > .title-item{
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    > span{
+                        font-size: .1rem;
+                        color: #00000066;
+                    }
+                    &:nth-child(1){
+                        > span{
+                            font-size: .12rem;
+                            color: #000000;
+                        }
+                    }
+                }
+            }
+        }
+        > .option-oper-item{
+            width: 100%;
+            height: .38rem;
+            margin-top: .04rem;
+            > .item-value{
+                > .value-box{
+                    > .value-oper{
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-around;
+                        > .btn{
+                            font-size: .28rem;
+                            cursor: pointer;
+                        }
+                    }
+                }
+            }
+            > .item-picture{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                > .btn{
+                    font-size: .28rem;
+                    cursor: pointer;
+                }
+            }
+            > .item-isCorrect{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            > .item-move{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                > .btn{
+                    font-size: .28rem;
+                    cursor: pointer;
+                    &:nth-child(1){
+                        margin-right: .05rem;
+                    }
+                }
+            }
+        }
+    }
+    .question-complete-box{
+        width: 100%;
+        margin-top: .77rem;
+        margin-bottom: .5rem;
+    }
+}

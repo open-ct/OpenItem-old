@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
-import { Button, Radio, Modal, Table, Pagination, Space, Form, Select } from 'antd'
-
+import { Button, Radio, Modal, Table, Pagination, Space } from 'antd'
+import UpLoadQuestionModal from '../../../../components/UpLoadQuestionModal'
 import PropositionPaperIcon from '../../../../asset/images/proposition-paper-icon.png'
 import { LockOutlined , EditOutlined, EllipsisOutlined } from '@ant-design/icons';
 import './index.less'
 
-const {Option} = Select
 
 export default class index extends Component {
 
@@ -125,9 +124,16 @@ export default class index extends Component {
             param3:'text'
 
         }],
+
+        upLoadQuestionModalParams:{
+            show:false,
+            type:"create"
+        },
+
         modifyRecordVisible:false,
         upLoadQuestionVisible:false,
         editQuestionVisible:false,
+        createPaperVisible:false
     }
 
     columns = [{
@@ -190,7 +196,10 @@ export default class index extends Component {
                         </div>
                         <div className="action-item b-right" onClick={()=>{
                             this.setState({
-                                editQuestionVisible:true
+                                upLoadQuestionModalParams:{
+                                    type:"edit",
+                                    show:true
+                                }
                             })
                         }}>
                             <EditOutlined/>
@@ -239,10 +248,20 @@ export default class index extends Component {
                         <div className="btn-box">
                             <Button type="primary" onClick={()=>{
                                 this.setState({
-                                    upLoadQuestionVisible:true
+                                    upLoadQuestionModalParams:{
+                                        type:"create",
+                                        show:true
+                                    }
                                 })
                             }}>上传试题</Button>
-                            <Button type="primary" style={{marginLeft:'.18rem'}}>创建试卷</Button>
+                            <Button type="primary" style={{marginLeft:'.18rem'}} onClick={()=>{
+                                this.setState({
+                                    upLoadQuestionModalParams:{
+                                        type:"create-paper",
+                                        show:true
+                                    }
+                                })
+                            }}>创建试卷</Button>
                         </div>
                     </div>
                     <img src={PropositionPaperIcon} alt="图片" className="icon"></img>
@@ -258,6 +277,15 @@ export default class index extends Component {
                         {this.loadQuestionData()}
                     </div>
                 </div>
+                <UpLoadQuestionModal
+                    {...this.state.upLoadQuestionModalParams}
+                    onClose={()=>{
+                        let upLoadQuestionModalParams = Object.assign(this.state.upLoadQuestionModalParams,{show:false})
+                        this.setState({
+                            upLoadQuestionModalParams
+                        })
+                    }}
+                />
                 <Modal title="修改记录" visible={this.state.modifyRecordVisible} footer={null} onCancel={()=>{
                     this.setState({
                         modifyRecordVisible:false
@@ -292,164 +320,6 @@ export default class index extends Component {
                             </div>
                         </div>
                     </div>
-                </Modal>
-                <Modal 
-                    title="上传试题" 
-                    cancelText="取消创建"
-                    okText="下一步"
-                    visible={this.state.upLoadQuestionVisible} 
-                    onOk={()=>{
-                        this.props.history.push("/home/proposition-paper/upload-questions")
-                    }} 
-                    onCancel={()=>{
-                        this.setState({
-                            upLoadQuestionVisible:false
-                        })
-                    }}
-                >
-                    <div className="upLoad-question-title">
-                        <span>试题编号编号:absnahghj（自动生成）</span>
-                    </div>
-                    <Form 
-                        labelCol={{ span: 5 }}
-                        wrapperCol={{ span: 19 }}
-                        labelAlign="left"
-                    >
-                        <Form.Item
-                            name="project"
-                            label="项目"
-                            rules={[{ required: true, message: '请选择项目名称' }]}
-                        >
-                            <Select placeholder="选择项目名称">
-                                <Option value="male">项目一</Option>
-                                <Option value="female">项目二</Option>
-                                <Option value="other">项目三</Option>
-                            </Select>
-                        </Form.Item> 
-                        <Form.Item
-                            name="subject"
-                            label="学科"
-                            rules={[{ required: true, message: '请选择学科' }]}
-                        >
-                            <Select placeholder="选择学科">
-                                <Option value="male">学科一</Option>
-                                <Option value="female">学科二</Option>
-                                <Option value="other">学科三</Option>
-                            </Select>
-                        </Form.Item>
-                        <Form.Item
-                            name="content"
-                            label="内容纬度"
-                            rules={[{ required: true, message: '请选择内容纬度' }]}
-                        >
-                            <Select placeholder="选择内容纬度">
-                                <Option value="male">内容纬度一</Option>
-                                <Option value="female">内容纬度二</Option>
-                                <Option value="other">内容纬度三</Option>
-                            </Select>
-                        </Form.Item>
-                        <Form.Item
-                            name="ability"
-                            label="能力维度"
-                            rules={[{ required: true, message: '请选择能力维度' }]}
-                        >
-                            <Select placeholder="选择能力维度">
-                                <Option value="male">能力维度一</Option>
-                                <Option value="female">能力维度二</Option>
-                                <Option value="other">能力维度三</Option>
-                            </Select>
-                        </Form.Item>
-                        <Form.Item
-                            name="type"
-                            label="题型"
-                            rules={[{ required: true, message: '请选择题型' }]}
-                        >
-                            <Select placeholder="选择题型">
-                                <Option value="male">题型一</Option>
-                                <Option value="female">题型二</Option>
-                                <Option value="other">题型三</Option>
-                            </Select>
-                        </Form.Item>
-                    </Form>
-                </Modal>
-                <Modal 
-                    title="编辑试题信息" 
-                    cancelText="取消"
-                    okText="保存"
-                    visible={this.state.editQuestionVisible} 
-                    onOk={()=>{
-                        
-                    }} 
-                    onCancel={()=>{
-                        this.setState({
-                            editQuestionVisible:false
-                        })
-                    }}
-                >
-                    <div className="upLoad-question-title">
-                        <span>试题编号编号:absnahghj（自动生成）</span>
-                    </div>
-                    <Form 
-                        labelCol={{ span: 5 }}
-                        wrapperCol={{ span: 19 }}
-                        labelAlign="left"
-                    >
-                        <Form.Item
-                            name="project"
-                            label="项目"
-                            rules={[{ required: true, message: '请选择项目名称' }]}
-                        >
-                            <Select placeholder="选择项目名称">
-                                <Option value="male">项目一</Option>
-                                <Option value="female">项目二</Option>
-                                <Option value="other">项目三</Option>
-                            </Select>
-                        </Form.Item> 
-                        <Form.Item
-                            name="subject"
-                            label="学科"
-                            rules={[{ required: true, message: '请选择学科' }]}
-                        >
-                            <Select placeholder="选择学科">
-                                <Option value="male">学科一</Option>
-                                <Option value="female">学科二</Option>
-                                <Option value="other">学科三</Option>
-                            </Select>
-                        </Form.Item>
-                        <Form.Item
-                            name="content"
-                            label="内容纬度"
-                            rules={[{ required: true, message: '请选择内容纬度' }]}
-                        >
-                            <Select placeholder="选择内容纬度">
-                                <Option value="male">内容纬度一</Option>
-                                <Option value="female">内容纬度二</Option>
-                                <Option value="other">内容纬度三</Option>
-                            </Select>
-                        </Form.Item>
-                        <Form.Item
-                            name="ability"
-                            label="能力维度"
-                            rules={[{ required: true, message: '请选择能力维度' }]}
-                        >
-                            <Select placeholder="选择能力维度">
-                                <Option value="male">能力维度一</Option>
-                                <Option value="female">能力维度二</Option>
-                                <Option value="other">能力维度三</Option>
-                            </Select>
-                        </Form.Item>
-                        <Form.Item
-                            name="type"
-                            label="题型"
-                            rules={[{ required: true, message: '请选择题型' }]}
-                        >
-                            <Select placeholder="选择题型">
-                                <Option value="male">题型一</Option>
-                                <Option value="female">题型二</Option>
-                                <Option value="other">题型三</Option>
-                            </Select>
-                        </Form.Item>
-                    </Form>
                 </Modal>
             </div>
         )
