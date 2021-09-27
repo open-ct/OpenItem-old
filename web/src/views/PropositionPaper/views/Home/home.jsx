@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
-import { Button, Radio, Modal, Table, Pagination, Space } from 'antd'
+import { Button, Radio, Modal, Table, Pagination, Space,Spin, message } from 'antd'
 import UpLoadQuestionModal from '../../../../components/UpLoadQuestionModal'
 import PropositionPaperIcon from '../../../../asset/images/proposition-paper-icon.png'
 import { LockOutlined , EditOutlined, EllipsisOutlined } from '@ant-design/icons';
+import request from '../../../../utils/request'
+import store from '../../../../store';
 import './index.less'
 
 
@@ -130,43 +132,67 @@ export default class index extends Component {
             type:"create"
         },
 
+        questionRecord:{
+            Id:"",
+            viewIndex:0,
+            recordList:[],
+        },
+
         modifyRecordVisible:false,
         upLoadQuestionVisible:false,
         editQuestionVisible:false,
-        createPaperVisible:false
+        createPaperVisible:false,
+        loadingState:false,
+        recordLoading:false
     }
 
     columns = [{
         title: '时间',
-        dataIndex: 'date',
         key: 'date',
-        width:110
+        width:110,
+        render: (text, record) => (
+            <span>{this.timeFilter(record.CreateAt)}</span>
+        ),
     },{
         title: '内容',
-        dataIndex: 'content',
         key: 'content',
-        width:110
+        width:110,
+        render: (text, record) => (
+            <span>{record.basic_props.description}</span>
+        ),
     },{
-        title: '参数1',
-        dataIndex: 'param1',
+        title: '难度',
         key: 'param1',
-        width:110
+        width:110,
+        render: (text, record) => (
+            <span>{record.advanced_props.irt_level}</span>
+        ),
     },{
-        title: '参数2',
-        dataIndex: 'param2',
+        title: '阶段',
         key: 'param2',
-        width:110
+        width:110,
+        render: (text, record) => (
+            <span>{record.apply_record.grade_fits}</span>
+        ),
     },{
-        title: '参数3',
-        dataIndex: 'param3',
+        title: '学科',
         key: 'param3',
-        width:110
+        width:110,
+        render: (text, record) => (
+            <span>{record.basic_props.subject}</span>
+        ),
     },{
         title: '操作',
         key: 'operate',
-        render: (text, record) => (
-            <Button type="link">预览</Button>
-        ),
+        render: (text, record) => {
+            return (
+                <Button type="link" onClick={()=>{
+                    this.setState({
+                        questionRecord:Object.assign(this.state.questionRecord,{viewIndex:this.state.questionRecord.recordList.findIndex(item=>item.Id===record.Id)})
+                    })
+                }}>预览</Button>
+            )
+        },
     }];
 
     handleModeChange = e => {
@@ -174,20 +200,43 @@ export default class index extends Component {
         this.setState({ mode });
     };
 
+    getQuestionRecord = (Id)=>{
+        this.setState({
+            recordLoading:true
+        })
+        request({
+            url:`/question/trace/${Id}`,
+            method:"GET"
+        }).then(res=>{
+            console.log(res.data.data)
+            this.setState({
+                questionRecord:Object.assign(this.state.questionRecord,{recordList:res.data.data,viewIndex:0}),
+                recordLoading:false
+            })
+        }).catch(err=>{
+            this.setState({
+                recordLoading:false,
+                modifyRecordVisible:false
+            })
+            message.error(err.message||"请求错误！")
+        })
+    }
+
     loadQuestionData = ()=>{
+        console.log(this.state.questionData)
         if(this.state.mode==="questions"){
-            return this.state.questionData.map((item,index)=>(
-                <div className="question-item" key={index}>
+            return this.state.questionData.map(item=>(
+                <div className="question-item" key={item.Id}>
                     <div className="header">
-                        <span className="category">{item.category}</span>
-                        <span className="date">{item.date}</span>
+                        <span className="category">{item.basic_props.subject}</span>
+                        <span className="date">{this.timeFilter(item.CreateAt)}</span>
                     </div>
                     <div className="container">
                         <div className="info">
-                            <span>{item.info}</span>
+                            <span>{item.info.title}</span>
                         </div>
                         <div className="project">
-                            <span>{item.projectName}</span>
+                            <span>{item.source_project}</span>
                         </div>
                     </div>
                     <div className="footer">
@@ -208,6 +257,7 @@ export default class index extends Component {
                             this.setState({
                                 modifyRecordVisible:true
                             })
+                            this.getQuestionRecord(item.uuid)
                         }}>
                             <EllipsisOutlined/>
                         </div>
@@ -218,18 +268,33 @@ export default class index extends Component {
         return ""
     }
 
+    timeFilter = (time)=>{
+        let date = new Date(time);
+        //${date.getHours().toString().padStart(2,'0')}:${date.getMinutes().toString().padStart(2,'0')}:${date.getSeconds().toString().padStart(2,'0')}
+        return `${date.getFullYear()}-${date.getMonth().toString().padStart(2,'0')}-${date.getDate().toString().padStart(2,'0')}`
+    }
+
     componentDidMount = ()=>{
-        let dataList = []
-        for(let i=0;i<12;i++){
-            dataList.push({
-                category:"数学",
-                info:"题目信息...........",
-                projectName:"所属项目名称abbbbb",
-                date:"2020/1/20"
-            })
-        }
+        this.getUserQuestionList()
+    }
+
+    getUserQuestionList = ()=>{
         this.setState({
-            questionData:dataList
+            loadingState:true
+        })
+        request({
+            url:`/question/user_t/${store.getState().userInfo.Id}`,
+            method:"GET",
+        }).then(res=>{
+            this.setState({
+                questionData:res.data.data,
+                loadingState:false
+            })
+        }).catch(err=>{
+            this.setState({
+                loadingState:false
+            })
+            message.error(err.message||"加载失败")
         })
     }
 
@@ -274,7 +339,11 @@ export default class index extends Component {
                         </Radio.Group>
                     </div>
                     <div className="main">
-                        {this.loadQuestionData()}
+                        <Spin spinning={this.state.loadingState} tip="加载中">
+                            {
+                                this.state.loadingState?"":this.loadQuestionData()
+                            }
+                        </Spin>
                     </div>
                 </div>
                 <UpLoadQuestionModal
@@ -286,40 +355,52 @@ export default class index extends Component {
                         })
                     }}
                 />
-                <Modal title="修改记录" visible={this.state.modifyRecordVisible} footer={null} onCancel={()=>{
-                    this.setState({
-                        modifyRecordVisible:false
-                    })
-                }}  width="16.12rem">
-                    <div className="question-modify-record-box">
-                        <div className="preview-box">
-                            <div className="header">
-                                <span>题目效果预览窗</span>
+                <Modal 
+                    title="修改记录" 
+                    visible={this.state.modifyRecordVisible} 
+                    footer={null} 
+                    onCancel={()=>{
+                        this.setState({
+                            modifyRecordVisible:false
+                        })
+                    }}  
+                    width="16.12rem"
+                >
+                    <Spin spinning={this.state.recordLoading} tip="加载中">
+                        <div className="question-modify-record-box">
+                            <div className="preview-box">
+                                <div className="header">
+                                    <span>题目效果预览窗</span>
+                                </div>
+                                <div className="view-box" dangerouslySetInnerHTML={{__html:this.state.recordLoading?"加载中":(
+                                        this.state.questionRecord.recordList[this.state.questionRecord.viewIndex]?this.state.questionRecord.recordList[this.state.questionRecord.viewIndex].info.body:"渲染失败"
+                                    )}}>
+                                </div>
+                            </div>
+                            <div className="record-box">
+                                <Space align="center">
+                                    修改历史版本
+                                </Space>
+                                <div className="container">
+                                    <Table 
+                                        dataSource={this.state.questionRecord.recordList} 
+                                        columns={this.columns} 
+                                        pagination={false}
+                                        scroll = {{y:'calc(100% - .56rem)'}}
+                                    />
+                                </div>
+                                <div className="footer">
+                                    <Pagination
+                                        total={85}
+                                        showTotal={total => `Total ${total} items`}
+                                        defaultPageSize={20}
+                                        defaultCurrent={1}
+                                        size="small"
+                                    />
+                                </div>
                             </div>
                         </div>
-                        <div className="record-box">
-                            <Space align="center">
-                                修改历史版本
-                            </Space>
-                            <div className="container">
-                                <Table 
-                                    dataSource={this.state.recordData} 
-                                    columns={this.columns} 
-                                    pagination={false}
-                                    scroll = {{y:'calc(100% - .56rem)'}}
-                                />
-                            </div>
-                            <div className="footer">
-                                <Pagination
-                                    total={85}
-                                    showTotal={total => `Total ${total} items`}
-                                    defaultPageSize={20}
-                                    defaultCurrent={1}
-                                    size="small"
-                                />
-                            </div>
-                        </div>
-                    </div>
+                    </Spin>
                 </Modal>
             </div>
         )

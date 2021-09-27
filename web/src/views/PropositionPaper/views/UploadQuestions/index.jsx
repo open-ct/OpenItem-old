@@ -15,15 +15,8 @@ export default class index extends Component {
     state = {
         difficultyValue:4,
         createTime:0,
-        questionTitle:"",
-        questionOption:[{
-            value:"",
-            picture:"",
-            isCorrect:false,
-        }],
         projectInfo:{},
         initLoading:true,
-
         upLoadQuestionModalParams:{
             show:false,
             type:"update"
@@ -112,10 +105,14 @@ export default class index extends Component {
                         <Sider theme="light" width="2.4rem" style={{backgroundColor:"#FAFAFA"}}>
                             <Menu
                                 style={{ width: "2.4rem" }}
-                                defaultSelectedKeys={['1']}
-                                defaultOpenKeys={['1']}
+                                defaultSelectedKeys={[this.props.match.params.type]}
+                                defaultOpenKeys={[this.props.match.params.type]}
                                 mode="vertical"
                                 theme="light"
+                                onClick = {(e)=>{
+                                    let data = this.props.match.params
+                                    this.props.history.push(`/home/proposition-paper/upload-questions/${data.project}/${data.subject}/${data.ability}/${data.content}/${e.key}`)
+                                }}
                             >
                                 <Menu.Item key="1">选择题</Menu.Item>
                                 <Menu.Item key="2">填空题</Menu.Item>
@@ -128,6 +125,8 @@ export default class index extends Component {
                                 subjectList={this.state.initLoading?[]:this.state.projectInfo.basic_info.subjects}
                                 ability={this.props.match.params.ability.split(',')}
                                 content={this.props.match.params.content.split(',')}
+                                grade_range={this.state.initLoading?[]:this.state.projectInfo.basic_info.grade_range}
+                                projectId={this.props.match.params.project}
                             />
                         </Content>
                         <Sider theme="light" width="7.47rem" className="question-box">

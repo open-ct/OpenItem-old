@@ -1,238 +1,197 @@
 import React, { Component } from 'react'
-import { Divider, Radio, Space, Row, Col,Form,Select,Tag,Input,Checkbox, message,Button } from "antd"
-import { PictureFilled,PlusCircleOutlined,MinusCircleOutlined,UpCircleOutlined,DownCircleOutlined } from '@ant-design/icons';
-import DifficultyBox from '../DifficultyBox'
+import {withRouter} from 'react-router-dom'
+import {  Row, Col,Select,Tag,Button,Spin,Slider,message } from "antd"
+import BraftEditor from 'braft-editor'
+import request from '../../utils/request'
+import store from '../../store'
+import 'braft-editor/dist/index.css'
 import './index.less'
 
 const { Option } = Select
-const { TextArea } = Input
 
 
-export default class index extends Component {
+class index extends Component {
 
     state = {
-        questionTitle:"这里是题目",
-        questionOption:[{
-            value:"测试",
-            picture:"",
-            isCorrect:false
-        }],
+        editorState: BraftEditor.createEditorState(null),
+        loadingState:false,
         questionParams:{
             subject:"",
             difficulty:1,
+            answer:""
         }
+    }
+
+    upLoadQuestion = ()=>{
+        this.setState({
+            loadingState:true
+        })
+        request({
+            url:"/question",
+            method:"POST",
+            data:{
+                advanced_props:{
+                    ctt_diff_1:this.state.questionParams.difficulty,
+                    ctt_diff_2:this.state.questionParams.difficulty,
+                    ctt_level:this.state.questionParams.difficulty,
+                    irt_level:this.state.questionParams.difficulty
+                },
+                apply_record:{
+                    grade_fits:this.props.grade_range.join(','),
+                    participant_count:0,
+                    test_count:0,
+                    test_region:[],
+                    test_year:`${new Date().getFullYear()}`,
+                },
+                author:store.getState().userInfo.Id,
+                basic_props:{
+                    ability_dimension:this.props.ability.join(','),
+                    description:"暂无",
+                    details:this.state.editorState.toHTML(),
+                    details_dimension:this.props.content.join(','),
+                    encode:"",
+                    keywords:[],
+                    sub_ability_dimension:"",
+                    sub_details_dimension:"",
+                    subject:this.state.questionParams.subject,
+                    subject_requirements:""
+                },
+                extra_props:{
+                    is_question_group:false,
+                    is_scene:true,
+                    material_length:0,
+                    reading_material_topic:""
+                },
+                info:{
+                    answer:this.state.questionParams.answer,
+                    body:this.state.editorState.toHTML(),
+                    solution:"无",
+                    title:"无",
+                    type:"选择题"
+                },
+                source_project:this.props.projectId,
+                spec_props:{
+                    article_type:"无",
+                    length:"无",
+                    topic:"无"
+                }
+            }
+        }).then(res=>{
+            this.setState({
+                loadingState:false
+            })
+            this.props.history.push("/home/proposition-paper/home")
+            message.success("上传成功")
+        }).catch(err=>{
+            this.setState({
+                loadingState:false
+            })
+            message.error(err.message||"请求错误")
+        })
+    }
+
+
+    componentDidMount(){
+        this.setState({
+            questionParams:Object.assign(this.state.questionParams,{subject:this.props.defaultSubjectValue})
+        })
     }
 
     render() {
         return (
-            <div className="choice-question-editer" data-component="choice-question-editer">
-                <div className="question-title">
-                    <span>{this.state.questionTitle}</span>
-                </div>
-                <Divider />
-                <Radio.Group>
-                    <Space direction="vertical">
-                        {
-                            this.state.questionOption.map((item,index)=>(
-                                <Radio value={item.value} key={`${index}-${Math.random(100)}`}>{item.value}</Radio>
-                            ))
-                        }
-                    </Space>
-                </Radio.Group>
-                <Row style={{marginTop:".3rem"}}  gutter={[8, 8]}>
-                    <Col span={16}>
-                        <div className="question-title-editer">
-                            <div className="title">
-                                <span className="title-value">题目编辑</span>
-                                <PictureFilled className="icon"/>
-                            </div>
-                            <div className="title-editer-box">
-                                <TextArea placeholder="题目输入区域" autoSize className="title-input" value={this.state.questionTitle} defaultValue={this.state.questionTitle} onChange={(e)=>{
-                                    this.setState({
-                                        questionTitle:e.target.value
-                                    })
-                                }}/>
-                            </div>
+            <div className="choice-question-editer" data-component="choice-question-editer" id="choice-question-edit-box">
+                <Spin spinning={this.state.loadingState} tip="上传试题中">
+                    <Row>
+                        <BraftEditor
+                            value={this.state.editorState}
+                            onChange={(editorState)=>{
+                                this.setState({ editorState })
+                            }}
+                            onSave={()=>{
+                                console.log("保存题目")
+                            }}
+                        />
+                    </Row>
+                    <Row className="question-params">
+                        <div className="title">
+                            <span>参数编辑</span>
                         </div>
-                    </Col>
-                    <Col span={8}>
-                        <div className="question-params">
-                            <div className="title">
-                                <span>参数编辑</span>
-                            </div>
-                            <div className="params-list-box">
-                                <Form
-                                    labelCol={{ span: 7 }}
-                                    wrapperCol={{ span: 17 }}
-                                    labelAlign="left"
+                        <Row className="param-item" style={{marginTop:'.17rem'}}>
+                            <Col span="4" className="label">
+                                <span>学科</span>
+                            </Col>
+                            <Col span="20" className="value">
+                                <Select 
+                                    placeholder="选择学科" 
+                                    value={this.state.questionParams.subject} 
+                                    defaultValue={this.props.defaultSubjectValue} 
+                                    onSelect={(e)=>{
+                                        let questionParams = Object.assign(this.state.questionParams,{subject:e})
+                                        this.setState({
+                                            questionParams
+                                        })
+                                    }}
+                                    size="small"
                                 >
-                                    <Form.Item
-                                        label="学科"
-                                        name="subjects"
-                                        colon={false}
-                                    >
-                                        <Select 
-                                            placeholder="选择学科" 
-                                            value={this.state.questionParams.subject} 
-                                            defaultValue={this.props.defaultSubjectValue} 
-                                            onSelect={(e)=>{
-                                                console.log("传出")
-                                            }}
-                                            size="small"
-                                        >
-                                            {
-                                                this.props.subjectList.map((item,index)=>(
-                                                    <Option value={item} key={index+Math.random(100)}>{item}</Option>
-                                                ))
-                                            }
-                                        </Select>
-                                    </Form.Item>
-                                    <Form.Item
-                                        label="难度"
-                                        name="difficult"
-                                        colon={false}
-                                    >
-                                        <DifficultyBox
-                                            onChange={(e)=>{
-                                                let questionParams = Object.assign(this.state.questionParams,{difficulty:e})
-                                                this.setState({
-                                                    questionParams
-                                                })
-                                            }}
-                                        />
-                                    </Form.Item>
-                                    <Form.Item
-                                        label="能力纬度"
-                                        name="ability"
-                                        colon={false}
-                                    >
-                                        {
-                                            this.props.ability.map(item=>(
-                                                <Tag>{item}</Tag>
-                                            ))
-                                        }
-                                    </Form.Item>
-                                    <Form.Item
-                                        label="内容纬度"
-                                        name="content"
-                                        colon={false}
-                                    >
-                                        {
-                                            this.props.content.map(item=>(
-                                                <Tag>{item}</Tag>
-                                            ))
-                                        }
-                                    </Form.Item>
-                                </Form>
-                            </div>
-                        </div>
-                    </Col>
-                </Row>
-                <div className="option-list-box">
-                    <div className="title">
-                        <Row className="title-line">
-                            <Col span="14" className="title-item">
-                                <span>选项文字</span>
-                            </Col>
-                            <Col span="4" className="title-item">
-                                <span>图片</span>
-                            </Col>
-                            <Col span="3" className="title-item">
-                                <span>正确答案</span>
-                            </Col>
-                            <Col span="3" className="title-item">
-                                <span>上移下移</span>
+                                    {
+                                        this.props.subjectList.map((item,index)=>(
+                                            <Option value={item} key={index+Math.random(100)}>{item}</Option>
+                                        ))
+                                    }
+                                </Select>
                             </Col>
                         </Row>
+                        <Row className="param-item" style={{marginTop:'.17rem'}}>
+                            <Col span="4" className="label">
+                                <span>难度</span>
+                            </Col>
+                            <Col span="20" className="value">
+                                <Slider marks={{1:1,2:2,3:3,4:4,5:5}} step={null} defaultValue={1} max={5 } min={1} onChange={(e)=>{
+                                    let questionParams = Object.assign(this.state.questionParams,{difficulty:e});
+                                    this.setState({
+                                        questionParams
+                                    })
+                                }}/>
+                            </Col>
+                        </Row>
+                        <Row className="param-item" style={{marginTop:'.3rem'}}>
+                            <Col span="4" className="label">
+                                <span>能力纬度</span>
+                            </Col>
+                            <Col span="20" className="value">
+                                <div className="tag-list">
+                                    {
+                                        this.props.ability.map(item=>(
+                                            <Tag>{item}</Tag>
+                                        ))
+                                    }
+                                </div>
+                            </Col>
+                        </Row>
+                        <Row className="param-item" style={{marginTop:'.17rem'}}>
+                            <Col span="4" className="label">
+                                <span>内容纬度</span>
+                            </Col>
+                            <Col span="20" className="value">
+                                <div className="tag-list">
+                                    {
+                                        this.props.content.map(item=>(
+                                            <Tag>{item}</Tag>
+                                        ))
+                                    }
+                                </div>
+                            </Col>
+                        </Row>
+                    </Row>
+                    <div className="question-complete-box">
+                        <Button type="primary" block onClick={()=>{
+                            this.upLoadQuestion()
+                        }}>完成编辑</Button>
                     </div>
-                    {
-                        this.state.questionOption.map((item,index)=>(
-                            <Row className="option-oper-item" key={Math.random(100000)}>
-                                <Col span="14" className="item-value">
-                                    <Row gutter={[16, 16]} className="value-box">
-                                        <Col span="19">
-                                            <Input placeholder="请输入选项内容" value={item.value} onChange={(e)=>{
-                                                let questionOption = [...this.state.questionOption]
-                                                questionOption[index].value=e.target.value
-                                                this.setState({
-                                                    questionOption
-                                                })
-                                            }}/>
-                                        </Col>
-                                        <Col span="5" className="value-oper">
-                                            <PlusCircleOutlined className="btn" onClick={()=>{
-                                                let questionOption = [...this.state.questionOption]
-                                                questionOption.push({
-                                                    value:"",
-                                                    picture:"",
-                                                    isCorrect:false
-                                                })
-                                                this.setState({
-                                                    questionOption
-                                                })
-                                            }}/>
-                                            <MinusCircleOutlined className="btn" onClick={()=>{
-                                                if(this.state.questionOption.length===1){
-                                                    message.warning("至少保留一个选项！")
-                                                }else{
-                                                    let questionOption = [...this.state.questionOption]
-                                                    questionOption.splice(index,1)
-                                                    this.setState({
-                                                        questionOption
-                                                    })
-                                                }
-                                            }}/>
-                                        </Col>
-                                    </Row>
-                                </Col>
-                                <Col span="4" className="item-picture">
-                                    <PictureFilled className="btn"/>
-                                </Col>
-                                <Col span="3" className="item-isCorrect">
-                                    <Checkbox checked={item.isCorrect} onChange={(e)=>{
-                                        let questionOption = [...this.state.questionOption]
-                                        questionOption[index].isCorrect=e.target.checked
-                                        this.setState({
-                                            questionOption
-                                        })
-                                    }}/>
-                                </Col>
-                                <Col span="3" className="item-move">
-                                    <UpCircleOutlined className="btn" onClick={()=>{
-                                        if(index===0){
-                                            message.error("当前为第一个选项，不可上移")
-                                        }else{
-                                            let questionOption = [...this.state.questionOption]
-                                            let s = questionOption[index]
-                                            questionOption[index] = questionOption[index-1]
-                                            questionOption[index-1] = s
-                                            this.setState({
-                                                questionOption
-                                            })
-                                        }
-                                    }}/>
-                                    <DownCircleOutlined className="btn" onClick={()=>{
-                                        if(index===this.state.questionOption.length-1){
-                                            message.warning("当前为最后一个元素，不可下移")
-                                        }else{
-                                            let questionOption = [...this.state.questionOption]
-                                            let s = questionOption[index]
-                                            questionOption[index] = questionOption[index+1]
-                                            questionOption[index+1] = s
-                                            this.setState({
-                                                questionOption
-                                            })
-                                        }
-                                    }}/>
-                                </Col>
-                            </Row>
-                        ))
-                    }
-                </div>
-                <div className="question-complete-box">
-                    <Button type="primary" block>完成编辑</Button>
-                </div>
+                </Spin>
             </div>
         )
     }
 }
+
+export default withRouter(index)

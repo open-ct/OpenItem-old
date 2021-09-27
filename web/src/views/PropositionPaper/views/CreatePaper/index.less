@@ -1,6 +1,6 @@
 [data-component=create-paper-page]{
     width: 100%;
-    > .container{
+    .container{
         width: 100%;
         box-sizing: border-box;
         > .left-box{
@@ -51,44 +51,68 @@
             background-color: #EEEEEE;
             box-sizing: border-box;
             padding: .16rem;
-            > .right-content{
+            height: 100%;
+            overflow-y: scroll;
+            > .question-item{
                 width: 100%;
                 height: 100%;
                 background-color: white;
                 box-sizing: border-box;
                 padding: .62rem .73rem 0px .29rem;
-                position: relative;
-                > .top-box{
-                    > .question-params{
-                        > .title{
-                            width: 100%;
-                            height: .41rem;
-                            background: #EEEEEE;
-                            display: flex;
-                            align-items: center;
+                overflow-y: scroll;
+                margin-top: .2rem;
+                > .params-box{
+                    > .title{
+                        width: 100%;
+                        height: .41rem;
+                        background-color: #EEEEEE;
+                        line-height: .41rem;
+                        box-sizing: border-box;
+                        padding-left: .1rem;
+                        > span{
+                            font-size: .14rem;
+                            color: #000000;
+                            
+                        }
+                    }
+                    > .params-item{
+                        width: 100%;
+                        min-height: .32rem;
+                        margin-top: .1rem;
+                        > .label{
                             box-sizing: border-box;
                             padding-left: .1rem;
+                            line-height: .32rem;
                             > span{
                                 font-size: .14rem;
+                                color: #000000;
                             }
                         }
-                        > .params-box{
-                            box-sizing: border-box;
-                            width: 100%;
-                            padding: .17rem .07rem .18rem .1rem;
-                            border: .01rem solid #EEEEEE;
-                            margin-top: .04rem;
-                            .ant-form-item-no-colon{
-                                font-size: .14rem;
+                        > .value{
+                            > .ant-select{
+                                width: 100%;
+                            }
+                            > .tag-list{
+                                width: 100%;
+                                height: 100%;
+                                display: flex;
+                                align-items: center;
                             }
                         }
                     }
                 }
-                > .btn-line{
+                > .oper-btn-line{
+                    height: 1rem;
                     width: 100%;
-                    position: absolute;
-                    bottom: .5rem;
-                    left: .62rem;
+                    > .right{
+                        display: flex;
+                        justify-content: space-around;
+                    }
+                }
+                > .info-box{
+                    > .btn-line{
+                        height: 1rem;
+                    }
                 }
             }
         }

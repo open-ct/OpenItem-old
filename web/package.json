@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^12.1.10",
     "antd": "^4.16.9",
     "axios": "^0.21.1",
+    "braft-editor": "^2.3.9",
     "customize-cra": "^1.0.0",
     "http-proxy-middleware": "^2.0.1",
     "less": "^4.1.1",
