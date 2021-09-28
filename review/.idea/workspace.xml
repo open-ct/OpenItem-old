@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e43682a1-e80b-47da-ad31-77747a1df769" name="Changes" comment="feat&amp;fix (beego filter, send email)&#10;&#10;1. add api to send email;&#10;2. add filter for front-end;">
+    <list default="true" id="e43682a1-e80b-47da-ad31-77747a1df769" name="Changes" comment="fix (cross-domain)&#10;&#10;1. fix front-end request cross domain;">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,7 +105,8 @@
     <MESSAGE value="fix (file operations)&#10;&#10;1. fix: when uploading file, url params dose not match, file cannot be saved on disk." />
     <MESSAGE value="feat (step operations)&#10;&#10;1. get data statistic of a step(submit count, pass rate...)." />
     <MESSAGE value="feat&amp;fix (beego filter, send email)&#10;&#10;1. add api to send email;&#10;2. add filter for front-end;" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat&amp;fix (beego filter, send email)&#10;&#10;1. add api to send email;&#10;2. add filter for front-end;" />
+    <MESSAGE value="fix (cross-domain)&#10;&#10;1. fix front-end request cross domain;" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix (cross-domain)&#10;&#10;1. fix front-end request cross domain;" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
