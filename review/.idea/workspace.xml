@@ -4,29 +4,9 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e43682a1-e80b-47da-ad31-77747a1df769" name="Changes" comment="feat (step operations)&#10;&#10;1. get data statistic of a step(submit count, pass rate...).">
-      <change afterPath="$PROJECT_DIR$/access/cros.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/access/filter.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/controllers/noticer.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/json.go" afterDir="false" />
+    <list default="true" id="e43682a1-e80b-47da-ad31-77747a1df769" name="Changes" comment="feat&amp;fix (beego filter, send email)&#10;&#10;1. add api to send email;&#10;2. add filter for front-end;">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/conf/app.conf" beforeDir="false" afterPath="$PROJECT_DIR$/conf/app.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/conf/mail.conf" beforeDir="false" afterPath="$PROJECT_DIR$/conf/mail.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/noticer/mail.go" beforeDir="false" afterPath="$PROJECT_DIR$/noticer/mail.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/noticer/siteMessage.go" beforeDir="false" afterPath="$PROJECT_DIR$/noticer/message.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routers/commentsRouter_controllers.go" beforeDir="false" afterPath="$PROJECT_DIR$/routers/commentsRouter_controllers.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routers/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/routers/router.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/swagger/swagger.json" beforeDir="false" afterPath="$PROJECT_DIR$/swagger/swagger.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/swagger/swagger.yml" beforeDir="false" afterPath="$PROJECT_DIR$/swagger/swagger.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../warehouse/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/../warehouse/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../warehouse/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/../warehouse/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../warehouse/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/../warehouse/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../warehouse/routers/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/../warehouse/routers/router.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../warehouse/swagger/swagger.json" beforeDir="false" afterPath="$PROJECT_DIR$/../warehouse/swagger/swagger.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../warehouse/swagger/swagger.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../warehouse/swagger/swagger.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -125,7 +105,8 @@
     <MESSAGE value="fix (project operations)&#10;&#10;1. fix the error about using mongodb create trans error." />
     <MESSAGE value="fix (file operations)&#10;&#10;1. fix: when uploading file, url params dose not match, file cannot be saved on disk." />
     <MESSAGE value="feat (step operations)&#10;&#10;1. get data statistic of a step(submit count, pass rate...)." />
-    <option name="LAST_COMMIT_MESSAGE" value="feat (step operations)&#10;&#10;1. get data statistic of a step(submit count, pass rate...)." />
+    <MESSAGE value="feat&amp;fix (beego filter, send email)&#10;&#10;1. add api to send email;&#10;2. add filter for front-end;" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat&amp;fix (beego filter, send email)&#10;&#10;1. add api to send email;&#10;2. add filter for front-end;" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
