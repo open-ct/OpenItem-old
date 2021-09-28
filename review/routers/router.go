@@ -35,6 +35,11 @@ func init() {
 				&controllers.QueryController{},
 			),
 		),
+		beego.NSNamespace("/noticer",
+			beego.NSInclude(
+				&controllers.NoticerController{},
+			),
+		),
 	)
 	beego.AddNamespace(ns)
 }

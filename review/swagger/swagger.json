@@ -214,6 +214,37 @@
                 }
             }
         },
+        "/noticer/email": {
+            "post": {
+                "tags": [
+                    "noticer"
+                ],
+                "description": "发送邮件",
+                "operationId": "NoticerController.SendEmail",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "json",
+                        "description": "邮件内容",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/noticer.EmailPackage"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid email-structure json body(token)\""
+                    }
+                }
+            }
+        },
         "/proj/": {
             "put": {
                 "tags": [
@@ -2005,7 +2036,7 @@
         }
     },
     "definitions": {
-        "1873.0xc000560c00.false": {
+        "1873.0xc00053bf20.false": {
             "title": "false",
             "type": "object"
         },
@@ -2071,6 +2102,39 @@
                     "type": "string"
                 },
                 "position": {
+                    "type": "string"
+                }
+            }
+        },
+        "noticer.EmailBody": {
+            "title": "EmailBody",
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                },
+                "send_time": {
+                    "type": "string"
+                },
+                "sender": {
+                    "type": "string"
+                }
+            }
+        },
+        "noticer.EmailPackage": {
+            "title": "EmailPackage",
+            "type": "object",
+            "properties": {
+                "body": {
+                    "$ref": "#/definitions/noticer.EmailBody"
+                },
+                "destination": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "subject": {
                     "type": "string"
                 }
             }
@@ -2608,7 +2672,7 @@
             "type": "object",
             "properties": {
                 "data": {
-                    "$ref": "#/definitions/1873.0xc000560c00.false"
+                    "$ref": "#/definitions/1873.0xc00053bf20.false"
                 },
                 "message": {
                     "type": "string"

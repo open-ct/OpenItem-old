@@ -52,6 +52,15 @@ func init() {
 			Filters:          nil,
 			Params:           nil})
 
+	beego.GlobalControllerRouter["review/controllers:NoticerController"] = append(beego.GlobalControllerRouter["review/controllers:NoticerController"],
+		beego.ControllerComments{
+			Method:           "SendEmail",
+			Router:           "/email",
+			AllowHTTPMethods: []string{"post"},
+			MethodParams:     param.Make(),
+			Filters:          nil,
+			Params:           nil})
+
 	beego.GlobalControllerRouter["review/controllers:ProjectController"] = append(beego.GlobalControllerRouter["review/controllers:ProjectController"],
 		beego.ControllerComments{
 			Method:           "CreateEmptyProject",
