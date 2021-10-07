@@ -21,7 +21,7 @@ export default class inedx extends Component {
     downLoadFile = (file_id)=>{
         message.info(`开始下载文件：${file_id}！`);
         request({
-            url:`/file/${file_id}`,
+            url:`http://49.232.73.36:8081/review/file/${file_id}`,
             method: 'GET',
             responseType:'blob'
         }).then(res=>{
@@ -51,11 +51,11 @@ export default class inedx extends Component {
             getFileLoading:true
         })
         request({
-            url:`/proj/detailed/${this.props.projectId}`,
+            url:`http://49.232.73.36:8081/review/proj/detailed/${this.props.projectId}`,
             method:"GET"
         }).then(res=>{
             request({
-                url:"/query/file",
+                url:"http://49.232.73.36:8081/review/query/file",
                 method:"POST",
                 data:{
                     id_list:res.data.materials.files

@@ -27,7 +27,7 @@ class index extends Component {
             loadingState:true
         })
         request({
-            url:"/question",
+            url:"http://49.232.73.36:8082/qbank/question",
             method:"POST",
             data:{
                 advanced_props:{

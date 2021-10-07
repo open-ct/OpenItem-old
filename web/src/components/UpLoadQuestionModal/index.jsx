@@ -65,7 +65,7 @@ class index extends Component {
             projectLoading:true
         })
         request({
-            url:`/proj/user/${store.getState().userInfo.Id}`,
+            url:`http://49.232.73.36:8081/review/proj/user/${store.getState().userInfo.Id}`,
             method:"GET"
         }).then(res=>{
             let id_list = []
@@ -73,7 +73,7 @@ class index extends Component {
                 id_list.push(res.data[i].project_id)
             }
             request({
-                url:"/query/proj",
+                url:"http://49.232.73.36:8081/review/query/proj",
                 method:"POST",
                 data:{id_list}
             }).then(res=>{

@@ -19,7 +19,7 @@ export default class index extends Component {
             loadingState:true
         })
         request({
-            url:`/proj/step/stat/${this.props.stepId}`,
+            url:`http://49.232.73.36:8081/review/proj/step/stat/${this.props.stepId}`,
             method:"GET"
         }).then(res=>{
             this.setState({

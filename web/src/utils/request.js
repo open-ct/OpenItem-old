@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-08-12 00:21:27
- * @LastEditTime: 2021-09-17 19:04:02
+ * @LastEditTime: 2021-10-02 03:28:30
  * @LastEditors: Please set LastEditors
  * @Description: axios拦截器配置
  * @FilePath: \OpenItem\web\src\utils\request.js
@@ -44,7 +44,8 @@ request.interceptors.response.use(
     }
   },
   error => {
-    return Promise.reject(error.response.data)
+    console.log(error)
+    return Promise.reject(error.response.data||error.response)
   }
 )
 

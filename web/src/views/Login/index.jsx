@@ -29,7 +29,7 @@ export default class index extends Component {
     login = ()=>{
         const form = this.formRef.current
         form.validateFields().then(data=>{
-            request({ method:'POST', url:'/user/login', data}).then(res=>{
+            request({ method:'POST', url:'http://49.232.73.36:8081/review/user/login', data}).then(res=>{
                 store.dispatch(setuserinfo(res))
                 this.setState({
                     loadingState:{
@@ -74,10 +74,9 @@ export default class index extends Component {
                 major: "无",
                 name: "stacker",
                 password: "123456",
-                phone: "12345678913",
                 position: "无"
             },data)
-            request({ method:'POST', url:'/user', data}).then(res=>{
+            request({ method:'POST', url:'http://49.232.73.36:8081/review/user', data}).then(res=>{
                 this.setState({
                     loadingState:{
                         show:false,
@@ -143,7 +142,7 @@ export default class index extends Component {
                                     labelCol={{ span: 4 }}
                                     wrapperCol={{ span: 20 }}
                                     ref = {this.formRef}
-                                    initialValues = {{email:"expert1@qq.com",password:"123456",phone:""}}
+                                    initialValues = {{email:"",password:"",phone:""}}
                                 >
                                     <Form.Item
                                         label="用户名"

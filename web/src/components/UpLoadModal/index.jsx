@@ -30,7 +30,7 @@ export default class index extends Component {
         formData.append('tags', "无")
         formData.append('description', "步骤附件")
         request({
-            url:'/file',
+            url:'http://49.232.73.36:8081/review/file',
             method:"POST",
             data:formData,
             headers:{
@@ -65,7 +65,7 @@ export default class index extends Component {
                 createLoading:true
             })
             request({
-                url:"/proj/submit",
+                url:"http://49.232.73.36:8081/review/proj/submit",
                 method:"POST",
                 data:{
                     description:"暂无",
@@ -74,7 +74,7 @@ export default class index extends Component {
                 }
             }).then(res=>{
                 request({
-                    url:"/proj/submit/content",
+                    url:"http://49.232.73.36:8081/review/proj/submit/content",
                     method:"POST",
                     data:{
                         comment:"一个新的文件",

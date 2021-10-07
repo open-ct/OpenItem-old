@@ -36,7 +36,7 @@ export default class index extends Component {
             initLoading:true
         })
         request({
-            url:`/proj/detailed/${this.props.match.params.project}`,
+            url:`http://49.232.73.36:8081/review/proj/detailed/${this.props.match.params.project}`,
             method:"GET"
         }).then(res=>{
             this.setState({

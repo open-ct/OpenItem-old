@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Radio, Modal, Table, Pagination, Space,Spin, message } from 'antd'
+import { Button, Radio, Modal, Table, Pagination, Space,Spin, message, Card,Row,Col } from 'antd'
 import UpLoadQuestionModal from '../../../../components/UpLoadQuestionModal'
 import PropositionPaperIcon from '../../../../asset/images/proposition-paper-icon.png'
 import { LockOutlined , EditOutlined, EllipsisOutlined } from '@ant-design/icons';
@@ -7,12 +7,14 @@ import request from '../../../../utils/request'
 import store from '../../../../store';
 import './index.less'
 
+const { Meta } = Card
 
 export default class index extends Component {
 
     state = {
-        mode: 'questions',
+        mode: 'testpaper',
         questionData:[],
+        testpaperData:[],
         recordData:[{
             key:'1',
             date:'text',
@@ -143,7 +145,13 @@ export default class index extends Component {
         editQuestionVisible:false,
         createPaperVisible:false,
         loadingState:false,
-        recordLoading:false
+        recordLoading:false,
+        testpaperVisible:{
+            show:false,
+            id_list:[],
+            loadingState:false,
+            questionList:[]
+        }
     }
 
     columns = [{
@@ -197,6 +205,11 @@ export default class index extends Component {
 
     handleModeChange = e => {
         const mode = e.target.value;
+        if(e.target.value==="questions"){
+            this.getUserQuestionList()
+        }else{
+            this.getUserTestpaperList()
+        }
         this.setState({ mode });
     };
 
@@ -205,10 +218,9 @@ export default class index extends Component {
             recordLoading:true
         })
         request({
-            url:`/question/trace/${Id}`,
+            url:`http://49.232.73.36:8082/qbank/question/trace/${Id}`,
             method:"GET"
         }).then(res=>{
-            console.log(res.data.data)
             this.setState({
                 questionRecord:Object.assign(this.state.questionRecord,{recordList:res.data.data,viewIndex:0}),
                 recordLoading:false
@@ -222,50 +234,134 @@ export default class index extends Component {
         })
     }
 
+    getQuestionListInfo = ()=>{
+        this.setState({
+            testpaperVisible:Object.assign(this.state.testpaperVisible,{loadingState:true})
+        })
+        request({
+            url:"http://49.232.73.36:8082/qbank/query/t_question",
+            method:"POST",
+            data:{
+                id_list:this.state.testpaperVisible.id_list
+            }
+        }).then(res=>{
+            this.setState({
+                testpaperVisible:Object.assign(this.state.testpaperVisible,{loadingState:false,questionList:Object.values(res.data.data)})
+            })
+        }).catch(err=>{
+            this.setState({
+                testpaperVisible:Object.assign(this.state.testpaperVisible,{loadingState:false,show:false})
+            })
+            message.error(err.message||"请求错误")
+        })
+    }
+
     loadQuestionData = ()=>{
-        console.log(this.state.questionData)
         if(this.state.mode==="questions"){
             return this.state.questionData.map(item=>(
-                <div className="question-item" key={item.Id}>
-                    <div className="header">
-                        <span className="category">{item.basic_props.subject}</span>
-                        <span className="date">{this.timeFilter(item.CreateAt)}</span>
-                    </div>
-                    <div className="container">
-                        <div className="info">
-                            <span>{item.info.title}</span>
-                        </div>
-                        <div className="project">
-                            <span>{item.source_project}</span>
-                        </div>
-                    </div>
-                    <div className="footer">
-                        <div className="action-item b-right">
-                            <LockOutlined/>
-                        </div>
-                        <div className="action-item b-right" onClick={()=>{
+                // <div className="question-item" key={item.Id}>
+                //     <div className="header">
+                //         <span className="category">{item.basic_props.subject}</span>
+                //         <span className="date">{this.timeFilter(item.CreateAt)}</span>
+                //     </div>
+                //     <div className="container">
+                //         <div className="info">
+                //             <span>{item.info.title}</span>
+                //         </div>
+                //         <div className="project">
+                //             <span>{item.source_project}</span>
+                //         </div>
+                //     </div>
+                //     <div className="footer">
+                //         <div className="action-item b-right">
+                //             <LockOutlined/>
+                //         </div>
+                //         <div className="action-item b-right" onClick={()=>{
+                //             this.setState({
+                //                 upLoadQuestionModalParams:{
+                //                     type:"edit",
+                //                     show:true
+                //                 }
+                //             })
+                //         }}>
+                //             <EditOutlined/>
+                //         </div>
+                //         <div className="action-item" onClick={()=>{
+                //             this.setState({
+                //                 modifyRecordVisible:true
+                //             })
+                //             this.getQuestionRecord(item.uuid)
+                //         }}>
+                //             <EllipsisOutlined/>
+                //         </div>
+                //     </div>
+                // </div>
+                <Card
+                    style={{ width: 300,float:"left" }}
+                    actions={[
+                        <LockOutlined key="lock"/>,
+                        <EditOutlined key="edit" onClick={()=>{
                             this.setState({
                                 upLoadQuestionModalParams:{
-                                    type:"edit",
+                                    type:"update",
                                     show:true
                                 }
                             })
-                        }}>
-                            <EditOutlined/>
-                        </div>
-                        <div className="action-item" onClick={()=>{
+                        }}/>,
+                        <EllipsisOutlined key="ellipsis" onClick={()=>{
                             this.setState({
                                 modifyRecordVisible:true
                             })
                             this.getQuestionRecord(item.uuid)
-                        }}>
-                            <EllipsisOutlined/>
-                        </div>
-                    </div>
-                </div>
+                        }}/>
+                    ]}
+                >
+                    <Meta
+                        title={(
+                            <div className="header" style={{display:"flex",alignItems:"center",justifyContent:"space-between"}}>
+                                <span>{item.basic_props.subject||"未知"}</span>
+                                <span>{this.timeFilter(item.CreateAt)}</span>
+                            </div>
+                        )}
+                        description={item.info.title}
+                    />
+                </Card>
+            ))
+        }else{
+            return this.state.testpaperData.map(item=>(
+                <Card
+                    style={{ width: 300,float:"left" }}
+                    actions={[
+                        <LockOutlined key="lock"/>,
+                        <EditOutlined key="edit" onClick={()=>{
+                            this.setState({
+                                upLoadQuestionModalParams:{
+                                    type:"update-paper",
+                                    show:true
+                                }
+                            })
+                        }}/>,
+                        <EllipsisOutlined key="ellipsis" onClick={()=>{
+                            this.setState({
+                                testpaperVisible:Object.assign(this.state.testpaperVisible,{id_list:item.info[0].question_list.map(item=>item.question_id),show:true})
+                            })
+                            this.getQuestionListInfo()
+                        }}/>
+                    ]}
+                >
+                    <Meta
+                        title={(
+                            <div className="header" style={{display:"flex",alignItems:"center",justifyContent:"space-between"}}>
+                                <span>{item.props.subjects[0]||"未知"}</span>
+                                <span>{this.timeFilter(item.CreateAt)}</span>
+                            </div>
+                        )}
+                        description={item.info[0].description}
+                    />
+                </Card>
             ))
         }
-        return ""
+        
     }
 
     timeFilter = (time)=>{
@@ -275,7 +371,7 @@ export default class index extends Component {
     }
 
     componentDidMount = ()=>{
-        this.getUserQuestionList()
+       this.state.mode==="testpaper"?this.getUserTestpaperList():this.getUserQuestionList()
     }
 
     getUserQuestionList = ()=>{
@@ -283,11 +379,32 @@ export default class index extends Component {
             loadingState:true
         })
         request({
-            url:`/question/user_t/${store.getState().userInfo.Id}`,
+            url:`http://49.232.73.36:8082/qbank/question/user_t/${store.getState().userInfo.Id}`,
             method:"GET",
         }).then(res=>{
             this.setState({
                 questionData:res.data.data,
+                loadingState:false
+            })
+        }).catch(err=>{
+            this.setState({
+                loadingState:false
+            })
+            message.error(err.message||"加载失败")
+        })
+    }
+
+    getUserTestpaperList = ()=>{
+        this.setState({
+            loadingState:true
+        })
+        request({
+            url:`http://49.232.73.36:8082/qbank/testpaper/user_t/${store.getState().userInfo.Id}`,
+            method:"GET"
+        }).then(res=>{
+            console.log(res.data.data)
+            this.setState({
+                testpaperData:res.data.data,
                 loadingState:false
             })
         }).catch(err=>{
@@ -335,7 +452,7 @@ export default class index extends Component {
                     <div className="category-list">
                         <Radio.Group onChange={this.handleModeChange} value={this.state.mode} >
                             <Radio.Button value="questions">我的试题</Radio.Button>
-                            <Radio.Button value="warehouse" style={{ marginLeft: 4 }}>我的试卷库</Radio.Button>
+                            <Radio.Button value="testpaper" style={{ marginLeft: 4 }}>我的试卷库</Radio.Button>
                         </Radio.Group>
                     </div>
                     <div className="main">
@@ -400,6 +517,72 @@ export default class index extends Component {
                                 </div>
                             </div>
                         </div>
+                    </Spin>
+                </Modal>
+                <Modal 
+                    title="试卷详情" 
+                    visible={this.state.testpaperVisible.show} 
+                    width="80%"
+                    onOk={()=>{
+                        this.setState({
+                            testpaperVisible:Object.assign(this.state.testpaperVisible,{show:false})
+                        })
+                    }} 
+                    onCancel={()=>{
+                        this.setState({
+                            testpaperVisible:Object.assign(this.state.testpaperVisible,{show:false})
+                        })
+                    }}
+                >
+                    <Spin spinning={this.state.testpaperVisible.loadingState} tip="加载中">
+                        {
+                            this.state.testpaperVisible.loadingState?"":(
+                                <>
+                                    {
+                                        this.state.testpaperVisible.questionList.map((item,index)=>(
+                                            <div className="paper-question-item" key={item.id}>
+                                                <Row className="header">
+                                                    <Col span="4">
+                                                        <span>序号：<span style={{fontWeight:"bold",color:"red"}}>{index+1}</span></span>
+                                                    </Col>
+                                                    <Col span="6">
+                                                        <span>
+                                                            测试年份：<span style={{fontWeight:"bold",color:"green"}}>{item.apply_record.test_year}</span>
+                                                        </span>
+                                                    </Col>
+                                                    <Col span="4">
+                                                        <span>
+                                                            试题难度：<span style={{fontWeight:"bold",color:"blue"}}>{item.advanced_props.irt_level}</span>
+                                                        </span>
+                                                    </Col>
+                                                    <Col span="4">
+                                                        <span>
+                                                            试题类型：{item.info.type}
+                                                        </span>
+                                                    </Col>
+                                                    <Col span="4">
+                                                        <span>
+                                                            题目答案：{item.info.answer||"无"}
+                                                        </span>
+                                                    </Col>
+                                                </Row>
+                                                <div className="body" dangerouslySetInnerHTML={{__html:item.info.body}}></div>
+                                                <div className="footer">
+                                                    <Button type="primary" style={{float:"right"}} onClick={()=>{
+                                                        this.getQuestionRecord(item.uuid)
+                                                        this.setState({
+                                                            modifyRecordVisible:true
+                                                        })
+                                                    }}>查看历史版本</Button>
+                                                </div>
+                                                <br/>
+                                                <br/>
+                                            </div>
+                                        ))
+                                    }
+                                </>
+                            )
+                        }
                     </Spin>
                 </Modal>
             </div>

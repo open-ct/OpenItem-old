@@ -26,8 +26,7 @@ export default class index extends Component {
         this.setState({
             loadingState:true
         })
-        request({ method:'GET', url:`/proj/detailed/${this.props.match.params.project_id}`}).then(res=>{
-            console.log(res.data)
+        request({ method:'GET', url:`http://49.232.73.36:8081/review/proj/detailed/${this.props.match.params.project_id}`}).then(res=>{
             this.setState({
                 projectBaseInfo:res.data,
                 loadingState:false
@@ -41,7 +40,15 @@ export default class index extends Component {
         })
     }
 
-    
+    dateFilter(time){
+        let date = new Date(time)
+        return `${date.getFullYear()}-${date.getMonth().toString().padStart(2,'0')}-${date.getDate().toString().padStart(2,'0')}`
+    }
+
+    tabCruuent=()=>{
+        let path_list = this.props.location.pathname.split('/')
+        return `${path_list[path_list.length-1]}_${path_list[path_list.length-2]}`
+    }
 
     render() {
         return (
@@ -60,7 +67,7 @@ export default class index extends Component {
                             this.state.loadingState?(
                                 <Spin spinning={this.state.loadingState} tip="加载中"/>
                             ):(
-                                <Tabs defaultActiveKey={`${this.state.projectBaseInfo.steps[0].uuid}_${this.state.projectBaseInfo.steps[0].name}`} type="card" onChange={(e)=>{
+                                <Tabs defaultActiveKey={`${this.state.projectBaseInfo.steps[0].uuid}_${this.state.projectBaseInfo.steps[0].name}`} type="card" activeKey={this.tabCruuent()} onChange={(e)=>{
                                     this.props.history.push(`/home/project-management/${this.props.match.params.project_id}/${this.props.match.params.role}/${e.split('_')[1]}/${e.split('_')[0]}`)
                                 }}>
                                     {
@@ -77,7 +84,7 @@ export default class index extends Component {
                                     <Spin spinning={this.state.loadingState} tip="加载中..." />
                                 ):(
                                     <Descriptions size="small" column={3} style={{width:'auto'}}>
-                                        <Descriptions.Item label="创建时间">{this.state.projectBaseInfo.basic_info.CreateAt}</Descriptions.Item>
+                                        <Descriptions.Item label="创建时间">{this.dateFilter(this.state.projectBaseInfo.basic_info.CreateAt)}</Descriptions.Item>
                                         <Descriptions.Item label="学科">
                                             {
                                                 this.state.projectBaseInfo.basic_info.basic_info.subjects.map((item,index)=>(

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-31 16:42:56
- * @LastEditTime: 2021-09-18 18:17:53
+ * @LastEditTime: 2021-09-29 01:01:26
  * @LastEditors: Please set LastEditors
  * @Description: 抽离出的任务要求组件
  * @FilePath: \OpenItem\web-client\src\index.js
@@ -41,7 +41,7 @@ export default class index extends Component {
         formData.append('tags', "无")
         formData.append('description', "步骤附件")
         request({
-            url:'/file',
+            url:'http://49.232.73.36:8081/review/file',
             method:"POST",
             data:formData,
             headers:{
@@ -49,7 +49,7 @@ export default class index extends Component {
             }
         }).then(res=>{
             request({
-                url:'/proj/step/attachment',
+                url:'http://49.232.73.36:8081/review/proj/step/attachment',
                 method:"POST",
                 data:{
                     files_ids:[res.data.uuid],
@@ -82,7 +82,7 @@ export default class index extends Component {
         }else{
             message.info(`开始下载文件：${this.state.stepInfo.attachments[0]}！`);
             request({
-                url:`/file/${this.state.stepInfo.attachments[0]}`,
+                url:`http://49.232.73.36:8081/review/file/${this.state.stepInfo.attachments[0]}`,
                 method: 'GET',
                 responseType:'blob'
             }).then(res=>{
@@ -143,7 +143,7 @@ export default class index extends Component {
                 }</Button>
             </div>
         )]
-        return operationDomList[this.props.role-2]()
+        return operationDomList[(this.props.role==="1"||this.props.role==="5")?0:this.props.role-2]()
     }
 
     componentDidMount(){
@@ -155,7 +155,7 @@ export default class index extends Component {
             loadingState:true,
         })
         request({
-            url:`/proj/step/${this.props.stepId}`,
+            url:`http://49.232.73.36:8081/review/proj/step/${this.props.stepId}`,
             method:'GET'
         }).then(res=>{
             this.setState({
@@ -193,3 +193,5 @@ export default class index extends Component {
         )
     }
 }
+
+ 

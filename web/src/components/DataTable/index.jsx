@@ -25,10 +25,12 @@ export default class index extends Component {
 
     colums=[[{
             title: '上传时间',
-            dataIndex: 'CreateAt',
             key: 'CreateAt',
             align: 'center',
-            width:150
+            width:150,
+            render:(text,record)=>(
+                <span>{this.dateFilter(record.CreateAt)}</span>
+            )
         },{
             title: '上传用户',
             dataIndex: 'user',
@@ -114,7 +116,7 @@ export default class index extends Component {
             align: 'center',
             render: (text, record) => (
                 <Space size="middle">
-                   <span>{record.CreateAt}</span>{record.isDelay?(<Tag color="error">延时提交</Tag>):''}
+                   <span>{this.dateFilter(record.CreateAt)}</span>{record.isDelay?(<Tag color="error">延时提交</Tag>):''}
                 </Space>
             )
         },{
@@ -256,10 +258,15 @@ export default class index extends Component {
         }]
     ]
 
+    dateFilter(time){
+        let date = new Date(time)
+        return `${date.getFullYear()}-${date.getMonth().toString().padStart(2,'0')}-${date.getDate().toString().padStart(2,'0')}`
+    }
+
     downLoadFile(file_id){
         message.info(`开始下载文件：${file_id}！`);
         request({
-            url:`/file/${file_id}`,
+            url:`http://49.232.73.36:8081/review/file/${file_id}`,
             method: 'GET',
             responseType:'blob'
         }).then(res=>{
@@ -302,7 +309,8 @@ export default class index extends Component {
         this.setState({
             loadingState:true
         })
-        request({ method:'GET', url:`/proj/submits/${this.props.stepId}`}).then(res=>{
+        request({ method:'GET', url:`http://49.232.73.36:8081/review/proj/submits/${this.props.stepId}`}).then(res=>{
+            console.log(res.data)
             this.setState({
                 data:res.data,
                 loadingState:false
@@ -350,7 +358,7 @@ export default class index extends Component {
                             statusChangeLoading:true
                         })
                         request({
-                            url:`/proj/submit`,
+                            url:`http://49.232.73.36:8081/review/proj/submit`,
                             method: 'PUT',
                             data:{
                                 new_status:this.state.statusChangeParams.value,

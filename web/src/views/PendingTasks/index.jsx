@@ -44,18 +44,14 @@ export default class index extends Component {
           key: 'name',
           align: 'center',
           width: 210,
-          render: record => (
-            <Space size="middle">
-              <Button type="link" onClick={this.seekProjectManagement.bind(this,record)}>项目名称</Button>
-            </Space>
+          render: (text,record) => (
+            // <Space size="middle">
+            //   <Button type="link" onClick={this.seekProjectManagement.bind(this,record)}>{
+            //     record.basic_info.name
+            //   }</Button>
+            // </Space>
+            <span>{record.basic_info.name}</span>
           )
-        },
-        {
-          title: '负责人',
-          dataIndex: 'operator',
-          key: 'director',
-          align: 'center',
-          width: 140,
         },
         {
           title: '学科',
@@ -63,42 +59,55 @@ export default class index extends Component {
           dataIndex: 'subject',
           align: 'center',
           width: 210,
-          render: tags => (
+          render: (text,record) => (
             <>
-              {/* {tags.map((tag,index)=> {
-                let colorList = ['green','geekblue','red']
-                return (
-                  <Tag color={colorList[index]} key={tag}>
-                    {tag.toUpperCase()}
+              {
+                record.basic_info.subjects.map((item,index)=>(
+                  <Tag key={index} color="green">
+                    {
+                      item
+                    }
                   </Tag>
-                );
-              })} */}
-              <Tag color="red" key="1">
-                学科标签
-              </Tag>
+                ))
+              }
             </>
-          ),
+          )
         },
         {
             title: '学段',
-            dataIndex: 'period',
             key: 'period',
             align: 'center',
-            width: 80,
+            render: (text,record) => (
+              <>
+                {
+                  record.basic_info.grade_range.map((item,index)=>(
+                    <Tag key={index} color="green">
+                      {
+                        item
+                      }
+                    </Tag>
+                  ))
+                }
+              </>
+            ),
         },
         {
             title: '试卷',
-            dataIndex: 'paper',
             key: 'paper',
             align: 'center',
             width: 142,
+            render: record => (
+              <span>0</span>
+            )
         },
         {
             title: '试题',
-            dataIndex: 'questions',
             key: 'questions',
             align: 'center',
             width: 121,
+            render: record => (
+              <span>0</span>
+            )
         },
         {
             title: '创建时间',
@@ -106,15 +115,18 @@ export default class index extends Component {
             key: 'create-time',
             align: 'center',
             width: 342,
+            render: (text,record) => (
+              <span>{this.dateFilter(record.CreateAt)}</span>
+            )
         },
         {
-          title:"Title",
+          title:"操作",
           key:'title',
           align: 'center',
           render: (text, record) => (
             <Space size="middle">
-              <Button type="link">Invite {record.name}</Button>
-              <Button type="link">Delete</Button>
+              <Button type="link" onClick={this.seekProjectManagement.bind(this,record)}>访问项目</Button>
+              <Button type="link" danger>删除</Button>
             </Space>
           )
         }
@@ -130,41 +142,53 @@ export default class index extends Component {
       )
     }
     componentDidMount = ()=>{
-      // let data = []
-      // for(let i=0;i<5;i++){
-      //   data.push({
-      //     key: i,
-      //     name: 'project'+i,
-      //     director:'负责人'+i,
-      //     subject: ['学科1', '学科2', '学科3'],
-      //     period:'test',
-      //     paper:'test',
-      //     questions:"test",
-      //     createTime:"2021-08-08 02:05:48",
-      //   })
-      // }
-      // this.setState({
-      //   data
-      // })
       this.getProjectList()
     }
     seekProjectManagement = (state)=>{
       this.props.history.push(`/home/project-management/${state.project_id}/${state.role}`)
     }
 
+    dateFilter(time){
+      let date = new Date(time)
+      return `${date.getFullYear()}-${date.getMonth().toString().padStart(2,'0')}-${date.getDate().toString().padStart(2,'0')}`
+    }
+
     getProjectList = ()=>{
       this.setState({
         loadingState:true
       })
-      request({ method:'GET', url:`/proj/user/${store.getState().userInfo.Id}`}).then(res=>{
-        this.setState({
-          data:res.data,
-          loadingState:false
+      request({ method:'GET', url:`http://49.232.73.36:8081/review/proj/user/${store.getState().userInfo.Id}`}).then(res=>{
+        let id_list = res.data.map(item=>item.project_id)
+        let role_lits = res.data.map(item=>item.role)
+        let project_id_list = res.data.map(item=>item.project_id)
+        request({
+          url:"http://49.232.73.36:8081/review/query/proj",
+          method:"POST",
+          data:{
+            id_list
+          }
+        }).then(res=>{
+          let data = Object.values(res.data)
+          data = data.map((item,index)=>{
+            item.role = role_lits[index]
+            item.project_id = project_id_list[index]
+            return item
+          })
+          this.setState({
+            data,
+            loadingState:false
+          })
+        }).catch(err=>{
+          this.setState({
+            loadingState:false
+          })
+          message.error(err.message||"请求错误")
         })
       }).catch(err=>{
         this.setState({
           loadingState:false
         })
+        message.error(err.message||"请求错误")
       })
     }
 
@@ -222,7 +246,7 @@ export default class index extends Component {
                           this.setState({
                             createLoading:true
                           })
-                          request({ method:'POST', url:"/proj/template",data}).then(res=>{
+                          request({ method:'POST', url:"http://49.232.73.36:8081/review/proj/template",data}).then(res=>{
                             message.success("项目创建成功！");
                             this.setState({
                               createLoading:false,

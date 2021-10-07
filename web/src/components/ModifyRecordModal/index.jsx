@@ -41,7 +41,7 @@ export default class index extends Component {
             loadingState:true
         })
         request({
-            url:`/proj/submit/${this.props.submitId}`,
+            url:`http://49.232.73.36:8081/review/proj/submit/${this.props.submitId}`,
             method:"GET"
         }).then(res=>{
             this.setState({
@@ -87,7 +87,7 @@ export default class index extends Component {
     downLoadFile(file_id){
         message.info(`开始下载文件：${file_id}！`);
         request({
-            url:`/file/${file_id}`,
+            url:`http://49.232.73.36:8081/review/file/${file_id}`,
             method: 'GET',
             responseType:'blob'
         }).then(res=>{
