@@ -1,0 +1,91 @@
+[data-component=difficulty-box]{
+    width: 100%;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    > .difficulty-process-box{
+        width: 100%;
+        height: .04rem;
+        background-color: #F5F5F5;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+        > .value-item{
+            width: .08rem;
+            height: .08rem;
+            border-radius: .08rem;
+            
+            position: relative;
+            cursor: pointer;
+            z-index: 10;
+            transition: all .5s;
+            > .value{
+                width: .16rem;
+                height: .16rem;
+                text-align: center;
+                position: absolute;
+                bottom: -.16rem;
+                left: -.04rem;
+            }
+            > .center-cir{
+                width: .04rem;
+                height: .04rem;
+                background-color: white;
+                border-radius: .04rem;
+                position: absolute;
+                left: .02rem;
+                top: .02rem;
+            }
+        }
+        > .difficulty-process-value{
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            background-color: #91D5FF;
+            z-index: 8;
+            transition: all .5s;
+        }
+        > .selected-cir{
+            width: .15rem;
+            height: .15rem;
+            position: absolute;
+            top: -0.055rem;
+            border-radius: .15rem;
+            background-color: #91D5FF;
+            z-index: 12;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all .5s;
+            > .circle-1{
+                width: .11rem;
+                height: .11rem;
+                background-color: white;
+                border-radius: .11rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                > .circle-2{
+                    width: .07rem;
+                    height: .07rem;
+                    border-radius: .07rem;
+                    background-color: #91D5FF;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    > .circle-3{
+                        width: .04rem;
+                        height: .04rem;
+                        border-radius: .04rem;
+                        background-color: white;
+                    }
+                }
+            }
+        }
+    }
+}
