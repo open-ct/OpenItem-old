@@ -1,0 +1,54 @@
+POST http://localhost:9001/proj/changeAssign
+Content-Type: application/json
+Token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYzk5M2FhM2MtYWRlOS00ZDk5LWE1NmItNmE1YjQ3MmQ5ZGJhIiwiZXhwIjoxNjI5NzE2MDUxLCJpYXQiOjE2MjkxMTEyNTEsImlzcyI6InJvYm90LTFAcHFicy5jb20ifQ.D1jdCkOv56qn_BQaDym_Omg2LkHj7s6PjjTYpKstRS4
+
+{
+  "assignment_id": "a33cbbc9-5497-48df-9d95-f3f25f270af9",
+  "new_role": 1
+}
+
+###
+POST http://localhost:9001/proj/makeAssign
+Content-Type: application/json
+Token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYzk5M2FhM2MtYWRlOS00ZDk5LWE1NmItNmE1YjQ3MmQ5ZGJhIiwiZXhwIjoxNjI5NzE2MDUxLCJpYXQiOjE2MjkxMTEyNTEsImlzcyI6InJvYm90LTFAcHFicy5jb20ifQ.D1jdCkOv56qn_BQaDym_Omg2LkHj7s6PjjTYpKstRS4
+
+{
+  "user_id": "1c00da28-0c1c-42a2-bff2-b00ed5d8ac52",
+  "project_id": "17dc1bf8-7b4d-42e8-8b53-4971aa65cf0d",
+  "role": 1
+}
+
+###
+GET http://localhost:9001/proj/removeAssign?assignment_id=b16d1aa9-8572-4152-871d-2a5b06c0e2f0
+Accept: application/json
+
+###
+
+GET http://localhost:9001/proj/projectAssign?proj_id=12ef6101-e47f-41fe-814f-b13a922ece8d
+Accept: application/json
+
+###
+GET http://localhost:9001/proj/userAssign?user_id=1c00da28-0c1c-42a2-bff2-b00ed5d8ac52
+Accept: application/json
+
+###
+
+GET http://localhost:9001/proj/getInfo?proj_id=12ef6101-e47f-41fe-814f-b13a922ece8d
+Accept: application/json
+
+###
+POST http://localhost:9001/proj/createEmpty
+Content-Type: application/json
+Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYzk5M2FhM2MtYWRlOS00ZDk5LWE1NmItNmE1YjQ3MmQ5ZGJhIiwiZXhwIjoxNjI5MzY0OTI0LCJpYXQiOjE2Mjg3NjAxMjQsImlzcyI6InJvYm90LTFAcHFicy5jb20ifQ.5ifVw1DyoXsxQL092qdMoShFMcvkC3qjM2ZBThiQi7s
+
+{
+  "name": "test-project-3",
+  "Description": "this is a no.3 test-project, which is an empty project.",
+  "requirement": "nothing... just testing.",
+  "target": "test create project api.",
+  "grade_range": ["10", "12", "15"],
+  "subjects": ["go", "html"],
+  "summary": "speed up..."
+}
+
+###

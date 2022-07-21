@@ -1,0 +1,176 @@
+# User 用户操作接口演示
+### 注册前信息检查
+POST http://49.232.73.36:8081/user/checkInfo
+Content-Type: application/json
+
+{
+  "phone": "13000000011",
+  "email": "robot-1@pqbs.com"
+}
+
+### 更新用户信息
+POST http://49.232.73.36:8081/user/updateInfo
+Content-Type: application/json
+
+{
+  "id": "c993aa3c-ade9-4d99-a56b-6a5b472d9dba",
+  "name": "robot-01",
+  "email": "robot-1@pqbs.com",
+  "phone": "13000000001",
+  "gender": false,
+  "degree": "robot",
+  "position": "robot-man",
+  "employer": "developer",
+  "major": "test"
+}
+
+### 删除用户
+GET http://49.232.73.36:8081/user/delete?user_id=c2dbc93b-f1c0-43b8-b4fc-6ecea7f52591
+Accept: application/json
+
+### 获取用户信息
+GET http://49.232.73.36:8081/user/getInfo?user_id=c993aa3c-ade9-4d99-a56b-6a5b472d9dba
+Accept: application/json
+
+### 用户搜索
+POST http://49.232.73.36:8081/user/search
+Content-Type: application/json
+
+{
+  "phone": "",
+  "email": "",
+  "name": "robot-3",
+  "degree": "",
+  "position": "",
+  "employer": "developer",
+  "major": "test"
+}
+
+### 更新用户密码
+POST http://49.232.73.36:8081/user/updatePwd
+Content-Type: application/json
+
+{
+  "id": "c993aa3c-ade9-4d99-a56b-6a5b472d9dba",
+  "old_password": "123456",
+  "new_password": "abcdef"
+}
+
+
+### 用户登录
+POST http://49.232.73.36:8081/user/login
+Content-Type: application/json
+
+{
+  "email": "robot-1@pqbs.com",
+  "password": "abcdef"
+}
+
+### 用户注册
+POST http://49.232.73.36:8081/user/register
+Content-Type: application/json
+
+{
+  "name": "robot-0",
+  "password": "123456",
+  "email": "robot-0@pqbs.com",
+  "phone": "13000000000",
+  "gender": false,
+  "degree": "robot",
+  "position": "robot-man",
+  "employer": "developer",
+  "major": "test"
+}
+###
+# File 文件操作
+### 删除文件（根据id）
+GET http://49.232.73.36:8081/file/delete?file_id=9094ce1c-e402-4e07-a363-a3383a471010
+Accept: application/json
+
+### 文件搜素
+POST http://49.232.73.36:8081/file/search
+Content-Type: application/json
+
+{
+  "file_name": "图.png",
+  "type": ".png",
+  "tags": []
+}
+
+### 获取文件信息
+GET http://49.232.73.36:8081/file/getInfo?file_id=9094ce1c-e402-4e07-a363-a3383a471010
+Accept: application/json
+
+### 下载文件（id）
+GET http://49.232.73.36:8081/file/download?file_id=9094ce1c-e402-4e07-a363-a3383a471010
+Accept: application/json
+
+### 上传文件（form  形式）
+POST http://49.232.73.36:8081/file/upload
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="field-name"; filename="file.txt"
+
+< ./relative/path/to/local_file.txt
+--WebAppBoundary--
+###
+# Project 项目操作接口
+### 获取指定项目的人员安排
+GET http://49.232.73.36:8081/proj/projectAssign?proj_id=0fad415b-5e78-4d53-8d25-163fbf26e47b
+Accept: application/json
+
+### 获取指定用户的项目角色分配
+GET http://49.232.73.36:8081/proj/userAssign?user_id=c993aa3c-ade9-4d99-a56b-6a5b472d9dba
+Accept: application/json
+
+### 获取项目信息（id）
+GET http://49.232.73.36:8081/proj/getInfo?proj_id=c993aa3c-ade9-4d99-a56b-6a5b472d9dba
+Accept: application/json
+
+### 创建空项目
+POST http://49.232.73.36:8081/proj/createEmpty
+Content-Type: application/json
+Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYzk5M2FhM2MtYWRlOS00ZDk5LWE1NmItNmE1YjQ3MmQ5ZGJhIiwiZXhwIjoxNjI5MzY0OTI0LCJpYXQiOjE2Mjg3NjAxMjQsImlzcyI6InJvYm90LTFAcHFicy5jb20ifQ.5ifVw1DyoXsxQL092qdMoShFMcvkC3qjM2ZBThiQi7s
+
+{
+  "name": "test-project-3",
+  "Description": "this is a no.3 test-project, which is an empty project.",
+  "requirement": "nothing... just testing.",
+  "target": "test create project api.",
+  "grade_range": ["10", "12", "15"],
+  "subjects": ["go", "html"],
+  "summary": "speed up..."
+}
+
+### 更改某个人的项目角色分配（需要token）
+POST http://49.232.73.36:8081/proj/changeAssign
+Content-Type: application/json
+Token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYzk5M2FhM2MtYWRlOS00ZDk5LWE1NmItNmE1YjQ3MmQ5ZGJhIiwiZXhwIjoxNjI5NzE2MDUxLCJpYXQiOjE2MjkxMTEyNTEsImlzcyI6InJvYm90LTFAcHFicy5jb20ifQ.D1jdCkOv56qn_BQaDym_Omg2LkHj7s6PjjTYpKstRS4
+
+{
+"assignment_id": "a33cbbc9-5497-48df-9d95-f3f25f270af9",
+"new_role": 1
+}
+
+### 创建一条人员分配（需要token）
+POST http://49.232.73.36:8081/proj/makeAssign
+Content-Type: application/json
+Token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYzk5M2FhM2MtYWRlOS00ZDk5LWE1NmItNmE1YjQ3MmQ5ZGJhIiwiZXhwIjoxNjI5NzE2MDUxLCJpYXQiOjE2MjkxMTEyNTEsImlzcyI6InJvYm90LTFAcHFicy5jb20ifQ.D1jdCkOv56qn_BQaDym_Omg2LkHj7s6PjjTYpKstRS4
+
+{
+  "user_id": "1c00da28-0c1c-42a2-bff2-b00ed5d8ac52",
+  "project_id": "17dc1bf8-7b4d-42e8-8b53-4971aa65cf0d",
+  "role": 1
+}
+
+### 删除一条分配记录
+GET http://49.232.73.36:8081/proj/removeAssign?assignment_id=b16d1aa9-8572-4152-871d-2a5b06c0e2f0
+Accept: application/json
+
+###
+# 题库系统接口（未上线）
+
+# Qusetion
+
+# Exam

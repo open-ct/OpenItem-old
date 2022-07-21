@@ -1,0 +1,2701 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "OpenCT PQBS - api document",
+        "description": "beego has a very cool tools to autogenerate documents for your API",
+        "version": "1.0.0",
+        "termsOfService": "http://",
+        "contact": {
+            "email": "kkoogqw@hotmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    },
+    "basePath": "/review",
+    "paths": {
+        "/file/": {
+            "post": {
+                "tags": [
+                    "file"
+                ],
+                "description": "文件上传, 使用post form格式上传, 会自动解析token获得对应的上传者id",
+                "operationId": "FileController.UploadFile",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "file",
+                        "description": "文件名",
+                        "required": true,
+                        "type": "file"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "description",
+                        "description": "文件注释和说明",
+                        "type": "string"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "tags",
+                        "description": "文件标签(文件类型即为文件的后缀名, 自动解析)",
+                        "type": "string"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "source_project",
+                        "description": "上传文件对应的项目id, 查询使用",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid file\""
+                    }
+                }
+            }
+        },
+        "/file/info/{fid}": {
+            "get": {
+                "tags": [
+                    "file"
+                ],
+                "description": "只获取文件信息, 不执行下载",
+                "operationId": "FileController.GetFileInfo",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "fid",
+                        "description": "file uuid",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid file uuid\""
+                    }
+                }
+            }
+        },
+        "/file/search": {
+            "post": {
+                "tags": [
+                    "file"
+                ],
+                "description": "条件搜素文件, 搜索结果 (待完善)",
+                "operationId": "FileController.SearchFiles",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "json",
+                        "description": "搜索条件",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.SearchFile"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid conditions (parse body failed)\""
+                    }
+                }
+            }
+        },
+        "/file/{fid}": {
+            "get": {
+                "tags": [
+                    "file"
+                ],
+                "description": "download a file by file id(根据文件id下载文件)",
+                "operationId": "FileController.DownloadFile",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "fid",
+                        "description": "file uuid",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid file uuid\""
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "file"
+                ],
+                "description": "删除文件上传记录(不在磁盘存储中删除文件)",
+                "operationId": "FileController.DeleteFile",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "fid",
+                        "description": "the file's uuid you want to delete",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid file id\""
+                    }
+                }
+            }
+        },
+        "/noticer/email": {
+            "post": {
+                "tags": [
+                    "noticer"
+                ],
+                "description": "发送邮件",
+                "operationId": "NoticerController.SendEmail",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "json",
+                        "description": "邮件内容",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/noticer.EmailPackage"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid email-structure json body(token)\""
+                    }
+                }
+            }
+        },
+        "/proj/": {
+            "put": {
+                "tags": [
+                    "proj"
+                ],
+                "description": "更新项目相关信息",
+                "operationId": "ProjectController.UpdateProjectInfo",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "json",
+                        "description": "要更新的项目信息数据",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.UpdateProjectInfo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid body\""
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "proj"
+                ],
+                "description": "创建一个空项目(不创建相关流程和任务)",
+                "operationId": "ProjectController.CreateEmptyProject",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "json",
+                        "description": "基本的项目信息, 创建人(creator)一项不需要填写,会根据token自动解析填充",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.CreateProject"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid project json body(token)\""
+                    }
+                }
+            }
+        },
+        "/proj/assign": {
+            "post": {
+                "tags": [
+                    "proj"
+                ],
+                "description": "create a user assignment for a project (创建一个人员分配记录: 项目-用户-角色) json字段说明: operator-进行角色分配的管理员id(根据token自行填充), project_id-该项分配记录对应的项目id, user_id-要进行分配的用户id, role-要分配的角色(1-项目管理员, 2-专家, 3-学科助理, 4-命题教师, 5-外审人员)",
+                "operationId": "ProjectController.MakeOneAssignment",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "json",
+                        "description": "assignment information",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.MakeOneAssignment"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid token(body)\""
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "proj"
+                ],
+                "description": "更改一个角色分配; 字段说明: operator-进行更改的管理员id(根据token解析), assignment_id-更改的assign id, new_role-新的角色分配,",
+                "operationId": "ProjectController.ChangeAssignment",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "json",
+                        "description": "new role to change",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.ChangeAssignment"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid bodu\""
+                    }
+                }
+            }
+        },
+        "/proj/assign/confirm/{aid}": {
+            "get": {
+                "tags": [
+                    "proj"
+                ],
+                "description": "用户端确认角色分配申请",
+                "operationId": "ProjectController.ConfirmAssignment",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "aid",
+                        "description": "true",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid uuid\""
+                    }
+                }
+            }
+        },
+        "/proj/assign/{aid}": {
+            "delete": {
+                "tags": [
+                    "proj"
+                ],
+                "description": "删除一条角色分配",
+                "operationId": "ProjectController.DeleteAssignment",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "aid",
+                        "description": "uuid of assignment to delete",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid uuid\""
+                    }
+                }
+            }
+        },
+        "/proj/assign/{pid}": {
+            "get": {
+                "tags": [
+                    "proj"
+                ],
+                "description": "获取一个项目的所有人员分配情况",
+                "operationId": "ProjectController.GetProjectAssignment",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "pid",
+                        "description": "project id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid project id\""
+                    }
+                }
+            }
+        },
+        "/proj/audit": {
+            "put": {
+                "tags": [
+                    "proj"
+                ],
+                "description": "负责人修改审核信息",
+                "operationId": "ProjectController.CorrectAudit",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "json",
+                        "description": "修改后的审核信息",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.UpdateAudit"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid json\""
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "proj"
+                ],
+                "description": "项目负责人创建一个材料审核记录",
+                "operationId": "ProjectController.VreateOneAudit",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "json",
+                        "description": "审核信息",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.MakeOneAudit"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid json\""
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "proj"
+                ],
+                "description": "删除一条审核记录",
+                "operationId": "ProjectController.DeleteAudit",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "auditId",
+                        "description": "要深处的审核记录Id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid audit id\""
+                    }
+                }
+            }
+        },
+        "/proj/audit/{auditId}": {
+            "get": {
+                "tags": [
+                    "proj"
+                ],
+                "description": "获取项目管理员/负责人等对一个submit下的content做出的审核",
+                "operationId": "ProjectController.GetOneAudit",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "auditId",
+                        "description": "audit id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid audit id\""
+                    }
+                }
+            }
+        },
+        "/proj/audits/{submitId}": {
+            "get": {
+                "tags": [
+                    "proj"
+                ],
+                "description": "获取一个submit下的所有audit",
+                "operationId": "ProjectController.GetAuditsInSubmit",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "submitId",
+                        "description": "submit id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid submit uuid\""
+                    }
+                }
+            }
+        },
+        "/proj/basic/{pid}": {
+            "get": {
+                "tags": [
+                    "proj"
+                ],
+                "description": "获取项目的基本信息数据",
+                "operationId": "ProjectController.GetBasicInfo",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "pid",
+                        "description": "项目的uuid",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid project id\""
+                    }
+                }
+            }
+        },
+        "/proj/detailed/{pid}": {
+            "get": {
+                "tags": [
+                    "proj"
+                ],
+                "description": "获取项目的详细信息数据(basic info 基本信息, group-人员情况, steps-项目所有流程信息, materials-项目使用的参考材料)",
+                "operationId": "ProjectController.GetDetailedInfo",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "pid",
+                        "description": "项目的uuid",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid project id\""
+                    }
+                }
+            }
+        },
+        "/proj/group": {
+            "post": {
+                "tags": [
+                    "proj"
+                ],
+                "description": "创建一个项目的人员分配(同时分配多种角色); 字段说明: admins-要分配为管理员的人员id数组, experts-分配为专家的id数组, assistants-分配为学科助理的id, teachers-分配为命题教师的id, out_experts-分配为外审人员的id, project_id-所属项目id, operator-进行分配到管理员id",
+                "operationId": "ProjectController.MakeAssignmentGroup",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "json",
+                        "description": "需要每种角色的user id",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.MakeAssignmentGroup"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid token(body)\""
+                    }
+                }
+            }
+        },
+        "/proj/step": {
+            "put": {
+                "tags": [
+                    "proj"
+                ],
+                "description": "更新某个step的信息",
+                "operationId": "ProjectController.UpdateStepInfo",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "json",
+                        "description": "要更新的信息",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.UpdateStepInfo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid json\""
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "proj"
+                ],
+                "description": "在指定项目下创建一个流程",
+                "operationId": "ProjectController.CreateOneStep",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "json",
+                        "description": "新建步骤的基本信息结构",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.CreateStep"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid step json body\""
+                    }
+                }
+            }
+        },
+        "/proj/step/attachment": {
+            "post": {
+                "tags": [
+                    "proj"
+                ],
+                "description": "绑定某个step的附件(这里并不上传文件, 需要调用uploadFile相关接口上传后绑定文件uuid到指定step)",
+                "operationId": "ProjectController.UploadStepAttachment",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "json",
+                        "description": "附件信息",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.AddStepAttachment"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid attachment json\""
+                    }
+                }
+            }
+        },
+        "/proj/step/stat/{stepId}": {
+            "get": {
+                "tags": [
+                    "proj"
+                ],
+                "description": "获取一个项目step的统计信息",
+                "operationId": "ProjectController.GetStepStatisticData",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "stepId",
+                        "description": "指定的step的uuid",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid project id\""
+                    }
+                }
+            }
+        },
+        "/proj/step/status": {
+            "put": {
+                "tags": [
+                    "proj"
+                ],
+                "description": "更改流程的进度状态",
+                "operationId": "ProjectController.SetStepStatus",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "json",
+                        "description": "新的状态信息",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.SetStepStatus"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid json body\""
+                    }
+                }
+            }
+        },
+        "/proj/step/timepoint": {
+            "put": {
+                "tags": [
+                    "proj"
+                ],
+                "description": "为step设置时间点",
+                "operationId": "ProjectController.SetStepTimePoint",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "json",
+                        "description": "时间点信息",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.SetStepTimePoint"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid json\""
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "proj"
+                ],
+                "description": "删除step下的某个时间点",
+                "operationId": "ProjectController.DeleteStepTimePoint",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "json",
+                        "description": "要删除的时间点信息",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.DeleteStepTimePoint"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid jsob\""
+                    }
+                }
+            }
+        },
+        "/proj/step/{stepId}": {
+            "get": {
+                "tags": [
+                    "proj"
+                ],
+                "description": "获取某一个指定id的step信息",
+                "operationId": "ProjectController.GetOneStepInfo",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "stepId",
+                        "description": "对应step的uuid",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid stepID\""
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "proj"
+                ],
+                "description": "删除step",
+                "operationId": "ProjectController.DeleteStep",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "stepId",
+                        "description": "要删除的的step的uuid",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid step id\""
+                    }
+                }
+            }
+        },
+        "/proj/steps/{pid}": {
+            "get": {
+                "tags": [
+                    "proj"
+                ],
+                "description": "获取一个项目下的所有step信息",
+                "operationId": "ProjectController.GetStepsInProject",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "pid",
+                        "description": "指定的项目uuid",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid project id\""
+                    }
+                }
+            }
+        },
+        "/proj/submit": {
+            "put": {
+                "tags": [
+                    "proj"
+                ],
+                "description": "更改提交的状态(即管理员最终审核某次提交是否最终通过)",
+                "operationId": "ProjectController.SetSubmitStatus",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "json",
+                        "description": "设定的状态",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.SetSubmitStatus"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid json\""
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "proj"
+                ],
+                "description": "创建一个新的submit",
+                "operationId": "ProjectController.MakeOneSubmit",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "json",
+                        "description": "新submit信息",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.CreateSubmit"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid json\""
+                    }
+                }
+            }
+        },
+        "/proj/submit/content": {
+            "post": {
+                "tags": [
+                    "proj"
+                ],
+                "description": "在一个step中的content下追加新的材料(即用户在上传材料审核的历史记录)",
+                "operationId": "ProjectController.AppendContentInStep",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "json",
+                        "description": "上传的材料信息",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.AppendContentInSubmit"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid json\""
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "proj"
+                ],
+                "description": "用户撤回某次提交的材料审核",
+                "operationId": "ProjectController.WithdrawContentInStep",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "json",
+                        "description": "撤回的信息",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.WithdrawContentInSubmit"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid json\""
+                    }
+                }
+            }
+        },
+        "/proj/submit/{submitId}": {
+            "get": {
+                "tags": [
+                    "proj"
+                ],
+                "description": "获取一个submit的信息",
+                "operationId": "ProjectController.GetOneSubmit",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "submitId",
+                        "description": "要获取的submit uuid",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid submit id\""
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "proj"
+                ],
+                "description": "删除一次submit",
+                "operationId": "ProjectController.DeleteSubmit",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "submitId",
+                        "description": "要删除的submit的uuid",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid submit id\""
+                    }
+                }
+            }
+        },
+        "/proj/submits/user": {
+            "post": {
+                "tags": [
+                    "proj"
+                ],
+                "description": "获取某个用户在指定step下的submit",
+                "operationId": "ProjectController.GetUserSubmitInStep",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "json",
+                        "description": "用户\u0026step信息",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.GetUserSubmitsInStep"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid json\""
+                    }
+                }
+            }
+        },
+        "/proj/submits/{stepId}": {
+            "get": {
+                "tags": [
+                    "proj"
+                ],
+                "description": "获取一个step下的所有submit",
+                "operationId": "ProjectController.GetSubmitInStep",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "stepId",
+                        "description": "step的uuid",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid step id\""
+                    }
+                }
+            }
+        },
+        "/proj/template": {
+            "post": {
+                "tags": [
+                    "proj"
+                ],
+                "description": "创建一个模板项目(创建标准的7个流程和任务)",
+                "operationId": "ProjectController.CreatTemplateProject",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "json",
+                        "description": "基本的项目信息, 创建人(creator)一项不需要填写,会根据token自动解析填充",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.CreateProject"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid project json body(token)\""
+                    }
+                }
+            }
+        },
+        "/proj/user/{uid}": {
+            "get": {
+                "tags": [
+                    "proj"
+                ],
+                "description": "获取某一个用户的所有项目参与情况(即参与各个项目的角色分配情况)",
+                "operationId": "ProjectController.GetUserAssignment",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "uid",
+                        "description": "user id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid user id\""
+                    }
+                }
+            }
+        },
+        "/query/assign": {
+            "post": {
+                "tags": [
+                    "query"
+                ],
+                "description": "根据id列表获取assignment信息",
+                "operationId": "QueryController.GetAssignmentList",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "json",
+                        "description": "要获取的id 列表",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/QueryRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"parse id list error\""
+                    }
+                }
+            }
+        },
+        "/query/audit": {
+            "post": {
+                "tags": [
+                    "query"
+                ],
+                "description": "根据id列表获取audit信息",
+                "operationId": "QueryController.GetAuditList",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "json",
+                        "description": "要获取的id 列表",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/QueryRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"parse id list error\""
+                    }
+                }
+            }
+        },
+        "/query/file": {
+            "post": {
+                "tags": [
+                    "query"
+                ],
+                "description": "根据id列表获取files信息",
+                "operationId": "QueryController.GetFilesList",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "json",
+                        "description": "要获取的id 列表",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/QueryRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"parse id list error\""
+                    }
+                }
+            }
+        },
+        "/query/proj": {
+            "post": {
+                "tags": [
+                    "query"
+                ],
+                "description": "根据id列表获取user信息",
+                "operationId": "QueryController.GetUserList",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "json",
+                        "description": "要获取的id 列表",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/QueryRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"parse id list error\""
+                    }
+                }
+            }
+        },
+        "/query/step": {
+            "post": {
+                "tags": [
+                    "query"
+                ],
+                "description": "根据id列表获取step信息",
+                "operationId": "QueryController.GetStepList",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "json",
+                        "description": "要获取的id 列表",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/QueryRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"parse id list error\""
+                    }
+                }
+            }
+        },
+        "/query/submit": {
+            "post": {
+                "tags": [
+                    "query"
+                ],
+                "description": "根据id列表获取submit信息",
+                "operationId": "QueryController.GetSubmitList",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "json",
+                        "description": "要获取的id 列表",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/QueryRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"parse id list error\""
+                    }
+                }
+            }
+        },
+        "/query/user": {
+            "post": {
+                "tags": [
+                    "query"
+                ],
+                "description": "根据id列表获取user信息",
+                "operationId": "QueryController.GetUserList",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "json",
+                        "description": "要获取的id 列表",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/QueryRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"parse id list error\""
+                    }
+                }
+            }
+        },
+        "/user/": {
+            "get": {
+                "tags": [
+                    "user"
+                ],
+                "description": "get all Users (已废弃)",
+                "operationId": "UserController.GetAll",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.User"
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "user"
+                ],
+                "description": "更新用户信息 (主要提交post时必须所有选项都要填写, 没发生更改的应当填充原来的信息数据)",
+                "operationId": "UserController.UpdateUserInfo",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "json",
+                        "description": "要更新的用户信息数据",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.UserUpdateInfo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"parse body error\""
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "user"
+                ],
+                "description": "用户注册部分, 邮箱和手机号不能和已注册用户重复",
+                "operationId": "UserController.UserRegister",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "json",
+                        "description": "要注册的用户信息",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.UserRegister"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"parse body failed\""
+                    }
+                }
+            }
+        },
+        "/user/login": {
+            "post": {
+                "tags": [
+                    "user"
+                ],
+                "description": "user login: 用户登录(邮箱 \u0026 手机号 二选一即可登录)",
+                "operationId": "UserController.UserLogin",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "json",
+                        "description": "user email / phone \u0026 password",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.UserLogin"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"parse body failed\""
+                    }
+                }
+            }
+        },
+        "/user/logout": {
+            "get": {
+                "tags": [
+                    "user"
+                ],
+                "description": "user logout: 用户退出, 注销token的有效期",
+                "operationId": "UserController.UserLogout",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid ??\""
+                    }
+                }
+            }
+        },
+        "/user/password": {
+            "put": {
+                "tags": [
+                    "user"
+                ],
+                "description": "update user's password: 更新用户密码(需要重新认证原密码) todo: 更新完成后退出当前登录 (注销 token)",
+                "operationId": "UserController.UpdateUserPassword",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "json",
+                        "description": "需要填写旧密码和新密码",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.UserUpdatePassword"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid body data\""
+                    }
+                }
+            }
+        },
+        "/user/{uid}": {
+            "get": {
+                "tags": [
+                    "user"
+                ],
+                "description": "get a user info (profile): 根据用户id获取用户基本信息 (用户密码不会返回)",
+                "operationId": "UserController.GetUser",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token recived at login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "uid",
+                        "description": "user 的 uuid",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid user id\""
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "user"
+                ],
+                "description": "delete a user by user id: 根据id删除用户记录",
+                "operationId": "UserController.UserDelete",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "user token get at login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "uid",
+                        "description": "user uuid",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Default"
+                        }
+                    },
+                    "400": {
+                        "description": "\"invalid user uuid\""
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "1873.0xc00053bf20.false": {
+            "title": "false",
+            "type": "object"
+        },
+        "QueryRequest": {
+            "title": "QueryRequest",
+            "type": "object"
+        },
+        "field.DefaultField": {
+            "title": "DefaultField",
+            "type": "object"
+        },
+        "models.User": {
+            "title": "User",
+            "type": "object",
+            "properties": {
+                "password": {
+                    "type": "string"
+                },
+                "profile": {
+                    "$ref": "#/definitions/models.UserProfile"
+                },
+                "salt": {
+                    "type": "string"
+                },
+                "uuid": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.UserProfile": {
+            "title": "UserProfile",
+            "type": "object",
+            "properties": {
+                "age": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "degree": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "employer": {
+                    "type": "string"
+                },
+                "gender": {
+                    "type": "boolean"
+                },
+                "locaion": {
+                    "type": "string"
+                },
+                "major": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "organization": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "position": {
+                    "type": "string"
+                }
+            }
+        },
+        "noticer.EmailBody": {
+            "title": "EmailBody",
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                },
+                "send_time": {
+                    "type": "string"
+                },
+                "sender": {
+                    "type": "string"
+                }
+            }
+        },
+        "noticer.EmailPackage": {
+            "title": "EmailPackage",
+            "type": "object",
+            "properties": {
+                "body": {
+                    "$ref": "#/definitions/noticer.EmailBody"
+                },
+                "destination": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "subject": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.AddStepAttachment": {
+            "title": "AddStepAttachment",
+            "type": "object",
+            "properties": {
+                "files_ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "step_id": {
+                    "type": "string"
+                },
+                "uploader": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.AppendContentInSubmit": {
+            "title": "AppendContentInSubmit",
+            "type": "object",
+            "properties": {
+                "comment": {
+                    "type": "string"
+                },
+                "item_id": {
+                    "type": "string"
+                },
+                "submit_id": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "version": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.ChangeAssignment": {
+            "title": "ChangeAssignment",
+            "type": "object",
+            "properties": {
+                "assignment_id": {
+                    "type": "string"
+                },
+                "new_role": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "operator": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.CreateProject": {
+            "title": "CreateProject",
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "grade_range": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "name": {
+                    "type": "string"
+                },
+                "requirement": {
+                    "type": "string"
+                },
+                "subjects": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "summary": {
+                    "type": "string"
+                },
+                "target": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.CreateStep": {
+            "title": "CreateStep",
+            "type": "object",
+            "properties": {
+                "creator": {
+                    "type": "string"
+                },
+                "deadline": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "index": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "project_id": {
+                    "type": "string"
+                },
+                "requirement": {
+                    "type": "string"
+                },
+                "time_table": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/request.TimePoint"
+                    }
+                }
+            }
+        },
+        "request.CreateSubmit": {
+            "title": "CreateSubmit",
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "step_id": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.DeleteStepTimePoint": {
+            "title": "DeleteStepTimePoint",
+            "type": "object",
+            "properties": {
+                "point_index": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "step_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.GetUserSubmitsInStep": {
+            "title": "GetUserSubmitsInStep",
+            "type": "object",
+            "properties": {
+                "step_id": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.MakeAssignmentGroup": {
+            "title": "MakeAssignmentGroup",
+            "type": "object",
+            "properties": {
+                "admin": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "assistant": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "expert": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "operator": {
+                    "type": "string"
+                },
+                "out_experts": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "project_id": {
+                    "type": "string"
+                },
+                "teachers": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "request.MakeOneAssignment": {
+            "title": "MakeOneAssignment",
+            "type": "object",
+            "properties": {
+                "operator": {
+                    "type": "string"
+                },
+                "project_id": {
+                    "type": "string"
+                },
+                "role": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.MakeOneAudit": {
+            "title": "MakeOneAudit",
+            "type": "object",
+            "properties": {
+                "comment": {
+                    "type": "string"
+                },
+                "result": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "submit_content_id": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.SearchFile": {
+            "title": "SearchFile",
+            "type": "object",
+            "properties": {
+                "file_name": {
+                    "type": "string"
+                },
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.SetStepStatus": {
+            "title": "SetStepStatus",
+            "type": "object",
+            "properties": {
+                "new_status": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "step_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.SetStepTimePoint": {
+            "title": "SetStepTimePoint",
+            "type": "object",
+            "properties": {
+                "info": {
+                    "$ref": "#/definitions/request.TimePoint"
+                },
+                "point_index": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "step_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.SetSubmitStatus": {
+            "title": "SetSubmitStatus",
+            "type": "object",
+            "properties": {
+                "new_status": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "submit_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.TimePoint": {
+            "title": "TimePoint",
+            "type": "object",
+            "properties": {
+                "comment": {
+                    "type": "string"
+                },
+                "end_time": {
+                    "type": "string",
+                    "format": "datetime"
+                },
+                "notice": {
+                    "type": "string"
+                },
+                "start_time": {
+                    "type": "string",
+                    "format": "datetime"
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.UpdateAudit": {
+            "title": "UpdateAudit",
+            "type": "object",
+            "properties": {
+                "audit_id": {
+                    "type": "string"
+                },
+                "new_auditor": {
+                    "type": "string"
+                },
+                "new_comment": {
+                    "type": "string"
+                },
+                "new_result": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            }
+        },
+        "request.UpdateProjectInfo": {
+            "title": "UpdateProjectInfo",
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "grade_range": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "name": {
+                    "type": "string"
+                },
+                "project_id": {
+                    "type": "string"
+                },
+                "requirement": {
+                    "type": "string"
+                },
+                "subjects": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "summary": {
+                    "type": "string"
+                },
+                "target": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.UpdateStepInfo": {
+            "title": "UpdateStepInfo",
+            "type": "object",
+            "properties": {
+                "new_deadline": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "new_description": {
+                    "type": "string"
+                },
+                "new_name": {
+                    "type": "string"
+                },
+                "new_requirement": {
+                    "type": "string"
+                },
+                "step_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.UserLogin": {
+            "title": "UserLogin",
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.UserRegister": {
+            "title": "UserRegister",
+            "type": "object",
+            "properties": {
+                "degree": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "employer": {
+                    "type": "string"
+                },
+                "gender": {
+                    "type": "boolean"
+                },
+                "location": {
+                    "type": "string"
+                },
+                "major": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "position": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.UserUpdateInfo": {
+            "title": "UserUpdateInfo",
+            "type": "object",
+            "properties": {
+                "degree": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "employer": {
+                    "type": "string"
+                },
+                "gender": {
+                    "type": "boolean"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "location": {
+                    "type": "string"
+                },
+                "major": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "position": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.UserUpdatePassword": {
+            "title": "UserUpdatePassword",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "new_password": {
+                    "type": "string"
+                },
+                "old_password": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.WithdrawContentInSubmit": {
+            "title": "WithdrawContentInSubmit",
+            "type": "object",
+            "properties": {
+                "content_id": {
+                    "type": "string"
+                },
+                "content_index": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "submit_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "response.Default": {
+            "title": "Default",
+            "type": "object",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/1873.0xc00053bf20.false"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "operation_code": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "user",
+            "description": "Operations about Users\n"
+        },
+        {
+            "name": "file",
+            "description": "Operations of files\n"
+        },
+        {
+            "name": "query",
+            "description": "Operations about query apis\n"
+        }
+    ]
+}

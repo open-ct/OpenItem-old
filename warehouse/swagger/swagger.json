@@ -1,0 +1,1207 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "OpenCT Question-warehouse API",
+        "description": "beego has a very cool tools to autogenerate documents for your API",
+        "version": "1.0.0",
+        "termsOfService": "http://beego.me/",
+        "contact": {
+            "email": "kkoogqw@hotmial.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    },
+    "basePath": "/qbank",
+    "paths": {
+        "/query/f_question": {
+            "post": {
+                "tags": [
+                    "query"
+                ],
+                "description": "根据id列表获取temp-question信息",
+                "operationId": "QueryController.GetFinalQuestionList",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "json",
+                        "description": "要获取的id 列表",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.QueryListRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.FinalQuestion"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "\"parse id list error\""
+                    }
+                }
+            }
+        },
+        "/query/f_testpaper": {
+            "post": {
+                "tags": [
+                    "query"
+                ],
+                "description": "根据id列表获取fianl-test-paper信息",
+                "operationId": "QueryController.GetFinalTestPaperList",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "json",
+                        "description": "要获取的id 列表",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.QueryListRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.FinalTestpaper"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "\"parse id list error\""
+                    }
+                }
+            }
+        },
+        "/query/t_question": {
+            "post": {
+                "tags": [
+                    "query"
+                ],
+                "description": "根据id列表获取temp-question信息",
+                "operationId": "QueryController.GetTempQuestionList",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "json",
+                        "description": "要获取的id 列表",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.QueryListRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.TempQuestion"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "\"parse id list error\""
+                    }
+                }
+            }
+        },
+        "/query/t_testpaper": {
+            "post": {
+                "tags": [
+                    "query"
+                ],
+                "description": "根据id列表获取temp-test-paper信息",
+                "operationId": "QueryController.GetTempTestPaperList",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "json",
+                        "description": "要获取的id 列表",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.QueryListRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.TempTestpaper"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "\"parse id list error\""
+                    }
+                }
+            }
+        },
+        "/question/": {
+            "put": {
+                "tags": [
+                    "question"
+                ],
+                "description": "更新新题目(创建一个新的分支)",
+                "operationId": "QuestionController.UpdateQuestion",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "json",
+                        "description": "更新的题目信息",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.UpdateQuestionRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{string}"
+                    },
+                    "400": {
+                        "description": "\"invalid body\""
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "question"
+                ],
+                "description": "创建新的题目（临时题目）",
+                "operationId": "QuestionController.CreateNewQuestion",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "json",
+                        "description": "新题目信息",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.NewQuestionRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{string}"
+                    },
+                    "400": {
+                        "description": "\"invalid body\""
+                    }
+                }
+            }
+        },
+        "/question/comment": {
+            "post": {
+                "tags": [
+                    "question"
+                ],
+                "description": "添加一条题目的评价内容",
+                "operationId": "QuestionController.AddQuestionComment",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "json",
+                        "description": "题目评价",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.AddQuestionCommentRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{string}"
+                    },
+                    "400": {
+                        "description": "\"invalid body\""
+                    }
+                }
+            }
+        },
+        "/question/finish/{qid}": {
+            "get": {
+                "tags": [
+                    "question"
+                ],
+                "description": "最终确定题目 (转移到final数据库下)",
+                "operationId": "QuestionController.FinishTempQuestion",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "qid",
+                        "description": "question id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{string}"
+                    },
+                    "400": {
+                        "description": "\"invalid qid\""
+                    }
+                }
+            }
+        },
+        "/question/proj_f/{pid}": {
+            "get": {
+                "tags": [
+                    "question"
+                ],
+                "description": "获取项目下的题目(final数据库下)",
+                "operationId": "QuestionController.GetProjectFinalQuestions",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "uid",
+                        "description": "project id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{[]models.FinalQuestion}"
+                    },
+                    "400": {
+                        "description": "\"invalid qid\""
+                    }
+                }
+            }
+        },
+        "/question/proj_t/{pid}": {
+            "get": {
+                "tags": [
+                    "question"
+                ],
+                "description": "获取项目下的题目(temp数据库下)",
+                "operationId": "QuestionController.GetProjectTempQuestions",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "uid",
+                        "description": "project id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{[]models.TempQuestion}"
+                    },
+                    "400": {
+                        "description": "\"invalid qid\""
+                    }
+                }
+            }
+        },
+        "/question/trace/{qid}": {
+            "get": {
+                "tags": [
+                    "question"
+                ],
+                "description": "查询历史版本",
+                "operationId": "QuestionController.TraceQuestionVersion",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "qid",
+                        "description": "question id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{[]models.TempQuestion}"
+                    },
+                    "400": {
+                        "description": "\"invalid qid\""
+                    }
+                }
+            }
+        },
+        "/question/user_f/{uid}": {
+            "get": {
+                "tags": [
+                    "question"
+                ],
+                "description": "获取用户创建的题目(final数据库下)",
+                "operationId": "QuestionController.GetUserFinalQuestions",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "uid",
+                        "description": "user id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{[]models.FinalQuestion}"
+                    },
+                    "400": {
+                        "description": "\"invalid qid\""
+                    }
+                }
+            }
+        },
+        "/question/user_t/{uid}": {
+            "get": {
+                "tags": [
+                    "question"
+                ],
+                "description": "获取用户创建的题目(temp数据库下)",
+                "operationId": "QuestionController.GetUserTempQuestions",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "uid",
+                        "description": "user id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{[]models.TempQuestion}"
+                    },
+                    "400": {
+                        "description": "\"invalid qid\""
+                    }
+                }
+            }
+        },
+        "/testpaper/": {
+            "put": {
+                "tags": [
+                    "testpaper"
+                ],
+                "description": "更新新题目(创建一个新的分支)",
+                "operationId": "TestpaperController.UpdateTestpaper",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "json",
+                        "description": "更新的试卷信息or内容",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.UpdateTestpaperRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{string}"
+                    },
+                    "400": {
+                        "description": "\"invalid body\""
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "testpaper"
+                ],
+                "description": "创建新的题目（临时题目）",
+                "operationId": "TestpaperController.CreateNewTestpaper",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "json",
+                        "description": "新试卷信息",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.NewTestpaperRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{string}"
+                    },
+                    "400": {
+                        "description": "\"invalid body\""
+                    }
+                }
+            }
+        },
+        "/testpaper/comment": {
+            "post": {
+                "tags": [
+                    "testpaper"
+                ],
+                "description": "添加一条题目的评价内容",
+                "operationId": "TestpaperController.AddTestpaperComment",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "json",
+                        "description": "新建一个试卷评估记录",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.AddTestpaperCommentRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{string}"
+                    },
+                    "400": {
+                        "description": "\"invalid body\""
+                    }
+                }
+            }
+        },
+        "/testpaper/finish/{qid}": {
+            "get": {
+                "tags": [
+                    "testpaper"
+                ],
+                "description": "最终确定题目 (试卷完成评审, 转移到final数据库下)",
+                "operationId": "TestpaperController.FinishTempTestpaper",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "qid",
+                        "description": "test-paper id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{string}"
+                    },
+                    "400": {
+                        "description": "\"invalid qid\""
+                    }
+                }
+            }
+        },
+        "/testpaper/proj_f/{pid}": {
+            "get": {
+                "tags": [
+                    "testpaper"
+                ],
+                "description": "获取项目下的试卷(final数据库下)",
+                "operationId": "TestpaperController.GetProjectFinalTestpaper",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "uid",
+                        "description": "project id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{[]models.FinalTestpaper}"
+                    },
+                    "400": {
+                        "description": "\"invalid qid\""
+                    }
+                }
+            }
+        },
+        "/testpaper/proj_t/{pid}": {
+            "get": {
+                "tags": [
+                    "testpaper"
+                ],
+                "description": "获取项目下的试卷(temp数据库下)",
+                "operationId": "TestpaperController.GetProjectTempTestpaper",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "uid",
+                        "description": "project id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{[]models.TempTestpaper}"
+                    },
+                    "400": {
+                        "description": "\"invalid qid\""
+                    }
+                }
+            }
+        },
+        "/testpaper/trace/{qid}": {
+            "get": {
+                "tags": [
+                    "testpaper"
+                ],
+                "description": "查询试卷的历史版本(向前查询)",
+                "operationId": "TestpaperController.TraceTestpaperVersion",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "qid",
+                        "description": "temp test-paper id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{[]models.TempTestpaper}"
+                    },
+                    "400": {
+                        "description": "\"invalid qid\""
+                    }
+                }
+            }
+        },
+        "/testpaper/user_f/{uid}": {
+            "get": {
+                "tags": [
+                    "testpaper"
+                ],
+                "description": "获取用户创建的试卷(final数据库下)",
+                "operationId": "TestpaperController.GetUserFinalTestpaper",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "uid",
+                        "description": "user id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{[]models.FinalTestpaper}"
+                    },
+                    "400": {
+                        "description": "\"invalid qid\""
+                    }
+                }
+            }
+        },
+        "/testpaper/user_t/{uid}": {
+            "get": {
+                "tags": [
+                    "testpaper"
+                ],
+                "description": "获取用户创建的试卷(temp数据库下)",
+                "operationId": "TestpaperController.GetUserTempTestpaper",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "uid",
+                        "description": "user id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{[]models.TempTestpaper}"
+                    },
+                    "400": {
+                        "description": "\"invalid qid\""
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "field.DefaultField": {
+            "title": "DefaultField",
+            "type": "object"
+        },
+        "models.AddQuestionCommentRequest": {
+            "title": "AddQuestionCommentRequest",
+            "type": "object",
+            "properties": {
+                "'author'": {
+                    "type": "string"
+                },
+                "comment": {
+                    "type": "string"
+                },
+                "question_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.AddTestpaperCommentRequest": {
+            "title": "AddTestpaperCommentRequest",
+            "type": "object",
+            "properties": {
+                "author": {
+                    "type": "string"
+                },
+                "comment": {
+                    "type": "string"
+                },
+                "testpaper_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.FinalQuestion": {
+            "title": "FinalQuestion",
+            "type": "object",
+            "properties": {
+                "advanced_props": {
+                    "$ref": "#/definitions/models.QuestionAdvancedProps"
+                },
+                "apply_record": {
+                    "$ref": "#/definitions/models.QuestionApplyRecord"
+                },
+                "author": {
+                    "type": "string"
+                },
+                "basic_props": {
+                    "$ref": "#/definitions/models.QuestionBasicProps"
+                },
+                "extra_props": {
+                    "$ref": "#/definitions/models.QuestionExtraProps"
+                },
+                "final_version": {
+                    "type": "string"
+                },
+                "info": {
+                    "$ref": "#/definitions/models.QuestionInfo"
+                },
+                "source_project": {
+                    "type": "string"
+                },
+                "spec_props": {
+                    "$ref": "#/definitions/models.QuestionSpecProps"
+                },
+                "uuid": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.FinalTestpaper": {
+            "title": "FinalTestpaper",
+            "type": "object",
+            "properties": {
+                "author": {
+                    "type": "string"
+                },
+                "info": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.TestpaperPart"
+                    }
+                },
+                "props": {
+                    "$ref": "#/definitions/models.TestpaperProps"
+                },
+                "source_project": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "uuid": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.NewQuestionRequest": {
+            "title": "NewQuestionRequest",
+            "type": "object",
+            "properties": {
+                "advanced_props": {
+                    "$ref": "#/definitions/models.QuestionAdvancedProps"
+                },
+                "apply_record": {
+                    "$ref": "#/definitions/models.QuestionApplyRecord"
+                },
+                "author": {
+                    "type": "string"
+                },
+                "basic_props": {
+                    "$ref": "#/definitions/models.QuestionBasicProps"
+                },
+                "extra_props": {
+                    "$ref": "#/definitions/models.QuestionExtraProps"
+                },
+                "info": {
+                    "$ref": "#/definitions/models.QuestionInfo"
+                },
+                "source_project": {
+                    "type": "string"
+                },
+                "spec_props": {
+                    "$ref": "#/definitions/models.QuestionSpecProps"
+                }
+            }
+        },
+        "models.NewTestpaperRequest": {
+            "title": "NewTestpaperRequest",
+            "type": "object",
+            "properties": {
+                "author": {
+                    "type": "string"
+                },
+                "info": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.TestpaperPart"
+                    }
+                },
+                "props": {
+                    "$ref": "#/definitions/models.TestpaperProps"
+                },
+                "source_project": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Profile": {
+            "title": "Profile",
+            "type": "object",
+            "properties": {
+                "Address": {
+                    "type": "string"
+                },
+                "Age": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "Email": {
+                    "type": "string"
+                },
+                "Gender": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.QueryListRequest": {
+            "title": "QueryListRequest",
+            "type": "object",
+            "properties": {
+                "id_list": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "models.QuestionAdvancedProps": {
+            "title": "QuestionAdvancedProps",
+            "type": "object",
+            "properties": {
+                "ctt_diff_1": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ctt_diff_2": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ctt_level": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "irt_level": {
+                    "type": "number",
+                    "format": "double"
+                }
+            }
+        },
+        "models.QuestionApplyRecord": {
+            "title": "QuestionApplyRecord",
+            "type": "object",
+            "properties": {
+                "grade_fits": {
+                    "type": "string"
+                },
+                "participant_count": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "test_count": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "test_region": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "test_year": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.QuestionBasicProps": {
+            "title": "QuestionBasicProps",
+            "type": "object",
+            "properties": {
+                "ability_dimension": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "details": {
+                    "type": "string"
+                },
+                "details_dimension": {
+                    "type": "string"
+                },
+                "encode": {
+                    "type": "string"
+                },
+                "keywords": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "sub_ability_dimension": {
+                    "type": "string"
+                },
+                "sub_details_dimension": {
+                    "type": "string"
+                },
+                "subject": {
+                    "type": "string"
+                },
+                "subject_requirements": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.QuestionComment": {
+            "title": "QuestionComment",
+            "type": "object",
+            "properties": {
+                "author": {
+                    "type": "string"
+                },
+                "comment": {
+                    "type": "string"
+                },
+                "time_point": {
+                    "type": "string",
+                    "format": "datetime"
+                }
+            }
+        },
+        "models.QuestionExtraProps": {
+            "title": "QuestionExtraProps",
+            "type": "object",
+            "properties": {
+                "is_question_group": {
+                    "type": "boolean"
+                },
+                "is_scene": {
+                    "type": "boolean"
+                },
+                "material_length": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "reading_material_topic": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.QuestionInfo": {
+            "title": "QuestionInfo",
+            "type": "object",
+            "properties": {
+                "answer": {
+                    "type": "string"
+                },
+                "body": {
+                    "type": "string"
+                },
+                "solution": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.QuestionItem": {
+            "title": "QuestionItem",
+            "type": "object",
+            "properties": {
+                "comment": {
+                    "type": "string"
+                },
+                "question_id": {
+                    "type": "string"
+                },
+                "score": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            }
+        },
+        "models.QuestionSpecProps": {
+            "title": "QuestionSpecProps",
+            "type": "object",
+            "properties": {
+                "article_type": {
+                    "type": "string"
+                },
+                "length": {
+                    "type": "string"
+                },
+                "topic": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.TempQuestion": {
+            "title": "TempQuestion",
+            "type": "object",
+            "properties": {
+                "advanced_props": {
+                    "$ref": "#/definitions/models.QuestionAdvancedProps"
+                },
+                "apply_record": {
+                    "$ref": "#/definitions/models.QuestionApplyRecord"
+                },
+                "author": {
+                    "type": "string"
+                },
+                "base": {
+                    "type": "string"
+                },
+                "basic_props": {
+                    "$ref": "#/definitions/models.QuestionBasicProps"
+                },
+                "comment_record": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.QuestionComment"
+                    }
+                },
+                "extra_props": {
+                    "$ref": "#/definitions/models.QuestionExtraProps"
+                },
+                "info": {
+                    "$ref": "#/definitions/models.QuestionInfo"
+                },
+                "is_root": {
+                    "type": "boolean"
+                },
+                "source_project": {
+                    "type": "string"
+                },
+                "spec_props": {
+                    "$ref": "#/definitions/models.QuestionSpecProps"
+                },
+                "uuid": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.TempTestpaper": {
+            "title": "TempTestpaper",
+            "type": "object",
+            "properties": {
+                "author": {
+                    "type": "string"
+                },
+                "base": {
+                    "type": "string"
+                },
+                "comment_record": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.TestpaperComment"
+                    }
+                },
+                "info": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.TestpaperPart"
+                    }
+                },
+                "is_root": {
+                    "type": "boolean"
+                },
+                "props": {
+                    "$ref": "#/definitions/models.TestpaperProps"
+                },
+                "source_project": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "uuid": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.TestpaperComment": {
+            "title": "TestpaperComment",
+            "type": "object",
+            "properties": {
+                "author": {
+                    "type": "string"
+                },
+                "comment": {
+                    "type": "string"
+                },
+                "time_point": {
+                    "type": "string",
+                    "format": "datetime"
+                }
+            }
+        },
+        "models.TestpaperPart": {
+            "title": "TestpaperPart",
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "question_list": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.QuestionItem"
+                    }
+                },
+                "score": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.TestpaperProps": {
+            "title": "TestpaperProps",
+            "type": "object",
+            "properties": {
+                "difficulty": {
+                    "type": "string"
+                },
+                "grade_range": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "subjects": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "time_limit": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.UpdateQuestionRequest": {
+            "title": "UpdateQuestionRequest",
+            "type": "object",
+            "properties": {
+                "author": {
+                    "type": "string"
+                },
+                "base_question": {
+                    "type": "string"
+                },
+                "new_advanced_props": {
+                    "$ref": "#/definitions/models.QuestionAdvancedProps"
+                },
+                "new_apply_record": {
+                    "$ref": "#/definitions/models.QuestionApplyRecord"
+                },
+                "new_basic_props": {
+                    "$ref": "#/definitions/models.QuestionBasicProps"
+                },
+                "new_extra_props": {
+                    "$ref": "#/definitions/models.QuestionExtraProps"
+                },
+                "new_info": {
+                    "$ref": "#/definitions/models.QuestionInfo"
+                },
+                "new_spec_props": {
+                    "$ref": "#/definitions/models.QuestionSpecProps"
+                }
+            }
+        },
+        "models.UpdateTestpaperRequest": {
+            "title": "UpdateTestpaperRequest",
+            "type": "object",
+            "properties": {
+                "author": {
+                    "type": "string"
+                },
+                "base_testpaper": {
+                    "type": "string"
+                },
+                "new_info": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.TestpaperPart"
+                    }
+                },
+                "new_props": {
+                    "$ref": "#/definitions/models.TestpaperProps"
+                },
+                "new_title": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.User": {
+            "title": "User",
+            "type": "object",
+            "properties": {
+                "Id": {
+                    "type": "string"
+                },
+                "Password": {
+                    "type": "string"
+                },
+                "Profile": {
+                    "$ref": "#/definitions/models.Profile"
+                },
+                "Username": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

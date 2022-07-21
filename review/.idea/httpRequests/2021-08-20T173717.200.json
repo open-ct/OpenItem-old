@@ -1,0 +1,16 @@
+{
+  "operation_code": 1000,
+  "message": "",
+  "data": {
+    "name": "robot0",
+    "age": 0,
+    "locaion": "china",
+    "email": "robot0@openct.com",
+    "phone": "10000000000",
+    "gender": true,
+    "degree": "本科",
+    "position": "developer",
+    "employer": "openct-community",
+    "major": "program"
+  }
+}

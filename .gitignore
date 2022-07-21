@@ -4,8 +4,7 @@
 *.dll
 *.so
 *.dylib
-/node_modules
-package-lock.json
+
 # Test binary, built with `go test -c`
 *.test
 
@@ -14,3 +13,21 @@ package-lock.json
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
+
+# Goalng mod packs:
+vendor
+
+# ignore the log file
+*.log
+
+# compile temp file
+*.tmp
+
+# temp upload file & exec file
+proj-review/static/files/*
+proj-review/proj-review
+review/static/files/*
+
+
+/node_modules
+package-lock.json

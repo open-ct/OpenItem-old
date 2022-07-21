@@ -1,0 +1,18 @@
+{
+  "operation_code": 1000,
+  "message": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiZTU5YmRjNDAtZTU1MS00MjM2LTljZjAtNzNlMmRmNmE3OGNmIiwiZXhwIjoxNjI5OTY5MjQxLCJpYXQiOjE2MjkzNjQ0NDEsImlzcyI6InJvYm90MUBvcGVuY3QuY29tIn0.F8A5BbxUHo86frL7YKqPkK0lT9rHVuKfqtWxPAkUefE",
+  "data": [
+    {
+      "name": "",
+      "age": 0,
+      "locaion": "",
+      "email": "robot1@openct.com",
+      "phone": "",
+      "gender": false,
+      "degree": "",
+      "position": "",
+      "employer": "",
+      "major": ""
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "operation_code": 1000,
+  "message": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiODhlZGVkMmUtMmZhYi00NjFiLTlhNDMtYTkzZDIxZGY2NmM5IiwiZXhwIjoxNjMwMzczMzQwLCJpYXQiOjE2Mjk3Njg1NDAsImlzcyI6InRlc3RtYW4tMUBvcGVuY3QuY29tIn0.EVJPeN2-1TiVaZNVwId5R0poYw_rfC5C1yAXQ0iJL5g",
+  "data": {
+    "Id": "6124434be55b388e3bc3072d",
+    "CreateAt": "2021-08-24T00:54:35.655Z",
+    "UpdateAt": "2021-08-24T00:54:35.655Z",
+    "uuid": "88eded2e-2fab-461b-9a43-a93d21df66c9",
+    "profile": {
+      "name": "test-man-1",
+      "age": 0,
+      "locaion": "china",
+      "email": "testman-1@openct.com",
+      "phone": "11000000001",
+      "gender": true,
+      "degree": "本科",
+      "position": "test-man",
+      "employer": "openct-community",
+      "major": "program"
+    },
+    "password": "",
+    "salt": ""
+  }
+}

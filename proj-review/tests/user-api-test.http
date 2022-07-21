@@ -1,0 +1,78 @@
+POST http://localhost:9001/user/checkInfo
+Content-Type: application/json
+
+{
+  "phone": "13000000011",
+  "email": "robot-5@pqbs.com"
+}
+
+###
+POST http://localhost:9001/user/updateInfo
+Content-Type: application/json
+
+{
+  "id": "c993aa3c-ade9-4d99-a56b-6a5b472d9dba",
+  "name": "robot-01",
+  "email": "robot-1@pqbs.com",
+  "phone": "13000000001",
+  "gender": false,
+  "degree": "robot",
+  "position": "robot-man",
+  "employer": "developer",
+  "major": "test"
+}
+
+###
+GET http://localhost:9001/user/delete?user_id=c2dbc93b-f1c0-43b8-b4fc-6ecea7f52591
+Accept: application/json
+
+###
+GET http://localhost:9001/user/getInfo?user_id=c993aa3c-ade9-4d99-a56b-6a5b472d9dba
+Accept: application/json
+
+###
+POST http://localhost:9001/user/updatePwd
+Content-Type: application/json
+
+{
+  "id": "c993aa3c-ade9-4d99-a56b-6a5b472d9dba",
+  "old_password": "123456",
+  "new_password": "abcdef"
+}
+
+
+###
+POST http://localhost:9001/user/login
+Content-Type: application/json
+
+{
+  "email": "robot-1@pqbs.com",
+  "password": "abcdef"
+}
+
+###
+POST http://localhost:9001/user/register
+Content-Type: application/json
+
+{
+  "name": "robot-2",
+  "password": "123456",
+  "email": "robot-2@pqbs.com",
+  "phone": "13000000002",
+  "gender": false,
+  "degree": "robot",
+  "position": "robot-man",
+  "employer": "developer",
+  "major": "test"
+}
+
+
+###
+POST http://localhost:9001/user/search
+Content-Type: application/json
+
+{
+  "name": "robot-3",
+  "employer": "developer",
+  "major": "test"
+}
