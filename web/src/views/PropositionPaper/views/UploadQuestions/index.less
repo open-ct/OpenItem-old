@@ -1,0 +1,289 @@
+[data-component=upLoad-question-page]{
+    width: 100%;
+    height: 100%;
+    .main{
+        background-color: white;
+        > .container{
+            width: 100%;
+            height: 100%;
+        }
+    }
+    .ant-menu-inline{
+        border-right: none;
+    }
+    .ant-menu-item{
+        padding-left: .7rem;
+        box-sizing: border-box;
+    }
+    .ant-menu-item-selected{
+        border-right: 3px solid #1890ff;
+    }
+    .content{
+        box-sizing: border-box;
+        padding: .3rem .3rem 0rem .3rem;
+        > .title{
+            width: 100%;
+            > p{
+                font-size: .12rem;
+                font-weight: 400;
+            }
+        }
+        .line{
+            width: 100%;
+            height: .01rem;
+            background-color: #D9D9D9;
+            margin: .15rem 0px;
+        }
+        .edit-box{
+            width: 100%;
+            min-height: 4.67rem;
+            margin-top: .2rem;
+            > .edit-core-box{
+                width: 100%;
+                height: 5.27rem;
+            }
+        }
+        .header-title{
+            width: 100%;
+            height: .41rem;
+            background-color: #EEEEEE;
+            box-sizing: border-box;
+            padding: .13rem .1rem 0rem .1rem;
+            display: flex;
+            justify-content: space-between;
+            > .title{
+                font-size: .14rem;
+            }
+            > svg{
+                width: .19rem;
+            }
+            > .right-box{
+                width: 1.92rem;
+                height: 100%;
+                margin-right: .57rem;
+                display: flex;
+                justify-content: space-between;
+                > span{
+                    font-size: .1rem;
+                    color: #00000066;
+                }
+            }
+           
+        }
+        .subject-edit-box,.params-edit-box{
+            width: 100%;
+            height: calc(100% - .45rem);
+            box-sizing: border-box;
+            border: .01rem solid #D9D9D9;
+            margin-top: .04rem;
+            border-radius: .02rem;
+            padding: .1rem .05rem 0rem .08rem;
+        }
+        .subject-edit-box{
+            > .ant-input{
+                border: none;
+                box-shadow: none;
+            }
+        }
+        .difficulty{
+            width: 100%;
+            height: .32rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            > .content-box{
+                width: 100%;
+                height: 4px;
+                background-color: #F5F5F5;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                position: relative;
+                > .value-box{
+                    position: absolute;
+                    height: 100%;
+                    background-color: #91D5FF;
+                    transition: all .2s;
+                }
+                > .value-item{
+                    width: .08rem;
+                    height: .08rem;
+                    background-color: #F5F5F5;
+                    border-radius: .08rem;
+                    cursor: pointer;
+                    position: relative;
+                    
+                    > .value{
+                        width: .16rem;
+                        height: .16rem;
+                        font-size: .14rem;
+                        position: absolute;
+                        bottom: -0.18rem;
+                        left: -0.04rem;
+                        text-align: center;
+                    }
+                    &::before{
+                        content:"";
+                        display: block;
+                        width: .04rem;
+                        height: .04rem;
+                        background-color: white;
+                        border-radius: .04rem;
+                        position: absolute;
+                        top: .02rem;
+                        left: .02rem;
+                        z-index: 2;
+                    }
+                    &::after{
+                        content:"";
+                        display: block;
+                        width: .08rem;
+                        height: .08rem;
+                        background-color: #69C0FF;
+                        border-radius: .08rem;
+                        position: absolute;
+                        top: 0rem;
+                        left: 0rem;
+                        z-index: 1;
+                    }
+                }
+                > .select-value{
+                    width: .15rem;
+                    height: .15rem;
+                    border-radius: .15rem;
+                    background-color: white;
+                    &::before{
+                        display: block;
+                        content: "";
+                        width: 100%;
+                        height: 100%;
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        border-radius: .15rem;
+                        background-color: #91D5FF;
+                        z-index: 1;
+                    }
+                    &::after{
+                        display: block;
+                        content: "";
+                        width: .09rem;
+                        height: .09rem;
+                        position: absolute;
+                        left: .03rem;
+                        top: .03rem;
+                        border-radius: .09rem;
+                        background-color: white;
+                        z-index: 2;
+                    }
+                }
+                > .big-value{
+                    &::after{
+                        display: none;
+                    }
+                }
+            }
+        }
+        .params-item{
+            height: .22rem;
+            float: left;
+            min-width: .5rem;
+            background-color: #FAFAFA;
+            box-sizing: border-box;
+            border: .01rem solid #D9D9D9;
+            font-size: .11rem;
+            color: #000000A6;
+            margin-right: .04rem;
+            margin-top: .09rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .option-box{
+            padding: 0px;
+            margin-top: .15rem;
+            margin-bottom: .5rem;
+        }
+        .option-item{
+            width: 100%;
+            height: .49rem;
+            margin-top: .04rem;
+            box-sizing: border-box;
+            padding-right: .57rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            > .oper-box{
+                width: 2rem;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                .oper-icon{
+                    font-size: .26rem;
+                }
+            }
+            > .value-box{
+                width: calc(100% - 2.5rem);
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                > .oper-box{
+                    width:.7rem;
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    margin-left: .2rem;
+                    > .oper-icon{
+                        font-size: .26rem;
+                    }
+                }
+            }
+        }
+        .btn-box{
+            width: 100%;
+            margin: .8rem 0rem;
+        }
+    }
+    .question-box{
+        box-sizing: border-box;
+        padding:0rem 1.03rem .57rem .27rem;
+        .question-content-box{
+            height: 100%;
+            box-sizing: border-box;
+            background-color: #F5FBFF;
+            padding: .35rem .16rem 0px .1rem;
+            border: 1px solid #1890FF;
+            > .title{
+                width: 100%;
+                text-align: center;
+                font-size: .14rem;
+            }
+            > .filter-box{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-top: .27rem;
+                > span{
+                    font-size: .14rem;
+                    margin-right: .2rem;
+                }
+            }
+            .page-spare{
+                margin: .2rem;
+                .ant-pagination-item-link,.ant-pagination-item{
+                    background: #91D5FF;
+                    border: 1px solid #FFFEFE;
+                    box-sizing: border-box;
+                    border-radius: 2px;
+                    .anticon{
+                        color: white;
+                    }
+                }
+                
+            }
+        }
+    }
+}

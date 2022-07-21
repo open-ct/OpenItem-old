@@ -28,3 +28,6 @@ proj-review/static/files/*
 proj-review/proj-review
 review/static/files/*
 
+
+/node_modules
+package-lock.json

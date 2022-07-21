@@ -1,0 +1,120 @@
+[data-component=create-paper-page]{
+    width: 100%;
+    .container{
+        width: 100%;
+        box-sizing: border-box;
+        > .left-box{
+            background-color: white;
+            box-sizing: border-box;
+            padding: .22rem .1rem .4rem .22rem;
+            > .title-box{
+                width: 100%;
+                height: .32rem;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                box-sizing: border-box;
+                padding-left: .1rem;
+                padding-right: .24rem;
+                margin-bottom: .2rem;
+                > .title-value{
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+                    > .ver-line{
+                        height: .18rem;
+                        width: .06rem;
+                        background-color: #1890FF;
+                        margin-right: .06rem;
+                    }
+                    > .value{
+                        font-size: .16rem;
+                        color: #000000D9;
+                    }
+                }
+            }
+            .page-spare{
+                margin: .2rem;
+                .ant-pagination-item-link,.ant-pagination-item{
+                    background: #91D5FF;
+                    border: 1px solid #FFFEFE;
+                    box-sizing: border-box;
+                    border-radius: 2px;
+                    .anticon{
+                        color: white;
+                    }
+                }
+                
+            }
+        }
+        > .right-box{
+            background-color: #EEEEEE;
+            box-sizing: border-box;
+            padding: .16rem;
+            height: 100%;
+            overflow-y: scroll;
+            > .question-item{
+                width: 100%;
+                height: 100%;
+                background-color: white;
+                box-sizing: border-box;
+                padding: .62rem .73rem 0px .29rem;
+                overflow-y: scroll;
+                margin-top: .2rem;
+                > .params-box{
+                    > .title{
+                        width: 100%;
+                        height: .41rem;
+                        background-color: #EEEEEE;
+                        line-height: .41rem;
+                        box-sizing: border-box;
+                        padding-left: .1rem;
+                        > span{
+                            font-size: .14rem;
+                            color: #000000;
+                            
+                        }
+                    }
+                    > .params-item{
+                        width: 100%;
+                        min-height: .32rem;
+                        margin-top: .1rem;
+                        > .label{
+                            box-sizing: border-box;
+                            padding-left: .1rem;
+                            line-height: .32rem;
+                            > span{
+                                font-size: .14rem;
+                                color: #000000;
+                            }
+                        }
+                        > .value{
+                            > .ant-select{
+                                width: 100%;
+                            }
+                            > .tag-list{
+                                width: 100%;
+                                height: 100%;
+                                display: flex;
+                                align-items: center;
+                            }
+                        }
+                    }
+                }
+                > .oper-btn-line{
+                    height: 1rem;
+                    width: 100%;
+                    > .right{
+                        display: flex;
+                        justify-content: space-around;
+                    }
+                }
+                > .info-box{
+                    > .btn-line{
+                        height: 1rem;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,78 @@
+[data-component=material-warehouse-box]{
+    width: 100%;
+    height: calc(100% - .38rem);
+    box-sizing: border-box;
+    padding:0rem .21rem 0rem .23rem;
+    > .container{
+        width: 100%;
+        height: calc(100% - .4rem);
+        .empty-state-box{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            > .ant-empty{
+                margin: 0;
+            }
+        }
+        .file-item{
+            width: 1rem;
+            height: 1rem;
+            background-color: #F3F3F3;
+            float: left;
+            margin-right: .1rem;
+            display: flex;
+            align-content: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            cursor: pointer;
+            > .icon{
+                width: 100%;
+                height: .5rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: .32rem;
+            }
+            > .name{
+                text-align: center;
+                overflow:hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+                box-sizing: border-box;
+                padding: 0px .08rem;
+                >  span{
+                    font-size: .08rem;
+                }
+            }
+        } 
+        > .upload-download-box{
+            float: left;
+            margin-right: .1rem;
+            .file-load-btn{
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-content: center;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            > .ant-upload-picture-card-wrapper{
+                width: 1rem;
+                height: 1rem;
+                > .ant-upload{
+                    width: 100%;
+                    height: 100%;
+                    margin: 0;
+                }
+            }
+        }   
+    }
+    > .footer{
+        display: flex;
+        align-items: flex-end;
+        width: 100%;
+        height: .4rem;
+    }
+}

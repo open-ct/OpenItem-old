@@ -1,0 +1,120 @@
+[data-component=login-page]{
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background-image: url(../../asset/images/login_background.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: #EEF4FF;
+    overflow: hidden;
+    > .login-box{
+        width: 6.4rem;
+        height: 4.5rem;
+        background: #FFFFFF;
+        border-radius: .4rem;
+        box-sizing: border-box;
+        padding: .26rem .28rem .61rem .69rem;
+        position: absolute;
+        right: 1.69rem;
+        top: 2.57rem;
+        > .login-btn__box{
+            width: 100%;
+            height: .52rem
+        }
+        > .login-btn__change{
+            margin-bottom: .06rem;
+            > .ant-btn{
+                float: right;
+                background-color: #FFC000;
+                border-color: #FFC000;
+            }
+        }
+        > .login-btn__operation{
+            display: flex;
+            width: 4.43rem;
+            > .space-box{
+                flex: 0 0 29.16666667%;
+            }
+        }
+        > .login-form{
+            width: 100%;
+            height: calc(100% - 1.76rem);
+            display: flex;
+            align-content: center;
+            flex-wrap: wrap;
+            > .ant-form{
+                width: 4.43rem;
+                > .ant-form-item{
+                    > .ant-form-item-label{
+                        box-sizing: border-box;
+                        margin-right: .31rem;
+                        > label{
+                            font-size: .24rem;
+                            font-weight: 600;
+                            &::before{
+                                display: none;
+                            }
+                        }
+                    }
+                }
+            }
+            > .more-choice-box{
+                width: 4.43rem;
+                text-align: right;
+                >  a{
+                    color: #55BAFF;
+                    border-bottom: .01rem solid #55BAFF;
+                    padding-bottom: .01rem;
+                    font-size: .16rem;
+                    font-weight: 400;
+                }
+            }
+        }
+        > .state-box{
+            width: 100%;
+            height: .38rem;
+            box-sizing: border-box;
+            padding-left: .36rem;
+            margin-bottom: .28rem;
+            > .message{
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                svg{
+                    width: .2744rem;
+                    height: .2744rem;
+                    color: #FF8C00;
+                    margin-right: .15rem;
+                }
+                > .content{
+                    font-size: .16rem;
+                    color: #FF8C00;
+                }
+            }
+        }
+    }
+    > .login-describe{
+        width: 3.2rem;
+        position: absolute;
+        top: 3rem;
+        left: 1.83rem;
+        box-sizing: border-box;
+        padding-top: .3rem;
+        > h1{
+            font-weight: bold;
+            color: #1890FF;
+            font-size: .38rem;
+        }
+        > .describe-item{
+           word-wrap: break-word;
+           color: #1890FF;
+           font-size: .18rem;
+        }
+    }
+}
+
+.ant-spin-nested-loading,.ant-spin-container{
+    height: 100%;
+}
+
